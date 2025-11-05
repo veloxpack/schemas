@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/box.json",
+  "title": "Box",
+  "type": "object",
+  "properties": {
+    "client_id": {"type": "string", "title": "OAuth Client ID"},
+    "client_secret": {"type": "string", "title": "OAuth Client Secret", "format": "password"},
+    "box_sub_type": {"type": "string", "enum": ["user", "enterprise"], "default": "user"},
+    "root_folder_id": {"type": "string", "title": "Root Folder ID", "default": "0"}
+  }
+}

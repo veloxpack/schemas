@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/swift.json",
+  "title": "OpenStack Swift",
+  "type": "object",
+  "properties": {
+    "auth": {"type": "string", "title": "Authentication URL", "format": "uri"},
+    "user": {"type": "string", "title": "Username"},
+    "key": {"type": "string", "title": "API Key or Password", "format": "password"},
+    "tenant": {"type": "string", "title": "Tenant Name"},
+    "region": {"type": "string", "title": "Region Name"}
+  }
+}

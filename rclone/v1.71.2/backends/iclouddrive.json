@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/iclouddrive.json",
+  "title": "iCloud Drive",
+  "description": "iCloud Drive (Apple)",
+  "type": "object",
+  "required": [
+    "apple_id",
+    "password"
+  ],
+  "properties": {
+    "apple_id": {
+      "type": "string",
+      "title": "Apple ID",
+      "description": "Apple ID",
+      "format": "email",
+      "examples": [
+        "user@icloud.com"
+      ]
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "description": "Password (app-specific password recommended)",
+      "format": "password"
+    },
+    "client_id": {
+      "type": "string",
+      "title": "Client ID",
+      "description": "Client ID",
+      "default": "d39ba9916b7251055b22c7f910e2ea796ee65e98b2ddecea8f5dde8d9d1a815d"
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,BackSlash,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "apple_id": "user@icloud.com",
+      "password": "app-specific-password"
+    }
+  ],
+  "$comment": "iCloud Drive requires 2FA setup. trust_token and cookies are managed internally by rclone"
+}

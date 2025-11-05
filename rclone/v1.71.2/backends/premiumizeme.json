@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/premiumizeme.json",
+  "title": "Premiumize.me",
+  "description": "Premiumize.me cloud storage",
+  "type": "object",
+  "properties": {
+    "api_key": {
+      "type": "string",
+      "title": "API Key",
+      "description": "API Key. Not normally used - use OAuth instead",
+      "format": "password"
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,DoubleQuote,BackSlash,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {},
+    {
+      "api_key": "your-api-key"
+    }
+  ],
+  "$comment": "Premiumize.me uses OAuth authentication by default. API key is optional alternative"
+}

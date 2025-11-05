@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/webdav.json",
+  "title": "WebDAV",
+  "description": "Configuration schema for rclone WebDAV backend",
+  "type": "object",
+  "required": ["url"],
+  "properties": {
+    "url": {
+      "type": "string",
+      "title": "WebDAV URL",
+      "description": "URL of the WebDAV server",
+      "format": "uri",
+      "examples": ["https://example.com/webdav", "http://localhost:8080/dav"]
+    },
+    "vendor": {
+      "type": "string",
+      "title": "WebDAV Vendor",
+      "description": "Name of the WebDAV vendor/software",
+      "enum": ["", "nextcloud", "owncloud", "sharepoint", "other"],
+      "examples": ["nextcloud", "owncloud", "sharepoint"]
+    },
+    "user": {
+      "type": "string",
+      "title": "Username",
+      "description": "WebDAV username"
+    },
+    "pass": {
+      "type": "string",
+      "title": "Password",
+      "description": "WebDAV password",
+      "format": "password"
+    },
+    "bearer_token": {
+      "type": "string",
+      "title": "Bearer Token",
+      "description": "Bearer token instead of user/pass for authentication"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "url": "https://nextcloud.example.com/remote.php/dav/files/username/",
+      "vendor": "nextcloud",
+      "user": "username",
+      "pass": "password"
+    }
+  ]
+}
+

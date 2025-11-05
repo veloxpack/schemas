@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/azureblob.json",
+  "title": "Azure Blob Storage",
+  "type": "object",
+  "properties": {
+    "account": {"type": "string", "title": "Storage Account Name"},
+    "key": {"type": "string", "title": "Storage Account Key", "format": "password"},
+    "sas_url": {"type": "string", "title": "SAS URL", "format": "uri"},
+    "tenant": {"type": "string", "title": "Tenant ID"},
+    "client_id": {"type": "string", "title": "Service Principal Client ID"},
+    "client_secret": {"type": "string", "title": "Service Principal Client Secret", "format": "password"}
+  }
+}

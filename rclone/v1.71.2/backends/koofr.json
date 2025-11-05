@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/koofr.json",
+  "title": "Koofr",
+  "description": "Koofr cloud storage and compatible services",
+  "type": "object",
+  "required": ["user", "password"],
+  "properties": {
+    "provider": {
+      "type": "string",
+      "title": "Storage Provider",
+      "description": "Choose your storage provider",
+      "oneOf": [
+        { "const": "koofr", "title": "Koofr - https://app.koofr.net/" },
+        { "const": "digistorage", "title": "Digi Storage - https://storage.rcs-rds.ro/" },
+        { "const": "other", "title": "Any other Koofr API compatible storage service" }
+      ]
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "description": "The Koofr API endpoint to use (required when provider is 'other')",
+      "format": "uri",
+      "examples": ["https://app.koofr.net", "https://storage.rcs-rds.ro"]
+    },
+    "mountid": {
+      "type": "string",
+      "title": "Mount ID",
+      "description": "Mount ID of the mount to use. If omitted, the primary mount is used",
+      "examples": ["primary", "123abc"]
+    },
+    "setmtime": {
+      "type": "boolean",
+      "title": "Set Modification Time",
+      "description": "Does the backend support setting modification time. Set to false if you use a mount ID that points to a Dropbox or Amazon Drive backend",
+      "default": true
+    },
+    "user": {
+      "type": "string",
+      "title": "Username",
+      "description": "Your user name",
+      "examples": ["user@example.com"]
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "description": "Your password for rclone (generate one at your service's settings page)",
+      "format": "password"
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,BackSlash,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": { "provider": { "const": "other" } }
+      },
+      "then": {
+        "required": ["endpoint"]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "provider": "koofr",
+      "user": "user@example.com",
+      "password": "app-password"
+    },
+    {
+      "provider": "digistorage",
+      "user": "user@example.com",
+      "password": "app-password"
+    },
+    {
+      "provider": "other",
+      "endpoint": "https://storage.example.com",
+      "user": "user@example.com",
+      "password": "app-password"
+    }
+  ]
+}

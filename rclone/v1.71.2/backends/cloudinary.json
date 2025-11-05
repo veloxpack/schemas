@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/cloudinary.json",
+  "title": "Cloudinary",
+  "description": "Cloudinary image and video management",
+  "type": "object",
+  "required": [
+    "cloud_name",
+    "api_key",
+    "api_secret"
+  ],
+  "properties": {
+    "cloud_name": {
+      "type": "string",
+      "title": "Cloud Name",
+      "description": "Cloudinary Environment Name"
+    },
+    "api_key": {
+      "type": "string",
+      "title": "API Key",
+      "description": "Cloudinary API Key"
+    },
+    "api_secret": {
+      "type": "string",
+      "title": "API Secret",
+      "description": "Cloudinary API Secret",
+      "format": "password"
+    },
+    "upload_prefix": {
+      "type": "string",
+      "title": "Upload Prefix",
+      "description": "Specify the API endpoint for environments out of the US",
+      "examples": [
+        "https://api.cloudinary.com"
+      ]
+    },
+    "upload_preset": {
+      "type": "string",
+      "title": "Upload Preset",
+      "description": "Upload Preset to select asset manipulation on upload"
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,LtGt,DoubleQuote,Question,Asterisk,Pipe,Hash,Percent,BackSlash,Del,Ctl,RightSpace,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false
+}

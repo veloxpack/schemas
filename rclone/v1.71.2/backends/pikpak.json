@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/pikpak.json",
+  "title": "PikPak",
+  "description": "PikPak cloud storage",
+  "type": "object",
+  "required": [
+    "user",
+    "pass"
+  ],
+  "properties": {
+    "user": {
+      "type": "string",
+      "title": "Username",
+      "description": "Pikpak username",
+      "examples": [
+        "user@example.com"
+      ]
+    },
+    "pass": {
+      "type": "string",
+      "title": "Password",
+      "description": "Pikpak password",
+      "format": "password"
+    },
+    "device_id": {
+      "type": "string",
+      "title": "Device ID",
+      "description": "Device ID used for authorization"
+    },
+    "user_agent": {
+      "type": "string",
+      "title": "User Agent",
+      "description": "HTTP user agent for pikpak",
+      "default": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0"
+    },
+    "root_folder_id": {
+      "type": "string",
+      "title": "Root Folder ID",
+      "description": "ID of the root folder. Leave blank normally"
+    },
+    "use_trash": {
+      "type": "boolean",
+      "title": "Use Trash",
+      "description": "Send files to the trash instead of deleting permanently",
+      "default": true
+    },
+    "trashed_only": {
+      "type": "boolean",
+      "title": "Trashed Only",
+      "description": "Only show files that are in the trash",
+      "default": false
+    },
+    "no_media_link": {
+      "type": "boolean",
+      "title": "No Media Link",
+      "description": "Use original file links instead of media links. Avoids issues with invalid media links but may reduce download speeds",
+      "default": false
+    },
+    "hash_memory_limit": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "title": "Hash Memory Limit",
+      "description": "Files bigger than this will be cached on disk to calculate hash if required",
+      "default": "10Mi"
+    },
+    "upload_cutoff": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "title": "Upload Cutoff",
+      "description": "Cutoff for switching to chunked upload. Maximum is 5 GiB",
+      "default": "200Mi"
+    },
+    "chunk_size": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "title": "Chunk Size",
+      "description": "Chunk size for multipart uploads",
+      "default": "5Mi"
+    },
+    "upload_concurrency": {
+      "type": "integer",
+      "title": "Upload Concurrency",
+      "description": "Concurrency for multipart uploads",
+      "default": 4,
+      "minimum": 1
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,LtGt,DoubleQuote,Colon,Question,Asterisk,Pipe,BackSlash,Ctl,LeftSpace,RightSpace,RightPeriod,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "user": "user@example.com",
+      "pass": "password"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/backends/protondrive.json",
+  "title": "ProtonDrive",
+  "description": "Proton Drive secure cloud storage",
+  "type": "object",
+  "required": [
+    "username",
+    "password"
+  ],
+  "properties": {
+    "username": {
+      "type": "string",
+      "title": "Username",
+      "description": "The username of your proton account",
+      "format": "email",
+      "examples": [
+        "user@protonmail.com"
+      ]
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "description": "The password of your proton account",
+      "format": "password"
+    },
+    "mailbox_password": {
+      "type": "string",
+      "title": "Mailbox Password",
+      "description": "The mailbox password of your two-password proton account (see https://proton.me/support/the-difference-between-the-mailbox-password-and-login-password)",
+      "format": "password"
+    },
+    "2fa": {
+      "type": "string",
+      "title": "2FA Code",
+      "description": "The 2FA code of your proton drive account if set up with two-factor authentication",
+      "examples": [
+        "123456"
+      ]
+    },
+    "otp_secret_key": {
+      "type": "string",
+      "title": "OTP Secret Key",
+      "description": "The OTP secret key of your proton drive account if set up with two-factor authentication",
+      "format": "password"
+    },
+    "original_file_size": {
+      "type": "boolean",
+      "title": "Original File Size",
+      "description": "Return the file size before encryption",
+      "default": false
+    },
+    "app_version": {
+      "type": "string",
+      "title": "App Version",
+      "description": "The app version string",
+      "default": "macos-drive@1.0.0-alpha.1+rclone"
+    },
+    "replace_existing_draft": {
+      "type": "boolean",
+      "title": "Replace Existing Draft",
+      "description": "Create a new revision when filename conflict is detected. Required for integration tests",
+      "default": false
+    },
+    "enable_caching": {
+      "type": "boolean",
+      "title": "Enable Caching",
+      "description": "Caches files and folders metadata to reduce API calls. Not recommended for VFS mounts",
+      "default": true
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,BackSlash,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "username": "user@protonmail.com",
+      "password": "password"
+    },
+    {
+      "username": "user@protonmail.com",
+      "password": "password",
+      "mailbox_password": "mailbox-password",
+      "2fa": "123456"
+    }
+  ],
+  "$comment": "ProtonDrive is end-to-end encrypted. No multi-threading support due to block encryption"
+}

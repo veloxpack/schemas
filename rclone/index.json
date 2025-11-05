@@ -1,0 +1,503 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rclone.org/schemas/index.json",
+  "title": "Rclone Schema Index",
+  "description": "Index of all available rclone JSON schemas",
+  "version": "1.0.0",
+  "master_schema": {
+    "path": "./schema.json",
+    "description": "Master schema for rclone storage configuration"
+  },
+  "option_schemas": [
+    {
+      "name": "config",
+      "path": "./options/config.json",
+      "description": "General rclone configuration options",
+      "option_count": 130
+    },
+    {
+      "name": "mount",
+      "path": "./options/mount.json",
+      "description": "Mount/FUSE options",
+      "option_count": 21
+    },
+    {
+      "name": "vfs",
+      "path": "./options/vfs.json",
+      "description": "Virtual File System options",
+      "option_count": 30
+    }
+  ],
+  "backend_schemas": [
+    {
+      "backend": "alias",
+      "path": "./backends/alias.json",
+      "category": "virtual",
+      "implemented": false
+    },
+    {
+      "backend": "archive",
+      "path": "./backends/archive.json",
+      "category": "virtual",
+      "implemented": false
+    },
+    {
+      "backend": "azureblob",
+      "path": "./backends/azureblob.json",
+      "category": "object-storage",
+      "implemented": true
+    },
+    {
+      "backend": "azurefiles",
+      "path": "./backends/azurefiles.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "b2",
+      "path": "./backends/b2.json",
+      "category": "object-storage",
+      "implemented": true
+    },
+    {
+      "backend": "box",
+      "path": "./backends/box.json",
+      "category": "cloud",
+      "implemented": true
+    },
+    {
+      "backend": "cache",
+      "path": "./backends/cache.json",
+      "category": "virtual",
+      "implemented": false
+    },
+    {
+      "backend": "chunker",
+      "path": "./backends/chunker.json",
+      "category": "virtual",
+      "implemented": false
+    },
+    {
+      "backend": "cloudinary",
+      "path": "./backends/cloudinary.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "combine",
+      "path": "./backends/combine.json",
+      "category": "virtual",
+      "implemented": false
+    },
+    {
+      "backend": "compress",
+      "path": "./backends/compress.json",
+      "category": "virtual",
+      "implemented": false
+    },
+    {
+      "backend": "crypt",
+      "path": "./backends/crypt.json",
+      "category": "virtual",
+      "implemented": true
+    },
+    {
+      "backend": "doi",
+      "path": "./backends/doi.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "drive",
+      "path": "./backends/drive.json",
+      "category": "cloud",
+      "implemented": true
+    },
+    {
+      "backend": "dropbox",
+      "path": "./backends/dropbox.json",
+      "category": "cloud",
+      "implemented": true
+    },
+    {
+      "backend": "fichier",
+      "path": "./backends/fichier.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "filefabric",
+      "path": "./backends/filefabric.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "filelu",
+      "path": "./backends/filelu.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "filescom",
+      "path": "./backends/filescom.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "ftp",
+      "path": "./backends/ftp.json",
+      "category": "network",
+      "implemented": true
+    },
+    {
+      "backend": "gofile",
+      "path": "./backends/gofile.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "googlecloudstorage",
+      "path": "./backends/googlecloudstorage.json",
+      "category": "object-storage",
+      "implemented": false
+    },
+    {
+      "backend": "googlephotos",
+      "path": "./backends/googlephotos.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "hasher",
+      "path": "./backends/hasher.json",
+      "category": "virtual",
+      "implemented": false
+    },
+    {
+      "backend": "hdfs",
+      "path": "./backends/hdfs.json",
+      "category": "network",
+      "implemented": false
+    },
+    {
+      "backend": "hidrive",
+      "path": "./backends/hidrive.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "http",
+      "path": "./backends/http.json",
+      "category": "network",
+      "implemented": false
+    },
+    {
+      "backend": "iclouddrive",
+      "path": "./backends/iclouddrive.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "imagekit",
+      "path": "./backends/imagekit.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "internetarchive",
+      "path": "./backends/internetarchive.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "jottacloud",
+      "path": "./backends/jottacloud.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "koofr",
+      "path": "./backends/koofr.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "linkbox",
+      "path": "./backends/linkbox.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "local",
+      "path": "./backends/local.json",
+      "category": "filesystem",
+      "implemented": true
+    },
+    {
+      "backend": "mailru",
+      "path": "./backends/mailru.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "mega",
+      "path": "./backends/mega.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "memory",
+      "path": "./backends/memory.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "netstorage",
+      "path": "./backends/netstorage.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "onedrive",
+      "path": "./backends/onedrive.json",
+      "category": "cloud",
+      "implemented": true
+    },
+    {
+      "backend": "opendrive",
+      "path": "./backends/opendrive.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "oracleobjectstorage",
+      "path": "./backends/oracleobjectstorage.json",
+      "category": "object-storage",
+      "implemented": false
+    },
+    {
+      "backend": "pcloud",
+      "path": "./backends/pcloud.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "pikpak",
+      "path": "./backends/pikpak.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "pixeldrain",
+      "path": "./backends/pixeldrain.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "premiumizeme",
+      "path": "./backends/premiumizeme.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "protondrive",
+      "path": "./backends/protondrive.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "putio",
+      "path": "./backends/putio.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "qingstor",
+      "path": "./backends/qingstor.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "quatrix",
+      "path": "./backends/quatrix.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "s3",
+      "path": "./backends/s3.json",
+      "category": "object-storage",
+      "implemented": true
+    },
+    {
+      "backend": "seafile",
+      "path": "./backends/seafile.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "sftp",
+      "path": "./backends/sftp.json",
+      "category": "network",
+      "implemented": true
+    },
+    {
+      "backend": "sharefile",
+      "path": "./backends/sharefile.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "sia",
+      "path": "./backends/sia.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "smb",
+      "path": "./backends/smb.json",
+      "category": "network",
+      "implemented": true
+    },
+    {
+      "backend": "storj",
+      "path": "./backends/storj.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "sugarsync",
+      "path": "./backends/sugarsync.json",
+      "category": "specialized",
+      "implemented": false
+    },
+    {
+      "backend": "swift",
+      "path": "./backends/swift.json",
+      "category": "object-storage",
+      "implemented": true
+    },
+    {
+      "backend": "ulozto",
+      "path": "./backends/ulozto.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "union",
+      "path": "./backends/union.json",
+      "category": "virtual",
+      "implemented": false
+    },
+    {
+      "backend": "uptobox",
+      "path": "./backends/uptobox.json",
+      "category": "file-sharing",
+      "implemented": false
+    },
+    {
+      "backend": "webdav",
+      "path": "./backends/webdav.json",
+      "category": "network",
+      "implemented": true
+    },
+    {
+      "backend": "yandex",
+      "path": "./backends/yandex.json",
+      "category": "cloud",
+      "implemented": false
+    },
+    {
+      "backend": "zoho",
+      "path": "./backends/zoho.json",
+      "category": "specialized",
+      "implemented": false
+    }
+  ],
+  "categories": {
+    "filesystem": [
+      "local"
+    ],
+    "object-storage": [
+      "s3",
+      "azureblob",
+      "b2",
+      "googlecloudstorage",
+      "swift",
+      "oracleobjectstorage"
+    ],
+    "cloud": [
+      "drive",
+      "dropbox",
+      "onedrive",
+      "box",
+      "mega",
+      "pcloud",
+      "yandex",
+      "koofr",
+      "jottacloud",
+      "mailru",
+      "hidrive",
+      "iclouddrive",
+      "googlephotos"
+    ],
+    "network": [
+      "sftp",
+      "ftp",
+      "webdav",
+      "smb",
+      "http",
+      "hdfs"
+    ],
+    "file-sharing": [
+      "fichier",
+      "gofile",
+      "linkbox",
+      "pikpak",
+      "pixeldrain",
+      "putio",
+      "premiumizeme",
+      "protondrive",
+      "uptobox",
+      "ulozto",
+      "filelu",
+      "filescom",
+      "filefabric",
+      "sharefile"
+    ],
+    "virtual": [
+      "crypt",
+      "chunker",
+      "compress",
+      "union",
+      "alias",
+      "hasher",
+      "combine",
+      "cache",
+      "archive"
+    ],
+    "specialized": [
+      "storj",
+      "sia",
+      "netstorage",
+      "seafile",
+      "quatrix",
+      "qingstor",
+      "imagekit",
+      "cloudinary",
+      "doi",
+      "opendrive",
+      "sugarsync",
+      "zoho",
+      "azurefiles",
+      "internetarchive",
+      "memory"
+    ]
+  },
+  "statistics": {
+    "total_backends": 64,
+    "fully_implemented": 14,
+    "placeholder": 50,
+    "total_schemas": 69
+  }
+}

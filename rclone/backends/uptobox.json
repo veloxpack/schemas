@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rclone.org/schemas/backends/uptobox.json",
+  "title": "uptouox Backend",
+  "description": "Configuration schema for rclone uptobox backend",
+  "type": "object",
+  "properties": {
+    "placeholder": {
+      "type": "string",
+      "title": "Configuration",
+      "description": "Backend-specific configuration options. Refer to rclone documentation at https://rclone.org/uptobox/"
+    }
+  },
+  "$comment": "This is a placeholder schema. Full backend options need to be extracted from backend/uptobox/uptobox.go"
+}

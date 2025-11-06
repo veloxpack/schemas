@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/union.json",
+  "title": "Union",
+  "description": "Merge multiple remotes into a unified namespace",
+  "type": "object",
+  "required": ["upstreams"],
+  "properties": {
+    "upstreams": {
+      "type": "array",
+      "title": "Upstreams",
+      "description": "List of space-separated upstreams. Format: 'upstreama:test/dir upstreamb:' or '\"upstreama:test/space dir\" upstreamb:'",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2,
+      "examples": [
+        ["upstreama:test/dir", "upstreamb:"],
+        ["drive:", "dropbox:", "onedrive:"],
+        ["\"remote with spaces:path\"", "remote2:"]
+      ]
+    },
+    "action_policy": {
+      "type": "string",
+      "title": "Action Policy",
+      "description": "Policy to choose upstream on ACTION category (delete, move, etc.)",
+      "default": "epall",
+      "oneOf": [
+        { "const": "epall", "title": "EP All - All" },
+        { "const": "epff", "title": "EP FF - First Found" },
+        { "const": "eplfs", "title": "EP LFS - Least Free Space" },
+        { "const": "eplus", "title": "EP LUS - Least Used Space" },
+        { "const": "epmfs", "title": "EP MFS - Most Free Space" },
+        { "const": "eprand", "title": "EP Rand - Random" },
+        { "const": "ff", "title": "FF - First Found" }
+      ]
+    },
+    "create_policy": {
+      "type": "string",
+      "title": "Create Policy",
+      "description": "Policy to choose upstream on CREATE category (upload, mkdir, etc.)",
+      "default": "epmfs",
+      "oneOf": [
+        { "const": "epmfs", "title": "EP MFS - Most Free Space" },
+        { "const": "eplfs", "title": "EP LFS - Least Free Space" },
+        { "const": "eplus", "title": "EP LUS - Least Used Space" },
+        { "const": "epff", "title": "EP FF - First Found" },
+        { "const": "epall", "title": "EP All - All" },
+        { "const": "eprand", "title": "EP Rand - Random" },
+        { "const": "ff", "title": "FF - First Found" }
+      ]
+    },
+    "search_policy": {
+      "type": "string",
+      "title": "Search Policy",
+      "description": "Policy to choose upstream on SEARCH category (ls, stat, etc.)",
+      "default": "ff",
+      "oneOf": [
+        { "const": "ff", "title": "FF - First Found" },
+        { "const": "epff", "title": "EP FF - First Found" },
+        { "const": "epall", "title": "EP All - All" },
+        { "const": "eprand", "title": "EP Rand - Random" }
+      ]
+    },
+    "cache_time": {
+      "type": "integer",
+      "title": "Cache Time",
+      "description": "Cache time of usage and free space in seconds (useful for path preserving policies)",
+      "default": 120,
+      "minimum": 0
+    },
+    "min_free_space": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$" },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "title": "Minimum Free Space",
+      "description": "Minimum viable free space for lfs/eplfs policies. Remotes with less space won't be considered",
+      "default": "1Gi",
+      "examples": ["1G", "500M", "10Gi"]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "upstreams": ["drive:", "dropbox:", "onedrive:"],
+      "action_policy": "epall",
+      "create_policy": "epmfs",
+      "search_policy": "ff"
+    },
+    {
+      "upstreams": ["s3:bucket1", "b2:bucket2"],
+      "create_policy": "epmfs",
+      "min_free_space": "10G"
+    }
+  ]
+}

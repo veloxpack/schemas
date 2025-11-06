@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/seafile.json",
+  "title": "Seafile",
+  "description": "Seafile server",
+  "type": "object",
+  "required": ["url", "user"],
+  "properties": {
+    "url": {
+      "type": "string",
+      "title": "Server URL",
+      "description": "URL of seafile host to connect to",
+      "format": "uri",
+      "examples": [
+        "https://cloud.seafile.com/",
+        "https://seafile.example.com/"
+      ]
+    },
+    "user": {
+      "type": "string",
+      "title": "User",
+      "description": "User name (usually email address)",
+      "format": "email",
+      "examples": ["user@example.com"]
+    },
+    "pass": {
+      "type": "string",
+      "title": "Password",
+      "description": "Password (leave blank for 2FA)",
+      "format": "password"
+    },
+    "2fa": {
+      "type": "boolean",
+      "title": "Two-Factor Authentication",
+      "description": "Two-factor authentication (set to true if the account has 2FA enabled)",
+      "default": false
+    },
+    "library": {
+      "type": "string",
+      "title": "Library Name",
+      "description": "Name of the library. Leave blank to access all non-encrypted libraries",
+      "examples": ["My Library", "Photos"]
+    },
+    "library_key": {
+      "type": "string",
+      "title": "Library Password",
+      "description": "Library password (for encrypted libraries only). Leave blank if you pass it through the command line",
+      "format": "password"
+    },
+    "create_library": {
+      "type": "boolean",
+      "title": "Create Library",
+      "description": "Should rclone create a library if it doesn't exist",
+      "default": false
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,DoubleQuote,BackSlash,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "url": "https://cloud.seafile.com/",
+      "user": "user@example.com",
+      "pass": "obscured-password"
+    },
+    {
+      "url": "https://seafile.example.com/",
+      "user": "user@example.com",
+      "2fa": true,
+      "library": "My Library"
+    },
+    {
+      "url": "https://cloud.seafile.com/",
+      "user": "user@example.com",
+      "pass": "obscured-password",
+      "library": "Encrypted Lib",
+      "library_key": "library-password"
+    }
+  ]
+}

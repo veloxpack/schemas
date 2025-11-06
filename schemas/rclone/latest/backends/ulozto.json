@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/ulozto.json",
+  "title": "Uloz.to",
+  "description": "Uloz.to cloud storage (Czech file hosting)",
+  "type": "object",
+  "required": [
+    "app_token",
+    "username",
+    "password"
+  ],
+  "properties": {
+    "app_token": {
+      "type": "string",
+      "title": "App Token",
+      "description": "The application token identifying the app. See https://uloz.to/upload-resumable-api-beta or contact customer service",
+      "format": "password"
+    },
+    "username": {
+      "type": "string",
+      "title": "Username",
+      "description": "The username of the principal to operate as"
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "description": "The password for the user",
+      "format": "password"
+    },
+    "root_folder_slug": {
+      "type": "string",
+      "title": "Root Folder Slug",
+      "description": "If set, rclone will use this folder as the root folder for all operations"
+    },
+    "list_page_size": {
+      "type": "integer",
+      "title": "List Page Size",
+      "description": "The size of a single page for list commands (1-500)",
+      "default": 500,
+      "minimum": 1,
+      "maximum": 500
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,BackSlash,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "app_token": "your-app-token",
+      "username": "username",
+      "password": "password"
+    }
+  ]
+}

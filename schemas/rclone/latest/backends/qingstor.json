@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/qingstor.json",
+  "title": "QingStor",
+  "description": "QingCloud Object Storage",
+  "type": "object",
+  "properties": {
+    "env_auth": {
+      "type": "boolean",
+      "title": "Environment Auth",
+      "description": "Get QingStor credentials from runtime. Only applies if access_key_id and secret_access_key is blank",
+      "default": false
+    },
+    "access_key_id": {
+      "type": "string",
+      "title": "Access Key ID",
+      "description": "QingStor Access Key ID. Leave blank for anonymous access or runtime credentials",
+      "examples": ["AKIAIOSFODNN7EXAMPLE"]
+    },
+    "secret_access_key": {
+      "type": "string",
+      "title": "Secret Access Key",
+      "description": "QingStor Secret Access Key (password). Leave blank for anonymous access or runtime credentials",
+      "format": "password"
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "description": "Enter an endpoint URL to connection QingStor API. Leave blank will use the default value 'https://qingstor.com:443'",
+      "format": "uri",
+      "examples": ["https://qingstor.com:443"]
+    },
+    "zone": {
+      "type": "string",
+      "title": "Zone",
+      "description": "Zone to connect to",
+      "default": "pek3a",
+      "oneOf": [
+        { "const": "pek3a", "title": "Beijing (China) Three Zone" },
+        { "const": "sh1a", "title": "Shanghai (China) First Zone" },
+        { "const": "gd2a", "title": "Guangdong (China) Second Zone" }
+      ]
+    },
+    "connection_retries": {
+      "type": "integer",
+      "title": "Connection Retries",
+      "description": "Number of connection retries",
+      "default": 3,
+      "minimum": 0,
+      "maximum": 10
+    },
+    "upload_cutoff": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$" },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "title": "Upload Cutoff",
+      "description": "Cutoff for switching to chunked upload. Maximum is 5 GiB",
+      "default": "200Mi"
+    },
+    "chunk_size": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$" },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "title": "Chunk Size",
+      "description": "Chunk size to use for uploading",
+      "default": "4Mi"
+    },
+    "upload_concurrency": {
+      "type": "integer",
+      "title": "Upload Concurrency",
+      "description": "Number of chunks to upload in parallel",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 32
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,Ctl,InvalidUtf8"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "access_key_id": "AKIAIOSFODNN7EXAMPLE",
+      "secret_access_key": "...",
+      "zone": "pek3a"
+    },
+    {
+      "env_auth": true,
+      "zone": "sh1a"
+    }
+  ]
+}

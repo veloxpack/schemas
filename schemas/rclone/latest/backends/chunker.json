@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/chunker.json",
+  "title": "Chunker",
+  "description": "Transparently split large files into chunks",
+  "type": "object",
+  "required": ["remote"],
+  "properties": {
+    "remote": {
+      "type": "string",
+      "title": "Remote to Chunk",
+      "description": "Remote to chunk/unchunk. Should contain ':' and a path, e.g. 'myremote:path/to/dir', 'myremote:bucket'",
+      "examples": ["myremote:path/to/dir", "s3:bucket", "crypt:"]
+    },
+    "chunk_size": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$" },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "title": "Chunk Size",
+      "description": "Files larger than chunk size will be split into chunks",
+      "default": "2Gi",
+      "examples": ["2G", "1G", "500M"]
+    },
+    "name_format": {
+      "type": "string",
+      "title": "Chunk Name Format",
+      "description": "String format of chunk file names. Use * for base name and # for chunk number",
+      "default": "*.rclone_chunk.###",
+      "examples": ["*.rclone_chunk.###", "*.part###"]
+    },
+    "start_from": {
+      "type": "integer",
+      "title": "Start From",
+      "description": "Minimum valid chunk number. Usually 0 or 1",
+      "default": 1,
+      "minimum": 0
+    },
+    "meta_format": {
+      "type": "string",
+      "title": "Metadata Format",
+      "description": "Format of the metadata object",
+      "default": "simplejson",
+      "oneOf": [
+        { "const": "none", "title": "None - No metadata files (requires hash_type=none)" },
+        { "const": "simplejson", "title": "Simple JSON - Supports hash sums and validation" }
+      ]
+    },
+    "hash_type": {
+      "type": "string",
+      "title": "Hash Type",
+      "description": "Choose how chunker handles hash sums (requires metadata except for 'none')",
+      "default": "md5",
+      "oneOf": [
+        { "const": "none", "title": "None - Pass through non-chunked file hashes" },
+        { "const": "md5", "title": "MD5 - For composite files" },
+        { "const": "sha1", "title": "SHA1 - For composite files" },
+        { "const": "md5all", "title": "MD5 All - For all files" },
+        { "const": "sha1all", "title": "SHA1 All - For all files" },
+        { "const": "md5quick", "title": "MD5 Quick - Request MD5 from source, fallback to SHA1" },
+        { "const": "sha1quick", "title": "SHA1 Quick - Prefer SHA1 over MD5" }
+      ]
+    },
+    "fail_hard": {
+      "type": "boolean",
+      "title": "Fail Hard",
+      "description": "How to handle files with missing or invalid chunks",
+      "default": false,
+      "oneOf": [
+        { "const": true, "title": "True - Report errors and abort" },
+        { "const": false, "title": "False - Warn, skip incomplete file and proceed" }
+      ]
+    },
+    "transactions": {
+      "type": "string",
+      "title": "Transaction Mode",
+      "description": "How to handle temporary files during transactions",
+      "default": "rename",
+      "oneOf": [
+        { "const": "rename", "title": "Rename - Rename temp files after success" },
+        { "const": "norename", "title": "No Rename - Use temp names, write to metadata (EXPERIMENTAL)" },
+        { "const": "auto", "title": "Auto - Choose based on backend capabilities (EXPERIMENTAL)" }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "remote": "s3:large-files",
+      "chunk_size": "2G",
+      "hash_type": "md5"
+    },
+    {
+      "remote": "encrypted:",
+      "chunk_size": "1G",
+      "meta_format": "simplejson",
+      "hash_type": "sha1"
+    }
+  ]
+}

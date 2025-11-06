@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/smb.json",
+  "title": "SMB",
+  "description": "Configuration schema for rclone SMB/CIFS backend",
+  "type": "object",
+  "required": ["host"],
+  "properties": {
+    "host": {
+      "type": "string",
+      "title": "SMB Host",
+      "description": "SMB server hostname or IP address",
+      "examples": ["example.com", "192.168.1.100"]
+    },
+    "user": {
+      "type": "string",
+      "title": "SMB Username",
+      "description": "SMB username for authentication",
+      "default": "$USER"
+    },
+    "port": {
+      "type": "integer",
+      "title": "SMB Port",
+      "description": "SMB port number",
+      "default": 445,
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "pass": {
+      "type": "string",
+      "title": "SMB Password",
+      "description": "SMB password",
+      "format": "password"
+    },
+    "domain": {
+      "type": "string",
+      "title": "Domain",
+      "description": "Domain name for NTLM authentication",
+      "default": "WORKGROUP"
+    },
+    "spn": {
+      "type": "string",
+      "title": "Service Principal Name",
+      "description": "Service principal name for Kerberos authentication"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "host": "nas.local",
+      "user": "admin",
+      "pass": "password",
+      "domain": "WORKGROUP",
+      "port": 445
+    }
+  ]
+}
+

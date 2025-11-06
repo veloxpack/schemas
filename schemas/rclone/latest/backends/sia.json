@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/sia.json",
+  "title": "Sia",
+  "description": "Sia Decentralized Cloud Storage",
+  "type": "object",
+  "properties": {
+    "api_url": {
+      "type": "string",
+      "title": "API URL",
+      "description": "Sia daemon API URL, like http://sia.daemon.host:9980. Note that siad must run with --disable-api-security to open API port for other hosts (not recommended). Keep default if Sia daemon runs on localhost",
+      "default": "http://127.0.0.1:9980",
+      "format": "uri"
+    },
+    "api_password": {
+      "type": "string",
+      "title": "API Password",
+      "description": "Sia Daemon API Password. Can be found in the apipassword file located in HOME/.sia/ or in the daemon directory",
+      "format": "password"
+    },
+    "user_agent": {
+      "type": "string",
+      "title": "User Agent",
+      "description": "Siad User Agent. Sia daemon requires the 'Sia-Agent' user agent by default for security",
+      "default": "Sia-Agent"
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,Question,HashPercent,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "api_url": "http://127.0.0.1:9980",
+      "api_password": "your-api-password"
+    }
+  ]
+}

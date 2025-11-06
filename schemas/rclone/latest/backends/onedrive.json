@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/onedrive.json",
+  "title": "OneDrive",
+  "description": "Configuration schema for rclone Microsoft OneDrive backend",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "title": "OAuth Client ID",
+      "description": "Microsoft App Client ID"
+    },
+    "client_secret": {
+      "type": "string",
+      "title": "OAuth Client Secret",
+      "description": "Microsoft App Client Secret",
+      "format": "password"
+    },
+    "region": {
+      "type": "string",
+      "title": "OneDrive Region",
+      "description": "National cloud region for OneDrive",
+      "enum": ["global", "us", "de", "cn"],
+      "default": "global"
+    },
+    "drive_id": {
+      "type": "string",
+      "title": "Drive ID",
+      "description": "The ID of the drive to use"
+    },
+    "drive_type": {
+      "type": "string",
+      "title": "Drive Type",
+      "description": "The type of the drive",
+      "enum": ["personal", "business", "documentLibrary"],
+      "examples": ["personal", "business"]
+    },
+    "root_folder_id": {
+      "type": "string",
+      "title": "Root Folder ID",
+      "description": "ID of the root folder"
+    },
+    "disable_site_permission": {
+      "type": "boolean",
+      "title": "Disable Site Permission Check",
+      "description": "Disable the request for Sites.Read.All permission",
+      "default": false
+    }
+  },
+  "additionalProperties": false
+}

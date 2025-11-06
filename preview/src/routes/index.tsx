@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { SchemaPreview } from '@/components/SchemaPreview'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import {
   Select,
   SelectContent,
@@ -20,6 +21,12 @@ const SCHEMAS = [
     url: 'https://schemas.veloxpack.io/schemas/rclone/latest/schema.json',
     description: 'Configure your rclone settings with an interactive form based on the latest schema',
   },
+  {
+    id: 'sample',
+    name: 'Sample Nested Object',
+    url: 'https://schemas.veloxpack.io/schemas/sample/schema.json',
+    description: 'A sample nested object for the schema',
+  }
 ] as const
 
 function App() {
@@ -31,11 +38,16 @@ function App() {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-6xl">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Schema Preview</h1>
-        <p className="text-xl text-muted-foreground">
-          Preview and configure schemas with interactive forms
-        </p>
+      <div className="flex justify-between items-start mb-8">
+        <div className="text-center flex-1">
+          <h1 className="text-4xl font-bold mb-4">Schema Preview</h1>
+          <p className="text-xl text-muted-foreground">
+            Preview and configure schemas with interactive forms
+          </p>
+        </div>
+        <div className="flex-shrink-0">
+          <ThemeToggle />
+        </div>
       </div>
 
       <div className="mb-8">

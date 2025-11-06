@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/options/mount.json",
+  "title": "Mount",
+  "description": "Rclone mount command options",
+  "type": "object",
+  "properties": {
+    "debug_fuse": {
+      "type": "boolean",
+      "default": false,
+      "description": "Debug the FUSE internals - needs -v"
+    },
+    "attr_timeout": {
+      "type": "string",
+      "default": "1s",
+      "description": "Time for which file/directory attributes are cached",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$",
+      "examples": ["1s", "5s", "10s", "1m"]
+    },
+    "option": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Option for libfuse/WinFsp (repeat if required). Can be specified with -o flag",
+      "examples": [
+        ["allow_other"],
+        ["uid=1000", "gid=1000"],
+        ["ro"]
+      ]
+    },
+    "fuse_flag": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Flags or arguments to be passed direct to libfuse/WinFsp (repeat if required)",
+      "examples": [
+        ["-d"],
+        ["--debug"]
+      ]
+    },
+    "daemon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Run mount in background and exit parent process (as background output is suppressed, use --log-file with --log-format=pid,... to monitor) (not supported on Windows)"
+    },
+    "daemon_timeout": {
+      "type": "string",
+      "description": "Time limit for rclone to respond to kernel (not supported on Windows). Defaults to 10 minutes on macOS, 0 on other systems",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$",
+      "examples": ["0s", "10m", "5m", "1h"]
+    },
+    "default_permissions": {
+      "type": "boolean",
+      "default": false,
+      "description": "Makes kernel enforce access control based on the file mode (not supported on Windows)"
+    },
+    "allow_non_empty": {
+      "type": "boolean",
+      "default": false,
+      "description": "Allow mounting over a non-empty directory (not supported on Windows)"
+    },
+    "allow_root": {
+      "type": "boolean",
+      "default": false,
+      "description": "Allow access to root user (not supported on Windows)"
+    },
+    "allow_other": {
+      "type": "boolean",
+      "default": false,
+      "description": "Allow access to other users (not supported on Windows)"
+    },
+    "async_read": {
+      "type": "boolean",
+      "default": true,
+      "description": "Use asynchronous reads (not supported on Windows)"
+    },
+    "max_read_ahead": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$",
+          "examples": ["128K", "256K", "1M"]
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "default": "128Ki",
+      "description": "The number of bytes that can be prefetched for sequential reads (not supported on Windows)"
+    },
+    "write_back_cache": {
+      "type": "boolean",
+      "default": false,
+      "description": "Makes kernel buffer writes before sending them to rclone (without this, writethrough caching is used) (not supported on Windows)"
+    },
+    "devname": {
+      "type": "string",
+      "default": "",
+      "description": "Set the device name - default is remote:path",
+      "examples": ["myremote", "rclone-mount", ""]
+    },
+    "mount_case_insensitive": {
+      "type": "string",
+      "enum": ["true", "false", "auto"],
+      "default": "auto",
+      "description": "Tell the OS the mount is case insensitive (true) or sensitive (false) regardless of the backend (auto)",
+      "examples": ["auto", "true", "false"]
+    },
+    "direct_io": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use Direct IO, disables caching of data"
+    },
+    "volname": {
+      "type": "string",
+      "default": "",
+      "description": "Set the volume name (supported on Windows and OSX only)",
+      "examples": ["MyDrive", "RcloneMount", ""]
+    },
+    "noappledouble": {
+      "type": "boolean",
+      "default": true,
+      "description": "Ignore Apple Double (._) and .DS_Store files (supported on OSX only)"
+    },
+    "noapplexattr": {
+      "type": "boolean",
+      "default": false,
+      "description": "Ignore all \"com.apple.*\" extended attributes (supported on OSX only)"
+    },
+    "network_mode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Mount as remote network drive, instead of fixed disk drive (supported on Windows only)"
+    },
+    "daemon_wait": {
+      "type": "string",
+      "description": "Time to wait for ready mount from daemon (maximum time on Linux, constant sleep time on OSX/BSD) (not supported on Windows). Defaults to 60s on Linux, 5s on BSD/macOS, 0 on other systems",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$",
+      "examples": ["60s", "5s", "30s", "1m"]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "platform_support": {
+      "type": "object",
+      "properties": {
+        "linux": {
+          "type": "boolean",
+          "description": "Supported on Linux"
+        },
+        "windows": {
+          "type": "boolean",
+          "description": "Supported on Windows"
+        },
+        "darwin": {
+          "type": "boolean",
+          "description": "Supported on macOS"
+        },
+        "bsd": {
+          "type": "boolean",
+          "description": "Supported on BSD variants"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "allow_other": true,
+      "default_permissions": true,
+      "vfs_cache_mode": "writes"
+    },
+    {
+      "daemon": true,
+      "daemon_wait": "60s",
+      "allow_non_empty": true
+    },
+    {
+      "volname": "MyCloud",
+      "network_mode": true,
+      "attr_timeout": "5s"
+    },
+    {
+      "direct_io": true,
+      "max_read_ahead": "1M",
+      "async_read": true,
+      "write_back_cache": true
+    },
+    {
+      "noappledouble": true,
+      "noapplexattr": true,
+      "volname": "RcloneMount"
+    }
+  ],
+  "$comment": "Platform-specific options are marked in their descriptions. Windows does not support: daemon, daemon_timeout, daemon_wait, default_permissions, allow_non_empty, allow_root, allow_other, async_read, max_read_ahead, write_back_cache. macOS-only: noappledouble, noapplexattr. Windows-only: network_mode."
+}
+

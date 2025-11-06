@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/backends/filefabric.json",
+  "title": "Enterprise File Fabric",
+  "description": "Enterprise File Fabric (Storage Made Easy)",
+  "type": "object",
+  "required": [
+    "url"
+  ],
+  "properties": {
+    "url": {
+      "type": "string",
+      "title": "URL",
+      "description": "URL of the Enterprise File Fabric to connect to",
+      "format": "uri",
+      "oneOf": [
+        {
+          "const": "https://storagemadeeasy.com",
+          "title": "Storage Made Easy US"
+        },
+        {
+          "const": "https://eu.storagemadeeasy.com",
+          "title": "Storage Made Easy EU"
+        }
+      ],
+      "examples": [
+        "https://yourfabric.smestorage.com"
+      ]
+    },
+    "root_folder_id": {
+      "type": "string",
+      "title": "Root Folder ID",
+      "description": "ID of the root folder. Leave blank normally"
+    },
+    "permanent_token": {
+      "type": "string",
+      "title": "Permanent Authentication Token",
+      "description": "Permanent Authentication Token created in Dashboard under Security. Valid for several years",
+      "format": "password"
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "$comment": "Session token and token_expiry are managed internally by rclone"
+}

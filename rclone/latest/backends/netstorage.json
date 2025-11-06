@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/backends/netstorage.json",
+  "title": "Akamai NetStorage",
+  "description": "Akamai NetStorage file storage",
+  "type": "object",
+  "required": [
+    "host",
+    "account",
+    "secret"
+  ],
+  "properties": {
+    "protocol": {
+      "type": "string",
+      "title": "Protocol",
+      "description": "Select between HTTP or HTTPS protocol",
+      "default": "https",
+      "oneOf": [
+        {
+          "const": "http",
+          "title": "HTTP - For debugging"
+        },
+        {
+          "const": "https",
+          "title": "HTTPS - Default (recommended)"
+        }
+      ]
+    },
+    "host": {
+      "type": "string",
+      "title": "Host",
+      "description": "Domain+path of NetStorage host to connect to. Format: <domain>/<internal folders>",
+      "examples": [
+        "example.akamaihd.net/123456"
+      ]
+    },
+    "account": {
+      "type": "string",
+      "title": "Account",
+      "description": "NetStorage account name"
+    },
+    "secret": {
+      "type": "string",
+      "title": "Secret",
+      "description": "NetStorage account secret/G2O key for authentication",
+      "format": "password"
+    }
+  },
+  "additionalProperties": false
+}

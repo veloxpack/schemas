@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/backends/drive.json",
+  "title": "Google Drive",
+  "description": "Configuration schema for rclone Google Drive backend",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "title": "OAuth Client ID",
+      "description": "Google Application Client ID"
+    },
+    "client_secret": {
+      "type": "string",
+      "title": "OAuth Client Secret",
+      "description": "Google Application Client Secret",
+      "format": "password"
+    },
+    "scope": {
+      "type": "string",
+      "title": "Scope",
+      "description": "Scope that rclone should use when requesting access from drive",
+      "enum": ["drive", "drive.readonly", "drive.file", "drive.appfolder", "drive.metadata.readonly"],
+      "default": "drive"
+    },
+    "root_folder_id": {
+      "type": "string",
+      "title": "Root Folder ID",
+      "description": "ID of the root folder. Leave blank for the root"
+    },
+    "service_account_file": {
+      "type": "string",
+      "title": "Service Account File",
+      "description": "Path to Service Account Credentials JSON file"
+    },
+    "team_drive": {
+      "type": "string",
+      "title": "Team Drive ID",
+      "description": "ID of the Shared Drive (Team Drive)"
+    },
+    "shared_with_me": {
+      "type": "boolean",
+      "title": "Show Shared With Me",
+      "description": "Only show files that are shared with me",
+      "default": false
+    },
+    "trashed_only": {
+      "type": "boolean",
+      "title": "Show Trashed Files Only",
+      "description": "Only show files that are in the trash",
+      "default": false
+    }
+  },
+  "additionalProperties": false
+}

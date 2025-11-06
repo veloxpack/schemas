@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/backends/hidrive.json",
+  "title": "HiDrive",
+  "description": "HiDrive cloud storage",
+  "type": "object",
+  "properties": {
+    "scope_access": {
+      "type": "string",
+      "title": "Access Scope",
+      "description": "Access permissions that rclone should use when requesting access from HiDrive",
+      "default": "rw",
+      "oneOf": [
+        { "const": "rw", "title": "Read and Write" },
+        { "const": "ro", "title": "Read Only" }
+      ]
+    },
+    "scope_role": {
+      "type": "string",
+      "title": "User Role",
+      "description": "User-level that rclone should use when requesting access from HiDrive",
+      "default": "user",
+      "oneOf": [
+        { "const": "user", "title": "User - Sufficient for most cases" },
+        { "const": "admin", "title": "Admin - Extensive management permissions" },
+        { "const": "owner", "title": "Owner - Full management permissions" }
+      ]
+    },
+    "root_prefix": {
+      "type": "string",
+      "title": "Root Prefix",
+      "description": "The root/parent folder for all paths. Rclone will use this as its starting point",
+      "default": "/",
+      "oneOf": [
+        { "const": "/", "title": "/ - Topmost directory (root if using regular account)" },
+        { "const": "root", "title": "root - Topmost directory of HiDrive user account" },
+        { "const": "", "title": "Empty - No root prefix (always specify full paths)" }
+      ]
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "description": "Endpoint for the service (URL for API calls)",
+      "default": "https://api.hidrive.strato.com/2.1",
+      "format": "uri"
+    },
+    "disable_fetching_member_count": {
+      "type": "boolean",
+      "title": "Disable Fetching Member Count",
+      "description": "Do not fetch number of objects in directories unless absolutely necessary. Requests may be faster",
+      "default": false
+    },
+    "chunk_size": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$" },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "title": "Chunk Size",
+      "description": "Chunk size for chunked uploads. Files larger than cutoff will be uploaded in chunks of this size",
+      "default": "48Mi",
+      "examples": ["48M", "64M", "96M"]
+    },
+    "upload_cutoff": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$" },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "title": "Upload Cutoff",
+      "description": "Cutoff for switching to chunked upload",
+      "default": "96Mi",
+      "examples": ["96M", "128M", "256M"]
+    },
+    "upload_concurrency": {
+      "type": "integer",
+      "title": "Upload Concurrency",
+      "description": "Concurrency for chunked uploads (number of chunks uploaded in parallel)",
+      "default": 4,
+      "minimum": 1,
+      "maximum": 32
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "scope_access": "rw"
+    },
+    {
+      "scope_access": "ro",
+      "root_prefix": "root"
+    }
+  ],
+  "$comment": "HiDrive uses OAuth authentication. File/folder names limited to 255 characters"
+}

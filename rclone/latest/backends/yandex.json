@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/backends/yandex.json",
+  "title": "Yandex Disk",
+  "description": "Yandex Disk cloud storage",
+  "type": "object",
+  "properties": {
+    "hard_delete": {
+      "type": "boolean",
+      "title": "Hard Delete",
+      "description": "Delete files permanently rather than putting them into the trash",
+      "default": false
+    },
+    "spoof_ua": {
+      "type": "boolean",
+      "title": "Spoof User Agent",
+      "description": "Set the user agent to match an official version of the yandex disk client. May help with upload performance",
+      "default": true
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "hard_delete": false
+    },
+    {
+      "hard_delete": true,
+      "spoof_ua": true
+    }
+  ],
+  "$comment": "Yandex uses OAuth authentication. The token, session_id, and master_key fields are managed internally by rclone"
+}

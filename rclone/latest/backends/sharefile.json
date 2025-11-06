@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/backends/sharefile.json",
+  "title": "ShareFile",
+  "description": "Citrix ShareFile cloud storage",
+  "type": "object",
+  "properties": {
+    "upload_cutoff": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$" },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "title": "Upload Cutoff",
+      "description": "Cutoff for switching to multipart upload",
+      "default": "128Mi",
+      "examples": ["64M", "128M", "256M"]
+    },
+    "root_folder_id": {
+      "type": "string",
+      "title": "Root Folder ID",
+      "description": "ID of the root folder. Leave blank for Personal Folders",
+      "oneOf": [
+        { "const": "", "title": "Personal Folders (default)" },
+        { "const": "favorites", "title": "Favorites folder" },
+        { "const": "allshared", "title": "All shared folders" },
+        { "const": "connectors", "title": "All individual connectors" },
+        { "const": "top", "title": "Home, favorites, shared folders and connectors" }
+      ]
+    },
+    "chunk_size": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$" },
+        { "type": "integer", "minimum": 0 }
+      ],
+      "title": "Chunk Size",
+      "description": "Upload chunk size. Must be power of 2 >= 256k. Each chunk is buffered in memory per transfer",
+      "default": "64Mi",
+      "examples": ["256K", "64M", "128M"]
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "description": "Endpoint for API calls. Usually auto-discovered during OAuth. Format: https://XXX.sharefile.com",
+      "format": "uri",
+      "examples": ["https://account.sharefile.com"]
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,LtGt,DoubleQuote,Colon,Question,Asterisk,Pipe,BackSlash,Ctl,LeftSpace,LeftPeriod,RightSpace,RightPeriod,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "root_folder_id": ""
+    },
+    {
+      "root_folder_id": "favorites",
+      "chunk_size": "128M"
+    }
+  ],
+  "$comment": "ShareFile uses OAuth authentication. The endpoint is auto-discovered during OAuth"
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/backends/pixeldrain.json",
+  "title": "Pixeldrain",
+  "description": "Pixeldrain file sharing and storage",
+  "type": "object",
+  "properties": {
+    "api_key": {
+      "type": "string",
+      "title": "API Key",
+      "description": "API key for your pixeldrain account. Found on https://pixeldrain.com/user/api_keys",
+      "format": "password"
+    },
+    "root_folder_id": {
+      "type": "string",
+      "title": "Root Folder ID",
+      "description": "Root of the filesystem to use. Set to 'me' to use your personal filesystem. Set to a shared directory ID to use a shared directory",
+      "default": "me",
+      "examples": ["me", "shared-directory-id-123"]
+    },
+    "api_url": {
+      "type": "string",
+      "title": "API URL",
+      "description": "The API endpoint to connect to. Leave at default unless testing",
+      "default": "https://pixeldrain.com/api",
+      "format": "uri"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "api_key": "your-api-key",
+      "root_folder_id": "me"
+    }
+  ],
+  "$comment": "Pixeldrain supports file metadata including mode and creation times"
+}

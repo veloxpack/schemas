@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/rclone/latest/backends/oracleobjectstorage.json",
+  "title": "Oracle Object Storage",
+  "description": "Oracle Cloud Infrastructure Object Storage",
+  "type": "object",
+  "required": [
+    "namespace",
+    "region"
+  ],
+  "properties": {
+    "provider": {
+      "type": "string",
+      "title": "Auth Provider",
+      "description": "Choose your Auth Provider",
+      "default": "env_auth",
+      "oneOf": [
+        {
+          "const": "env_auth",
+          "title": "Auto - Pickup credentials from runtime (env)"
+        },
+        {
+          "const": "user_principal_auth",
+          "title": "User Principal - OCI user and API key"
+        },
+        {
+          "const": "instance_principal_auth",
+          "title": "Instance Principal - Instance identity"
+        },
+        {
+          "const": "workload_identity_auth",
+          "title": "Workload Identity - OKE workload access"
+        },
+        {
+          "const": "resource_principal_auth",
+          "title": "Resource Principal"
+        },
+        {
+          "const": "no_auth",
+          "title": "No Auth - For public buckets"
+        }
+      ]
+    },
+    "namespace": {
+      "type": "string",
+      "title": "Object Storage Namespace",
+      "description": "Object storage namespace"
+    },
+    "compartment": {
+      "type": "string",
+      "title": "Compartment OCID",
+      "description": "Compartment OCID (required to list buckets, optional for list objects)"
+    },
+    "region": {
+      "type": "string",
+      "title": "Region",
+      "description": "Object storage Region"
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "description": "Endpoint for Object storage API. Leave blank for default",
+      "format": "uri"
+    },
+    "config_file": {
+      "type": "string",
+      "title": "Config File",
+      "description": "Path to OCI config file",
+      "default": "~/.oci/config"
+    },
+    "config_profile": {
+      "type": "string",
+      "title": "Config Profile",
+      "description": "Profile name inside the oci config file",
+      "default": "Default"
+    },
+    "storage_tier": {
+      "type": "string",
+      "title": "Storage Tier",
+      "description": "Storage tier for new objects",
+      "oneOf": [
+        {
+          "const": "Standard",
+          "title": "Standard"
+        },
+        {
+          "const": "InfrequentAccess",
+          "title": "Infrequent Access"
+        },
+        {
+          "const": "Archive",
+          "title": "Archive"
+        }
+      ]
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false
+}

@@ -17,26 +17,26 @@ export const Route = createFileRoute('/')({
 const SCHEMAS = [
   {
     id: 'rclone-index',
-    name: 'Rclone Schema',
+    name: 'Rclone: Full Schema',
     url: 'https://schemas.veloxpack.io/schemas/rclone/latest/index.json',
     description: 'Configure rclone remotes with simplified form interface',
   },
   // Rclone Options
   {
     id: 'rclone-configuration-options',
-    name: 'Rclone Configuration Options',
+    name: 'Rclone: Configuration Options',
     url: 'https://schemas.veloxpack.io/schemas/rclone/latest/options/configuration.json',
     description: 'General rclone configuration options',
   },
   {
     id: 'rclone-mount-options',
-    name: 'Rclone Mount Options',
+    name: 'Rclone: Mount Options',
     url: 'https://schemas.veloxpack.io/schemas/rclone/latest/options/mount.json',
     description: 'Options for mounting remotes as filesystems',
   },
   {
     id: 'rclone-vfs-options',
-    name: 'Rclone VFS Options',
+    name: 'Rclone: VFS Options',
     url: 'https://schemas.veloxpack.io/schemas/rclone/latest/options/vfs.json',
     description: 'Virtual File System options for remotes',
   },

@@ -1,8 +1,11 @@
 {
+
   "remotes": [
     {
       "name": "minio-fast",
       "type": "s3",
+      "remote": "minio-fast",
+      "remotePath": "data/${pvc.metadata.namespace}/${pvc.metadata.name}",
       "backend": {
         "provider": "Minio",
         "endpoint": "https://minio.example.com:9000",
@@ -13,8 +16,6 @@
       }
     }
   ],
-  "remote": "minio-fast",
-  "remotePath": "data/${pvc.metadata.namespace}/${pvc.metadata.name}",
   "configurationOptions": {
     "transfers": 32,
     "checkers": 16,

@@ -255,157 +255,1533 @@
       "default": false
     }
   },
-  "allOf": [
-    {
-      "if": {
-        "properties": { "provider": { "const": "AWS" } }
-      },
-      "then": {
-        "properties": {
-          "region": {
-            "type": "string",
-            "title": "AWS Region",
-            "oneOf": [
-              { "const": "us-east-1", "title": "US East (N. Virginia) - Default" },
-              { "const": "us-east-2", "title": "US East (Ohio)" },
-              { "const": "us-west-1", "title": "US West (N. California)" },
-              { "const": "us-west-2", "title": "US West (Oregon)" },
-              { "const": "ca-central-1", "title": "Canada (Central)" },
-              { "const": "eu-west-1", "title": "EU (Ireland)" },
-              { "const": "eu-west-2", "title": "EU (London)" },
-              { "const": "eu-west-3", "title": "EU (Paris)" },
-              { "const": "eu-north-1", "title": "EU (Stockholm)" },
-              { "const": "eu-south-1", "title": "EU (Milan)" },
-              { "const": "eu-central-1", "title": "EU (Frankfurt)" },
-              { "const": "ap-southeast-1", "title": "Asia Pacific (Singapore)" },
-              { "const": "ap-southeast-2", "title": "Asia Pacific (Sydney)" },
-              { "const": "ap-northeast-1", "title": "Asia Pacific (Tokyo)" },
-              { "const": "ap-northeast-2", "title": "Asia Pacific (Seoul)" },
-              { "const": "ap-northeast-3", "title": "Asia Pacific (Osaka)" },
-              { "const": "ap-south-1", "title": "Asia Pacific (Mumbai)" },
-              { "const": "ap-east-1", "title": "Asia Pacific (Hong Kong)" },
-              { "const": "sa-east-1", "title": "South America (São Paulo)" },
-              { "const": "il-central-1", "title": "Israel (Tel Aviv)" },
-              { "const": "me-south-1", "title": "Middle East (Bahrain)" },
-              { "const": "af-south-1", "title": "Africa (Cape Town)" },
-              { "const": "cn-north-1", "title": "China (Beijing)" },
-              { "const": "cn-northwest-1", "title": "China (Ningxia)" },
-              { "const": "us-gov-east-1", "title": "AWS GovCloud (US-East)" },
-              { "const": "us-gov-west-1", "title": "AWS GovCloud (US-West)" }
-            ]
-          },
-          "storage_class": {
-            "type": "string",
-            "title": "Storage Class",
-            "oneOf": [
-              { "const": "", "title": "Default" },
-              { "const": "STANDARD", "title": "Standard" },
-              { "const": "REDUCED_REDUNDANCY", "title": "Reduced Redundancy" },
-              { "const": "STANDARD_IA", "title": "Standard Infrequent Access" },
-              { "const": "ONEZONE_IA", "title": "One Zone Infrequent Access" },
-              { "const": "INTELLIGENT_TIERING", "title": "Intelligent-Tiering" },
-              { "const": "GLACIER", "title": "Glacier Flexible Retrieval" },
-              { "const": "GLACIER_IR", "title": "Glacier Instant Retrieval" },
-              { "const": "DEEP_ARCHIVE", "title": "Glacier Deep Archive" }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": { "provider": { "const": "Wasabi" } }
-      },
-      "then": {
-        "properties": {
-          "endpoint": {
-            "type": "string",
-            "title": "Wasabi Endpoint",
-            "oneOf": [
-              { "const": "s3.wasabisys.com", "title": "US East 1 (N. Virginia)" },
-              { "const": "s3.us-east-2.wasabisys.com", "title": "US East 2 (N. Virginia)" },
-              { "const": "s3.us-central-1.wasabisys.com", "title": "US Central 1 (Texas)" },
-              { "const": "s3.us-west-1.wasabisys.com", "title": "US West 1 (Oregon)" },
-              { "const": "s3.ca-central-1.wasabisys.com", "title": "CA Central 1 (Toronto)" },
-              { "const": "s3.eu-central-1.wasabisys.com", "title": "EU Central 1 (Amsterdam)" },
-              { "const": "s3.eu-central-2.wasabisys.com", "title": "EU Central 2 (Frankfurt)" },
-              { "const": "s3.eu-west-1.wasabisys.com", "title": "EU West 1 (London)" },
-              { "const": "s3.eu-west-2.wasabisys.com", "title": "EU West 2 (Paris)" },
-              { "const": "s3.eu-south-1.wasabisys.com", "title": "EU South 1 (Milan)" },
-              { "const": "s3.ap-northeast-1.wasabisys.com", "title": "AP Northeast 1 (Tokyo)" },
-              { "const": "s3.ap-northeast-2.wasabisys.com", "title": "AP Northeast 2 (Osaka)" },
-              { "const": "s3.ap-southeast-1.wasabisys.com", "title": "AP Southeast 1 (Singapore)" },
-              { "const": "s3.ap-southeast-2.wasabisys.com", "title": "AP Southeast 2 (Sydney)" }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": { "provider": { "const": "DigitalOcean" } }
-      },
-      "then": {
-        "properties": {
-          "endpoint": {
-            "type": "string",
-            "title": "DigitalOcean Endpoint",
-            "oneOf": [
-              { "const": "nyc3.digitaloceanspaces.com", "title": "New York 3" },
-              { "const": "sfo3.digitaloceanspaces.com", "title": "San Francisco 3" },
-              { "const": "sfo2.digitaloceanspaces.com", "title": "San Francisco 2" },
-              { "const": "ams3.digitaloceanspaces.com", "title": "Amsterdam 3" },
-              { "const": "sgp1.digitaloceanspaces.com", "title": "Singapore 1" },
-              { "const": "fra1.digitaloceanspaces.com", "title": "Frankfurt 1" },
-              { "const": "lon1.digitaloceanspaces.com", "title": "London 1" },
-              { "const": "tor1.digitaloceanspaces.com", "title": "Toronto 1" },
-              { "const": "blr1.digitaloceanspaces.com", "title": "Bangalore 1" },
-              { "const": "syd1.digitaloceanspaces.com", "title": "Sydney 1" }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": { "provider": { "const": "Cloudflare" } }
-      },
-      "then": {
-        "properties": {
-          "region": {
-            "type": "string",
-            "title": "Region",
-            "oneOf": [
-              { "const": "auto", "title": "Auto (R2 automatically distributes across Cloudflare data centers)" }
-            ],
-            "default": "auto"
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": { "provider": { "const": "Minio" } }
-      },
-      "then": {
-        "properties": {
-          "endpoint": {
-            "type": "string",
-            "title": "Minio Endpoint",
-            "description": "URL of your Minio server",
-            "examples": ["http://localhost:9000", "https://minio.example.com"]
-          },
-          "force_path_style": {
-            "type": "boolean",
-            "const": true,
-            "title": "Force Path Style",
-            "description": "Minio requires path style access (automatically enabled)"
+  "required": ["provider"],
+  "dependencies": {
+    "provider": {
+      "oneOf": [
+        {
+          "properties": {
+            "provider": {
+              "const": "AWS"
+            },
+            "region": {
+              "type": "string",
+              "title": "AWS Region",
+              "oneOf": [
+                { "const": "us-east-1", "title": "US East (N. Virginia) - Default" },
+                { "const": "us-east-2", "title": "US East (Ohio)" },
+                { "const": "us-west-1", "title": "US West (N. California)" },
+                { "const": "us-west-2", "title": "US West (Oregon)" },
+                { "const": "ca-central-1", "title": "Canada (Central)" },
+                { "const": "eu-west-1", "title": "EU (Ireland)" },
+                { "const": "eu-west-2", "title": "EU (London)" },
+                { "const": "eu-west-3", "title": "EU (Paris)" },
+                { "const": "eu-north-1", "title": "EU (Stockholm)" },
+                { "const": "eu-south-1", "title": "EU (Milan)" },
+                { "const": "eu-central-1", "title": "EU (Frankfurt)" },
+                { "const": "ap-southeast-1", "title": "Asia Pacific (Singapore)" },
+                { "const": "ap-southeast-2", "title": "Asia Pacific (Sydney)" },
+                { "const": "ap-northeast-1", "title": "Asia Pacific (Tokyo)" },
+                { "const": "ap-northeast-2", "title": "Asia Pacific (Seoul)" },
+                { "const": "ap-northeast-3", "title": "Asia Pacific (Osaka)" },
+                { "const": "ap-south-1", "title": "Asia Pacific (Mumbai)" },
+                { "const": "ap-east-1", "title": "Asia Pacific (Hong Kong)" },
+                { "const": "sa-east-1", "title": "South America (São Paulo)" },
+                { "const": "il-central-1", "title": "Israel (Tel Aviv)" },
+                { "const": "me-south-1", "title": "Middle East (Bahrain)" },
+                { "const": "af-south-1", "title": "Africa (Cape Town)" },
+                { "const": "cn-north-1", "title": "China (Beijing)" },
+                { "const": "cn-northwest-1", "title": "China (Ningxia)" },
+                { "const": "us-gov-east-1", "title": "AWS GovCloud (US-East)" },
+                { "const": "us-gov-west-1", "title": "AWS GovCloud (US-West)" }
+              ]
+            },
+            "location_constraint": {
+              "type": "string",
+              "title": "Location Constraint",
+              "description": "Location constraint - must match the Region. Used when creating buckets only. Leave empty for us-east-1.",
+              "oneOf": [
+                { "const": "", "title": "Empty for US Region, Northern Virginia, or Pacific Northwest" },
+                { "const": "us-east-2", "title": "US East (Ohio) Region" },
+                { "const": "us-west-1", "title": "US West (Northern California) Region" },
+                { "const": "us-west-2", "title": "US West (Oregon) Region" },
+                { "const": "ca-central-1", "title": "Canada (Central) Region" },
+                { "const": "eu-west-1", "title": "EU (Ireland) Region" },
+                { "const": "eu-west-2", "title": "EU (London) Region" },
+                { "const": "eu-west-3", "title": "EU (Paris) Region" },
+                { "const": "eu-north-1", "title": "EU (Stockholm) Region" },
+                { "const": "eu-south-1", "title": "EU (Milan) Region" },
+                { "const": "EU", "title": "EU Region" },
+                { "const": "eu-central-1", "title": "EU (Frankfurt) Region" },
+                { "const": "ap-southeast-1", "title": "Asia Pacific (Singapore) Region" },
+                { "const": "ap-southeast-2", "title": "Asia Pacific (Sydney) Region" },
+                { "const": "ap-northeast-1", "title": "Asia Pacific (Tokyo) Region" },
+                { "const": "ap-northeast-2", "title": "Asia Pacific (Seoul) Region" },
+                { "const": "ap-northeast-3", "title": "Asia Pacific (Osaka-Local) Region" },
+                { "const": "ap-south-1", "title": "Asia Pacific (Mumbai) Region" },
+                { "const": "ap-east-1", "title": "Asia Pacific (Hong Kong) Region" },
+                { "const": "sa-east-1", "title": "South America (Sao Paulo) Region" },
+                { "const": "il-central-1", "title": "Israel (Tel Aviv) Region" },
+                { "const": "me-south-1", "title": "Middle East (Bahrain) Region" },
+                { "const": "af-south-1", "title": "Africa (Cape Town) Region" },
+                { "const": "cn-north-1", "title": "China (Beijing) Region" },
+                { "const": "cn-northwest-1", "title": "China (Ningxia) Region" },
+                { "const": "us-gov-east-1", "title": "AWS GovCloud (US-East) Region" },
+                { "const": "us-gov-west-1", "title": "AWS GovCloud (US) Region" }
+              ]
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "", "title": "Default" },
+                { "const": "STANDARD", "title": "Standard" },
+                { "const": "REDUCED_REDUNDANCY", "title": "Reduced Redundancy" },
+                { "const": "STANDARD_IA", "title": "Standard Infrequent Access" },
+                { "const": "ONEZONE_IA", "title": "One Zone Infrequent Access" },
+                { "const": "INTELLIGENT_TIERING", "title": "Intelligent-Tiering" },
+                { "const": "GLACIER", "title": "Glacier Flexible Retrieval" },
+                { "const": "GLACIER_IR", "title": "Glacier Instant Retrieval" },
+                { "const": "DEEP_ARCHIVE", "title": "Glacier Deep Archive" }
+              ]
+            }
           }
         },
-        "required": ["endpoint"]
-      }
+        {
+          "properties": {
+            "provider": {
+              "const": "Wasabi"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Wasabi Endpoint",
+              "oneOf": [
+                { "const": "s3.wasabisys.com", "title": "US East 1 (N. Virginia)" },
+                { "const": "s3.us-east-2.wasabisys.com", "title": "US East 2 (N. Virginia)" },
+                { "const": "s3.us-central-1.wasabisys.com", "title": "US Central 1 (Texas)" },
+                { "const": "s3.us-west-1.wasabisys.com", "title": "US West 1 (Oregon)" },
+                { "const": "s3.ca-central-1.wasabisys.com", "title": "CA Central 1 (Toronto)" },
+                { "const": "s3.eu-central-1.wasabisys.com", "title": "EU Central 1 (Amsterdam)" },
+                { "const": "s3.eu-central-2.wasabisys.com", "title": "EU Central 2 (Frankfurt)" },
+                { "const": "s3.eu-west-1.wasabisys.com", "title": "EU West 1 (London)" },
+                { "const": "s3.eu-west-2.wasabisys.com", "title": "EU West 2 (Paris)" },
+                { "const": "s3.eu-south-1.wasabisys.com", "title": "EU South 1 (Milan)" },
+                { "const": "s3.ap-northeast-1.wasabisys.com", "title": "AP Northeast 1 (Tokyo)" },
+                { "const": "s3.ap-northeast-2.wasabisys.com", "title": "AP Northeast 2 (Osaka)" },
+                { "const": "s3.ap-southeast-1.wasabisys.com", "title": "AP Southeast 1 (Singapore)" },
+                { "const": "s3.ap-southeast-2.wasabisys.com", "title": "AP Southeast 2 (Sydney)" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "DigitalOcean"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "DigitalOcean Endpoint",
+              "oneOf": [
+                { "const": "nyc3.digitaloceanspaces.com", "title": "New York 3" },
+                { "const": "sfo3.digitaloceanspaces.com", "title": "San Francisco 3" },
+                { "const": "sfo2.digitaloceanspaces.com", "title": "San Francisco 2" },
+                { "const": "ams3.digitaloceanspaces.com", "title": "Amsterdam 3" },
+                { "const": "sgp1.digitaloceanspaces.com", "title": "Singapore 1" },
+                { "const": "fra1.digitaloceanspaces.com", "title": "Frankfurt 1" },
+                { "const": "lon1.digitaloceanspaces.com", "title": "London 1" },
+                { "const": "tor1.digitaloceanspaces.com", "title": "Toronto 1" },
+                { "const": "blr1.digitaloceanspaces.com", "title": "Bangalore 1" },
+                { "const": "syd1.digitaloceanspaces.com", "title": "Sydney 1" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Cloudflare"
+            },
+            "region": {
+              "type": "string",
+              "title": "Region",
+              "oneOf": [
+                { "const": "auto", "title": "Auto (R2 automatically distributes across Cloudflare data centers)" }
+              ],
+              "default": "auto"
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Minio"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Minio Endpoint",
+              "description": "URL of your Minio server",
+              "examples": ["http://localhost:9000", "https://minio.example.com"]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Minio requires path style access",
+              "default": true
+            },
+            "server_side_encryption": {
+              "type": "string",
+              "title": "Server Side Encryption",
+              "oneOf": [
+                { "const": "", "title": "None" },
+                { "const": "AES256", "title": "AES256" },
+                { "const": "aws:kms", "title": "AWS KMS" }
+              ],
+              "default": ""
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Alibaba"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Alibaba Endpoint",
+              "oneOf": [
+                { "const": "oss-accelerate.aliyuncs.com", "title": "Global Accelerate" },
+                { "const": "oss-accelerate-overseas.aliyuncs.com", "title": "Global Accelerate (outside mainland China)" },
+                { "const": "oss-cn-hangzhou.aliyuncs.com", "title": "East China 1 (Hangzhou)" },
+                { "const": "oss-cn-shanghai.aliyuncs.com", "title": "East China 2 (Shanghai)" },
+                { "const": "oss-cn-qingdao.aliyuncs.com", "title": "North China 1 (Qingdao)" },
+                { "const": "oss-cn-beijing.aliyuncs.com", "title": "North China 2 (Beijing)" },
+                { "const": "oss-cn-zhangjiakou.aliyuncs.com", "title": "North China 3 (Zhangjiakou)" },
+                { "const": "oss-cn-huhehaote.aliyuncs.com", "title": "North China 5 (Hohhot)" },
+                { "const": "oss-cn-wulanchabu.aliyuncs.com", "title": "North China 6 (Ulanqab)" },
+                { "const": "oss-cn-shenzhen.aliyuncs.com", "title": "South China 1 (Shenzhen)" },
+                { "const": "oss-cn-heyuan.aliyuncs.com", "title": "South China 2 (Heyuan)" },
+                { "const": "oss-cn-guangzhou.aliyuncs.com", "title": "South China 3 (Guangzhou)" },
+                { "const": "oss-cn-chengdu.aliyuncs.com", "title": "West China 1 (Chengdu)" },
+                { "const": "oss-cn-hongkong.aliyuncs.com", "title": "Hong Kong" },
+                { "const": "oss-us-west-1.aliyuncs.com", "title": "US West 1 (Silicon Valley)" },
+                { "const": "oss-us-east-1.aliyuncs.com", "title": "US East 1 (Virginia)" },
+                { "const": "oss-ap-southeast-1.aliyuncs.com", "title": "Southeast Asia Southeast 1 (Singapore)" },
+                { "const": "oss-ap-southeast-2.aliyuncs.com", "title": "Asia Pacific Southeast 2 (Sydney)" },
+                { "const": "oss-ap-southeast-3.aliyuncs.com", "title": "Southeast Asia Southeast 3 (Kuala Lumpur)" },
+                { "const": "oss-ap-southeast-5.aliyuncs.com", "title": "Asia Pacific Southeast 5 (Jakarta)" },
+                { "const": "oss-ap-northeast-1.aliyuncs.com", "title": "Asia Pacific Northeast 1 (Japan)" },
+                { "const": "oss-ap-south-1.aliyuncs.com", "title": "Asia Pacific South 1 (Mumbai)" },
+                { "const": "oss-eu-central-1.aliyuncs.com", "title": "Central Europe 1 (Frankfurt)" },
+                { "const": "oss-eu-west-1.aliyuncs.com", "title": "West Europe (London)" },
+                { "const": "oss-me-east-1.aliyuncs.com", "title": "Middle East 1 (Dubai)" }
+              ]
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "", "title": "Default" },
+                { "const": "STANDARD", "title": "Standard" },
+                { "const": "GLACIER", "title": "Archive" },
+                { "const": "STANDARD_IA", "title": "Infrequent Access" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Ceph"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Ceph Endpoint",
+              "description": "URL of your Ceph Object Storage server"
+            },
+            "server_side_encryption": {
+              "type": "string",
+              "title": "Server Side Encryption",
+              "oneOf": [
+                { "const": "", "title": "None" },
+                { "const": "AES256", "title": "AES256" },
+                { "const": "aws:kms", "title": "AWS KMS" }
+              ],
+              "default": ""
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Ceph requires path style access",
+              "default": true
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Scaleway"
+            },
+            "region": {
+              "type": "string",
+              "title": "Scaleway Region",
+              "oneOf": [
+                { "const": "nl-ams", "title": "Amsterdam, The Netherlands" },
+                { "const": "fr-par", "title": "Paris, France" },
+                { "const": "pl-waw", "title": "Warsaw, Poland" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Scaleway Endpoint",
+              "oneOf": [
+                { "const": "s3.nl-ams.scw.cloud", "title": "Amsterdam" },
+                { "const": "s3.fr-par.scw.cloud", "title": "Paris" },
+                { "const": "s3.pl-waw.scw.cloud", "title": "Warsaw" }
+              ]
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "", "title": "Default" },
+                { "const": "STANDARD", "title": "Standard" },
+                { "const": "GLACIER", "title": "Archived" },
+                { "const": "ONEZONE_IA", "title": "One Zone - Infrequent Access" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Linode"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Linode Endpoint",
+              "oneOf": [
+                { "const": "nl-ams-1.linodeobjects.com", "title": "Amsterdam (Netherlands)" },
+                { "const": "us-southeast-1.linodeobjects.com", "title": "Atlanta, GA (USA)" },
+                { "const": "in-maa-1.linodeobjects.com", "title": "Chennai (India)" },
+                { "const": "us-ord-1.linodeobjects.com", "title": "Chicago, IL (USA)" },
+                { "const": "eu-central-1.linodeobjects.com", "title": "Frankfurt (Germany)" },
+                { "const": "id-cgk-1.linodeobjects.com", "title": "Jakarta (Indonesia)" },
+                { "const": "gb-lon-1.linodeobjects.com", "title": "London 2 (Great Britain)" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Storj"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Storj Endpoint",
+              "oneOf": [
+                { "const": "gateway.storjshare.io", "title": "Global Hosted Gateway" }
+              ],
+              "default": "gateway.storjshare.io"
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "IBMCOS"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "IBM COS Endpoint",
+              "oneOf": [
+                { "const": "s3.us.cloud-object-storage.appdomain.cloud", "title": "US Cross Region" },
+                { "const": "s3.dal.us.cloud-object-storage.appdomain.cloud", "title": "US Cross Region Dallas" },
+                { "const": "s3.wdc.us.cloud-object-storage.appdomain.cloud", "title": "US Cross Region Washington DC" },
+                { "const": "s3.sjc.us.cloud-object-storage.appdomain.cloud", "title": "US Cross Region San Jose" },
+                { "const": "s3.private.us.cloud-object-storage.appdomain.cloud", "title": "US Cross Region Private" },
+                { "const": "s3.private.dal.us.cloud-object-storage.appdomain.cloud", "title": "US Cross Region Dallas Private" },
+                { "const": "s3.private.wdc.us.cloud-object-storage.appdomain.cloud", "title": "US Cross Region Washington DC Private" },
+                { "const": "s3.private.sjc.us.cloud-object-storage.appdomain.cloud", "title": "US Cross Region San Jose Private" },
+                { "const": "s3.us-east.cloud-object-storage.appdomain.cloud", "title": "US Region East" },
+                { "const": "s3.private.us-east.cloud-object-storage.appdomain.cloud", "title": "US Region East Private" },
+                { "const": "s3.us-south.cloud-object-storage.appdomain.cloud", "title": "US Region South" },
+                { "const": "s3.private.us-south.cloud-object-storage.appdomain.cloud", "title": "US Region South Private" },
+                { "const": "s3.eu.cloud-object-storage.appdomain.cloud", "title": "EU Cross Region" },
+                { "const": "s3.fra.eu.cloud-object-storage.appdomain.cloud", "title": "EU Cross Region Frankfurt" },
+                { "const": "s3.mil.eu.cloud-object-storage.appdomain.cloud", "title": "EU Cross Region Milan" },
+                { "const": "s3.ams.eu.cloud-object-storage.appdomain.cloud", "title": "EU Cross Region Amsterdam" },
+                { "const": "s3.private.eu.cloud-object-storage.appdomain.cloud", "title": "EU Cross Region Private" },
+                { "const": "s3.private.fra.eu.cloud-object-storage.appdomain.cloud", "title": "EU Cross Region Frankfurt Private" },
+                { "const": "s3.private.mil.eu.cloud-object-storage.appdomain.cloud", "title": "EU Cross Region Milan Private" },
+                { "const": "s3.private.ams.eu.cloud-object-storage.appdomain.cloud", "title": "EU Cross Region Amsterdam Private" },
+                { "const": "s3.eu-gb.cloud-object-storage.appdomain.cloud", "title": "Great Britain" },
+                { "const": "s3.private.eu-gb.cloud-object-storage.appdomain.cloud", "title": "Great Britain Private" },
+                { "const": "s3.eu-de.cloud-object-storage.appdomain.cloud", "title": "EU Region DE" },
+                { "const": "s3.private.eu-de.cloud-object-storage.appdomain.cloud", "title": "EU Region DE Private" },
+                { "const": "s3.ap.cloud-object-storage.appdomain.cloud", "title": "APAC Cross Regional" },
+                { "const": "s3.tok.ap.cloud-object-storage.appdomain.cloud", "title": "APAC Cross Regional Tokyo" },
+                { "const": "s3.hkg.ap.cloud-object-storage.appdomain.cloud", "title": "APAC Cross Regional Hong Kong" },
+                { "const": "s3.seo.ap.cloud-object-storage.appdomain.cloud", "title": "APAC Cross Regional Seoul" },
+                { "const": "s3.private.ap.cloud-object-storage.appdomain.cloud", "title": "APAC Cross Regional Private" },
+                { "const": "s3.private.tok.ap.cloud-object-storage.appdomain.cloud", "title": "APAC Cross Regional Tokyo Private" },
+                { "const": "s3.private.hkg.ap.cloud-object-storage.appdomain.cloud", "title": "APAC Cross Regional Hong Kong Private" },
+                { "const": "s3.private.seo.ap.cloud-object-storage.appdomain.cloud", "title": "APAC Cross Regional Seoul Private" },
+                { "const": "s3.jp-tok.cloud-object-storage.appdomain.cloud", "title": "APAC Region Japan" },
+                { "const": "s3.private.jp-tok.cloud-object-storage.appdomain.cloud", "title": "APAC Region Japan Private" },
+                { "const": "s3.au-syd.cloud-object-storage.appdomain.cloud", "title": "APAC Region Australia" },
+                { "const": "s3.private.au-syd.cloud-object-storage.appdomain.cloud", "title": "APAC Region Australia Private" },
+                { "const": "s3.ams03.cloud-object-storage.appdomain.cloud", "title": "Amsterdam Single Site" },
+                { "const": "s3.private.ams03.cloud-object-storage.appdomain.cloud", "title": "Amsterdam Single Site Private" },
+                { "const": "s3.che01.cloud-object-storage.appdomain.cloud", "title": "Chennai Single Site" },
+                { "const": "s3.private.che01.cloud-object-storage.appdomain.cloud", "title": "Chennai Single Site Private" },
+                { "const": "s3.mel01.cloud-object-storage.appdomain.cloud", "title": "Melbourne Single Site" },
+                { "const": "s3.private.mel01.cloud-object-storage.appdomain.cloud", "title": "Melbourne Single Site Private" },
+                { "const": "s3.osl01.cloud-object-storage.appdomain.cloud", "title": "Oslo Single Site" },
+                { "const": "s3.private.osl01.cloud-object-storage.appdomain.cloud", "title": "Oslo Single Site Private" },
+                { "const": "s3.tor01.cloud-object-storage.appdomain.cloud", "title": "Toronto Single Site" },
+                { "const": "s3.private.tor01.cloud-object-storage.appdomain.cloud", "title": "Toronto Single Site Private" }
+              ]
+            },
+            "location_constraint": {
+              "type": "string",
+              "title": "Location Constraint",
+              "description": "Location constraint for IBM COS buckets",
+              "oneOf": [
+                { "const": "us-standard", "title": "US Cross Region Standard" },
+                { "const": "us-vault", "title": "US Cross Region Vault" },
+                { "const": "us-cold", "title": "US Cross Region Cold" },
+                { "const": "us-flex", "title": "US Cross Region Flex" },
+                { "const": "us-east-standard", "title": "US East Region Standard" },
+                { "const": "us-east-vault", "title": "US East Region Vault" },
+                { "const": "us-east-cold", "title": "US East Region Cold" },
+                { "const": "us-east-flex", "title": "US East Region Flex" },
+                { "const": "us-south-standard", "title": "US South Region Standard" },
+                { "const": "us-south-vault", "title": "US South Region Vault" },
+                { "const": "us-south-cold", "title": "US South Region Cold" },
+                { "const": "us-south-flex", "title": "US South Region Flex" },
+                { "const": "eu-standard", "title": "EU Cross Region Standard" },
+                { "const": "eu-vault", "title": "EU Cross Region Vault" },
+                { "const": "eu-cold", "title": "EU Cross Region Cold" },
+                { "const": "eu-flex", "title": "EU Cross Region Flex" },
+                { "const": "eu-gb-standard", "title": "Great Britain Standard" },
+                { "const": "eu-gb-vault", "title": "Great Britain Vault" },
+                { "const": "eu-gb-cold", "title": "Great Britain Cold" },
+                { "const": "eu-gb-flex", "title": "Great Britain Flex" },
+                { "const": "ap-standard", "title": "APAC Standard" },
+                { "const": "ap-vault", "title": "APAC Vault" },
+                { "const": "ap-cold", "title": "APAC Cold" },
+                { "const": "ap-flex", "title": "APAC Flex" },
+                { "const": "mel01-standard", "title": "Melbourne Standard" },
+                { "const": "mel01-vault", "title": "Melbourne Vault" },
+                { "const": "mel01-cold", "title": "Melbourne Cold" },
+                { "const": "mel01-flex", "title": "Melbourne Flex" },
+                { "const": "tor01-standard", "title": "Toronto Standard" },
+                { "const": "tor01-vault", "title": "Toronto Vault" },
+                { "const": "tor01-cold", "title": "Toronto Cold" },
+                { "const": "tor01-flex", "title": "Toronto Flex" }
+              ]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "IBM COS requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "GCS"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "GCS Endpoint",
+              "oneOf": [
+                { "const": "https://storage.googleapis.com", "title": "Google Cloud Storage endpoint" }
+              ],
+              "default": "https://storage.googleapis.com"
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "HuaweiOBS"
+            },
+            "region": {
+              "type": "string",
+              "title": "Huawei OBS Region",
+              "oneOf": [
+                { "const": "af-south-1", "title": "AF-Johannesburg" },
+                { "const": "ap-southeast-2", "title": "AP-Bangkok" },
+                { "const": "ap-southeast-3", "title": "AP-Singapore" },
+                { "const": "cn-east-3", "title": "CN East-Shanghai1" },
+                { "const": "cn-east-2", "title": "CN East-Shanghai2" },
+                { "const": "cn-north-1", "title": "CN North-Beijing1" },
+                { "const": "cn-north-4", "title": "CN North-Beijing4" },
+                { "const": "cn-south-1", "title": "CN South-Guangzhou" },
+                { "const": "ap-southeast-1", "title": "CN-Hong Kong" },
+                { "const": "sa-argentina-1", "title": "LA-Buenos Aires1" },
+                { "const": "sa-peru-1", "title": "LA-Lima1" },
+                { "const": "na-mexico-1", "title": "LA-Mexico City1" },
+                { "const": "sa-chile-1", "title": "LA-Santiago2" },
+                { "const": "sa-brazil-1", "title": "LA-Sao Paulo1" },
+                { "const": "ru-northwest-2", "title": "RU-Moscow2" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Huawei OBS Endpoint",
+              "oneOf": [
+                { "const": "obs.af-south-1.myhuaweicloud.com", "title": "AF-Johannesburg" },
+                { "const": "obs.ap-southeast-2.myhuaweicloud.com", "title": "AP-Bangkok" },
+                { "const": "obs.ap-southeast-3.myhuaweicloud.com", "title": "AP-Singapore" },
+                { "const": "obs.cn-east-3.myhuaweicloud.com", "title": "CN East-Shanghai1" },
+                { "const": "obs.cn-east-2.myhuaweicloud.com", "title": "CN East-Shanghai2" },
+                { "const": "obs.cn-north-1.myhuaweicloud.com", "title": "CN North-Beijing1" },
+                { "const": "obs.cn-north-4.myhuaweicloud.com", "title": "CN North-Beijing4" },
+                { "const": "obs.cn-south-1.myhuaweicloud.com", "title": "CN South-Guangzhou" },
+                { "const": "obs.ap-southeast-1.myhuaweicloud.com", "title": "CN-Hong Kong" },
+                { "const": "obs.sa-argentina-1.myhuaweicloud.com", "title": "LA-Buenos Aires1" },
+                { "const": "obs.sa-peru-1.myhuaweicloud.com", "title": "LA-Lima1" },
+                { "const": "obs.na-mexico-1.myhuaweicloud.com", "title": "LA-Mexico City1" },
+                { "const": "obs.sa-chile-1.myhuaweicloud.com", "title": "LA-Santiago2" },
+                { "const": "obs.sa-brazil-1.myhuaweicloud.com", "title": "LA-Sao Paulo1" },
+                { "const": "obs.ru-northwest-2.myhuaweicloud.com", "title": "RU-Moscow2" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "TencentCOS"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Tencent COS Endpoint",
+              "oneOf": [
+                { "const": "cos.ap-beijing.myqcloud.com", "title": "Beijing Region" },
+                { "const": "cos.ap-nanjing.myqcloud.com", "title": "Nanjing Region" },
+                { "const": "cos.ap-shanghai.myqcloud.com", "title": "Shanghai Region" },
+                { "const": "cos.ap-guangzhou.myqcloud.com", "title": "Guangzhou Region" },
+                { "const": "cos.ap-chengdu.myqcloud.com", "title": "Chengdu Region" },
+                { "const": "cos.ap-chongqing.myqcloud.com", "title": "Chongqing Region" },
+                { "const": "cos.ap-hongkong.myqcloud.com", "title": "Hong Kong (China) Region" },
+                { "const": "cos.ap-singapore.myqcloud.com", "title": "Singapore Region" },
+                { "const": "cos.ap-mumbai.myqcloud.com", "title": "Mumbai Region" },
+                { "const": "cos.ap-seoul.myqcloud.com", "title": "Seoul Region" },
+                { "const": "cos.ap-bangkok.myqcloud.com", "title": "Bangkok Region" },
+                { "const": "cos.ap-tokyo.myqcloud.com", "title": "Tokyo Region" },
+                { "const": "cos.na-siliconvalley.myqcloud.com", "title": "Silicon Valley Region" },
+                { "const": "cos.na-ashburn.myqcloud.com", "title": "Virginia Region" },
+                { "const": "cos.na-toronto.myqcloud.com", "title": "Toronto Region" },
+                { "const": "cos.eu-frankfurt.myqcloud.com", "title": "Frankfurt Region" },
+                { "const": "cos.eu-moscow.myqcloud.com", "title": "Moscow Region" },
+                { "const": "cos.accelerate.myqcloud.com", "title": "Use Tencent COS Accelerate Endpoint" }
+              ]
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "", "title": "Default" },
+                { "const": "STANDARD", "title": "Standard" },
+                { "const": "ARCHIVE", "title": "Archive" },
+                { "const": "STANDARD_IA", "title": "Infrequent Access" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "OVHcloud"
+            },
+            "region": {
+              "type": "string",
+              "title": "OVHcloud Region",
+              "oneOf": [
+                { "const": "gra", "title": "Gravelines, France" },
+                { "const": "rbx", "title": "Roubaix, France" },
+                { "const": "sbg", "title": "Strasbourg, France" },
+                { "const": "eu-west-par", "title": "Paris, France (3AZ)" },
+                { "const": "de", "title": "Frankfurt, Germany" },
+                { "const": "uk", "title": "London, United Kingdom" },
+                { "const": "waw", "title": "Warsaw, Poland" },
+                { "const": "bhs", "title": "Beauharnois, Canada" },
+                { "const": "ca-east-tor", "title": "Toronto, Canada" },
+                { "const": "sgp", "title": "Singapore" },
+                { "const": "ap-southeast-syd", "title": "Sydney, Australia" },
+                { "const": "ap-south-mum", "title": "Mumbai, India" },
+                { "const": "us-east-va", "title": "Vint Hill, Virginia, USA" },
+                { "const": "us-west-or", "title": "Hillsboro, Oregon, USA" },
+                { "const": "rbx-archive", "title": "Roubaix, France (Cold Archive)" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "OVHcloud Endpoint",
+              "oneOf": [
+                { "const": "s3.gra.io.cloud.ovh.net", "title": "Gravelines, France" },
+                { "const": "s3.rbx.io.cloud.ovh.net", "title": "Roubaix, France" },
+                { "const": "s3.sbg.io.cloud.ovh.net", "title": "Strasbourg, France" },
+                { "const": "s3.eu-west-par.io.cloud.ovh.net", "title": "Paris, France (3AZ)" },
+                { "const": "s3.de.io.cloud.ovh.net", "title": "Frankfurt, Germany" },
+                { "const": "s3.uk.io.cloud.ovh.net", "title": "London, United Kingdom" },
+                { "const": "s3.waw.io.cloud.ovh.net", "title": "Warsaw, Poland" },
+                { "const": "s3.bhs.io.cloud.ovh.net", "title": "Beauharnois, Canada" },
+                { "const": "s3.ca-east-tor.io.cloud.ovh.net", "title": "Toronto, Canada" },
+                { "const": "s3.sgp.io.cloud.ovh.net", "title": "Singapore" },
+                { "const": "s3.ap-southeast-syd.io.cloud.ovh.net", "title": "Sydney, Australia" },
+                { "const": "s3.ap-south-mum.io.cloud.ovh.net", "title": "Mumbai, India" },
+                { "const": "s3.us-east-va.io.cloud.ovh.us", "title": "Vint Hill, Virginia, USA" },
+                { "const": "s3.us-west-or.io.cloud.ovh.us", "title": "Hillsboro, Oregon, USA" },
+                { "const": "s3.rbx-archive.io.cloud.ovh.net", "title": "Roubaix, France (Cold Archive)" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "IDrive"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "IDrive requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "IONOS"
+            },
+            "region": {
+              "type": "string",
+              "title": "IONOS Region",
+              "oneOf": [
+                { "const": "de", "title": "Frankfurt, Germany" },
+                { "const": "eu-central-2", "title": "Berlin, Germany" },
+                { "const": "eu-south-2", "title": "Logrono, Spain" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "IONOS Endpoint",
+              "oneOf": [
+                { "const": "s3-eu-central-1.ionoscloud.com", "title": "Frankfurt, Germany" },
+                { "const": "s3-eu-central-2.ionoscloud.com", "title": "Berlin, Germany" },
+                { "const": "s3-eu-south-2.ionoscloud.com", "title": "Logrono, Spain" }
+              ]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "IONOS requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "LyveCloud"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "LyveCloud Endpoint",
+              "description": "Endpoint format: s3.{region}.{account_name}.lyve.seagate.com",
+              "examples": [
+                "s3.us-west-1.{account_name}.lyve.seagate.com",
+                "s3.eu-west-1.{account_name}.lyve.seagate.com"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "SeaweedFS"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "SeaweedFS Endpoint",
+              "description": "URL of your SeaweedFS S3 server",
+              "examples": ["localhost:8333", "http://seaweedfs.example.com:8333"],
+              "default": "localhost:8333"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "SeaweedFS requires path style access",
+              "default": true
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "RackCorp"
+            },
+            "region": {
+              "type": "string",
+              "title": "RackCorp Region",
+              "oneOf": [
+                { "const": "global", "title": "Global CDN (All locations)" },
+                { "const": "au", "title": "Australia (All states)" },
+                { "const": "au-nsw", "title": "NSW (Australia)" },
+                { "const": "au-qld", "title": "QLD (Australia)" },
+                { "const": "au-vic", "title": "VIC (Australia)" },
+                { "const": "au-wa", "title": "Perth (Australia)" },
+                { "const": "ph", "title": "Manila (Philippines)" },
+                { "const": "th", "title": "Bangkok (Thailand)" },
+                { "const": "hk", "title": "HK (Hong Kong)" },
+                { "const": "mn", "title": "Ulaanbaatar (Mongolia)" },
+                { "const": "kg", "title": "Bishkek (Kyrgyzstan)" },
+                { "const": "id", "title": "Jakarta (Indonesia)" },
+                { "const": "jp", "title": "Tokyo (Japan)" },
+                { "const": "sg", "title": "SG (Singapore)" },
+                { "const": "de", "title": "Frankfurt (Germany)" },
+                { "const": "us", "title": "USA (AnyCast)" },
+                { "const": "us-east-1", "title": "New York (USA)" },
+                { "const": "us-west-1", "title": "Freemont (USA)" },
+                { "const": "nz", "title": "Auckland (New Zealand)" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "RackCorp Endpoint",
+              "oneOf": [
+                { "const": "s3.rackcorp.com", "title": "Global (AnyCast)" },
+                { "const": "au.s3.rackcorp.com", "title": "Australia (Anycast)" },
+                { "const": "au-nsw.s3.rackcorp.com", "title": "Sydney (Australia)" },
+                { "const": "au-qld.s3.rackcorp.com", "title": "Brisbane (Australia)" },
+                { "const": "au-vic.s3.rackcorp.com", "title": "Melbourne (Australia)" },
+                { "const": "au-wa.s3.rackcorp.com", "title": "Perth (Australia)" },
+                { "const": "ph.s3.rackcorp.com", "title": "Manila (Philippines)" },
+                { "const": "th.s3.rackcorp.com", "title": "Bangkok (Thailand)" },
+                { "const": "hk.s3.rackcorp.com", "title": "HK (Hong Kong)" },
+                { "const": "mn.s3.rackcorp.com", "title": "Ulaanbaatar (Mongolia)" },
+                { "const": "kg.s3.rackcorp.com", "title": "Bishkek (Kyrgyzstan)" },
+                { "const": "id.s3.rackcorp.com", "title": "Jakarta (Indonesia)" },
+                { "const": "jp.s3.rackcorp.com", "title": "Tokyo (Japan)" },
+                { "const": "sg.s3.rackcorp.com", "title": "SG (Singapore)" },
+                { "const": "de.s3.rackcorp.com", "title": "Frankfurt (Germany)" },
+                { "const": "us.s3.rackcorp.com", "title": "USA (AnyCast)" },
+                { "const": "us-east-1.s3.rackcorp.com", "title": "New York (USA)" },
+                { "const": "us-west-1.s3.rackcorp.com", "title": "Freemont (USA)" },
+                { "const": "nz.s3.rackcorp.com", "title": "Auckland (New Zealand)" }
+              ]
+            },
+            "location_constraint": {
+              "type": "string",
+              "title": "Location Constraint",
+              "oneOf": [
+                { "const": "global", "title": "Global CDN Region" },
+                { "const": "au", "title": "Australia (All locations)" },
+                { "const": "au-nsw", "title": "NSW (Australia)" },
+                { "const": "au-qld", "title": "QLD (Australia)" },
+                { "const": "au-vic", "title": "VIC (Australia)" },
+                { "const": "au-wa", "title": "Perth (Australia)" },
+                { "const": "ph", "title": "Manila (Philippines)" },
+                { "const": "th", "title": "Bangkok (Thailand)" },
+                { "const": "hk", "title": "HK (Hong Kong)" },
+                { "const": "mn", "title": "Ulaanbaatar (Mongolia)" },
+                { "const": "kg", "title": "Bishkek (Kyrgyzstan)" },
+                { "const": "id", "title": "Jakarta (Indonesia)" },
+                { "const": "jp", "title": "Tokyo (Japan)" },
+                { "const": "sg", "title": "SG (Singapore)" },
+                { "const": "de", "title": "Frankfurt (Germany)" },
+                { "const": "us", "title": "USA (AnyCast)" },
+                { "const": "us-east-1", "title": "New York (USA)" },
+                { "const": "us-west-1", "title": "Fremont (USA)" },
+                { "const": "nz", "title": "Auckland (New Zealand)" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Petabox"
+            },
+            "region": {
+              "type": "string",
+              "title": "Petabox Region",
+              "oneOf": [
+                { "const": "us-east-1", "title": "US East (N. Virginia)" },
+                { "const": "eu-central-1", "title": "Europe (Frankfurt)" },
+                { "const": "ap-southeast-1", "title": "Asia Pacific (Singapore)" },
+                { "const": "me-south-1", "title": "Middle East (Bahrain)" },
+                { "const": "sa-east-1", "title": "South America (São Paulo)" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Petabox Endpoint",
+              "oneOf": [
+                { "const": "s3.petabox.io", "title": "US East (N. Virginia)" },
+                { "const": "s3.us-east-1.petabox.io", "title": "US East (N. Virginia)" },
+                { "const": "s3.eu-central-1.petabox.io", "title": "Europe (Frankfurt)" },
+                { "const": "s3.ap-southeast-1.petabox.io", "title": "Asia Pacific (Singapore)" },
+                { "const": "s3.me-south-1.petabox.io", "title": "Middle East (Bahrain)" },
+                { "const": "s3.sa-east-1.petabox.io", "title": "South America (São Paulo)" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Other"
+            },
+            "region": {
+              "type": "string",
+              "title": "Region",
+              "oneOf": [
+                { "const": "", "title": "Use this if unsure. Will use v4 signatures and an empty region." },
+                { "const": "other-v2-signature", "title": "Use this only if v4 signatures don't work. E.g. pre Jewel/v10 CEPH." }
+              ],
+              "default": ""
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Endpoint",
+              "description": "Endpoint for your S3 compatible provider"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Use path style access instead of virtual hosted style",
+              "default": true
+            },
+            "v2_auth": {
+              "type": "boolean",
+              "title": "Use V2 Auth",
+              "description": "Use AWS v2 authentication (signature v2) - required for some older S3 implementations",
+              "default": false
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "ArvanCloud"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "ArvanCloud Endpoint",
+              "oneOf": [
+                { "const": "s3.ir-thr-at1.arvanstorage.ir", "title": "Tehran Iran (Simin)" },
+                { "const": "s3.ir-tbz-sh1.arvanstorage.ir", "title": "Tabriz Iran (Shahriar)" }
+              ]
+            },
+            "location_constraint": {
+              "type": "string",
+              "title": "Location Constraint",
+              "oneOf": [
+                { "const": "ir-thr-at1", "title": "Tehran Iran (Simin)" },
+                { "const": "ir-tbz-sh1", "title": "Tabriz Iran (Shahriar)" }
+              ]
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "STANDARD", "title": "Standard" }
+              ],
+              "default": "STANDARD"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "ArvanCloud requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "ChinaMobile"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "China Mobile Endpoint",
+              "oneOf": [
+                { "const": "eos-wuxi-1.cmecloud.cn", "title": "East China (Suzhou)" },
+                { "const": "eos-jinan-1.cmecloud.cn", "title": "East China (Jinan)" },
+                { "const": "eos-ningbo-1.cmecloud.cn", "title": "East China (Hangzhou)" },
+                { "const": "eos-shanghai-1.cmecloud.cn", "title": "East China (Shanghai-1)" },
+                { "const": "eos-zhengzhou-1.cmecloud.cn", "title": "Central China (Zhengzhou)" },
+                { "const": "eos-hunan-1.cmecloud.cn", "title": "Central China (Changsha-1)" },
+                { "const": "eos-zhuzhou-1.cmecloud.cn", "title": "Central China (Changsha-2)" },
+                { "const": "eos-guangzhou-1.cmecloud.cn", "title": "South China (Guangzhou-2)" },
+                { "const": "eos-dongguan-1.cmecloud.cn", "title": "South China (Guangzhou-3)" },
+                { "const": "eos-beijing-1.cmecloud.cn", "title": "North China (Beijing-1)" },
+                { "const": "eos-beijing-2.cmecloud.cn", "title": "North China (Beijing-2)" },
+                { "const": "eos-beijing-4.cmecloud.cn", "title": "North China (Beijing-3)" },
+                { "const": "eos-huhehaote-1.cmecloud.cn", "title": "North China (Huhehaote)" },
+                { "const": "eos-chengdu-1.cmecloud.cn", "title": "Southwest China (Chengdu)" },
+                { "const": "eos-chongqing-1.cmecloud.cn", "title": "Southwest China (Chongqing)" },
+                { "const": "eos-guiyang-1.cmecloud.cn", "title": "Southwest China (Guiyang)" },
+                { "const": "eos-xian-1.cmecloud.cn", "title": "Nouthwest China (Xian)" },
+                { "const": "eos-yunnan.cmecloud.cn", "title": "Yunnan China (Kunming)" },
+                { "const": "eos-yunnan-2.cmecloud.cn", "title": "Yunnan China (Kunming-2)" },
+                { "const": "eos-tianjin-1.cmecloud.cn", "title": "Tianjin China (Tianjin)" },
+                { "const": "eos-jilin-1.cmecloud.cn", "title": "Jilin China (Changchun)" },
+                { "const": "eos-hubei-1.cmecloud.cn", "title": "Hubei China (Xiangyan)" },
+                { "const": "eos-jiangxi-1.cmecloud.cn", "title": "Jiangxi China (Nanchang)" },
+                { "const": "eos-gansu-1.cmecloud.cn", "title": "Gansu China (Lanzhou)" },
+                { "const": "eos-shanxi-1.cmecloud.cn", "title": "Shanxi China (Taiyuan)" },
+                { "const": "eos-liaoning-1.cmecloud.cn", "title": "Liaoning China (Shenyang)" },
+                { "const": "eos-hebei-1.cmecloud.cn", "title": "Hebei China (Shijiazhuang)" },
+                { "const": "eos-fujian-1.cmecloud.cn", "title": "Fujian China (Xiamen)" },
+                { "const": "eos-guangxi-1.cmecloud.cn", "title": "Guangxi China (Nanning)" },
+                { "const": "eos-anhui-1.cmecloud.cn", "title": "Anhui China (Huainan)" }
+              ]
+            },
+            "location_constraint": {
+              "type": "string",
+              "title": "Location Constraint",
+              "oneOf": [
+                { "const": "wuxi1", "title": "East China (Suzhou)" },
+                { "const": "jinan1", "title": "East China (Jinan)" },
+                { "const": "ningbo1", "title": "East China (Hangzhou)" },
+                { "const": "shanghai1", "title": "East China (Shanghai-1)" },
+                { "const": "zhengzhou1", "title": "Central China (Zhengzhou)" },
+                { "const": "hunan1", "title": "Central China (Changsha-1)" },
+                { "const": "zhuzhou1", "title": "Central China (Changsha-2)" },
+                { "const": "guangzhou1", "title": "South China (Guangzhou-2)" },
+                { "const": "dongguan1", "title": "South China (Guangzhou-3)" },
+                { "const": "beijing1", "title": "North China (Beijing-1)" },
+                { "const": "beijing2", "title": "North China (Beijing-2)" },
+                { "const": "beijing4", "title": "North China (Beijing-3)" },
+                { "const": "huhehaote1", "title": "North China (Huhehaote)" },
+                { "const": "chengdu1", "title": "Southwest China (Chengdu)" },
+                { "const": "chongqing1", "title": "Southwest China (Chongqing)" },
+                { "const": "guiyang1", "title": "Southwest China (Guiyang)" },
+                { "const": "xian1", "title": "Nouthwest China (Xian)" },
+                { "const": "yunnan", "title": "Yunnan China (Kunming)" },
+                { "const": "yunnan2", "title": "Yunnan China (Kunming-2)" },
+                { "const": "tianjin1", "title": "Tianjin China (Tianjin)" },
+                { "const": "jilin1", "title": "Jilin China (Changchun)" },
+                { "const": "hubei1", "title": "Hubei China (Xiangyan)" },
+                { "const": "jiangxi1", "title": "Jiangxi China (Nanchang)" },
+                { "const": "gansu1", "title": "Gansu China (Lanzhou)" },
+                { "const": "shanxi1", "title": "Shanxi China (Taiyuan)" },
+                { "const": "liaoning1", "title": "Liaoning China (Shenyang)" },
+                { "const": "hebei1", "title": "Hebei China (Shijiazhuang)" },
+                { "const": "fujian1", "title": "Fujian China (Xiamen)" },
+                { "const": "guangxi1", "title": "Guangxi China (Nanning)" },
+                { "const": "anhui1", "title": "Anhui China (Huainan)" }
+              ]
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "", "title": "Default" },
+                { "const": "STANDARD", "title": "Standard" },
+                { "const": "GLACIER", "title": "Archive" },
+                { "const": "STANDARD_IA", "title": "Infrequent Access" }
+              ]
+            },
+            "server_side_encryption": {
+              "type": "string",
+              "title": "Server Side Encryption",
+              "oneOf": [
+                { "const": "", "title": "None" },
+                { "const": "AES256", "title": "AES256" }
+              ],
+              "default": ""
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "China Mobile requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Cubbit"
+            },
+            "region": {
+              "type": "string",
+              "title": "Cubbit Region",
+              "oneOf": [
+                { "const": "eu-west-1", "title": "Europe West" }
+              ],
+              "default": "eu-west-1"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Cubbit Endpoint",
+              "oneOf": [
+                { "const": "s3.cubbit.eu", "title": "Cubbit DS3 Object Storage endpoint" }
+              ],
+              "default": "s3.cubbit.eu"
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Dreamhost"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Dreamhost Endpoint",
+              "oneOf": [
+                { "const": "objects-us-east-1.dream.io", "title": "Dream Objects endpoint" }
+              ],
+              "default": "objects-us-east-1.dream.io"
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Exaba"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Exaba Endpoint",
+              "description": "URL of your Exaba Object Storage server"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Exaba requires path style access",
+              "default": true
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "FileLu"
+            },
+            "region": {
+              "type": "string",
+              "title": "FileLu Region",
+              "oneOf": [
+                { "const": "global", "title": "Global" },
+                { "const": "us-east", "title": "North America (US-East)" },
+                { "const": "eu-central", "title": "Europe (EU-Central)" },
+                { "const": "ap-southeast", "title": "Asia Pacific (AP-Southeast)" },
+                { "const": "me-central", "title": "Middle East (ME-Central)" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "FileLu Endpoint",
+              "oneOf": [
+                { "const": "s5lu.com", "title": "Global FileLu S5 endpoint" },
+                { "const": "us.s5lu.com", "title": "North America (US-East)" },
+                { "const": "eu.s5lu.com", "title": "Europe (EU-Central)" },
+                { "const": "ap.s5lu.com", "title": "Asia Pacific (AP-Southeast)" },
+                { "const": "me.s5lu.com", "title": "Middle East (ME-Central)" }
+              ]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "FileLu requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "FlashBlade"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "FlashBlade Endpoint",
+              "description": "URL of your Pure Storage FlashBlade Object Storage server"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "FlashBlade supports vhost but defaults to path-style",
+              "default": true
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Hetzner"
+            },
+            "region": {
+              "type": "string",
+              "title": "Hetzner Region",
+              "oneOf": [
+                { "const": "hel1", "title": "Helsinki" },
+                { "const": "fsn1", "title": "Falkenstein" },
+                { "const": "nbg1", "title": "Nuremberg" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Hetzner Endpoint",
+              "oneOf": [
+                { "const": "hel1.your-objectstorage.com", "title": "Helsinki" },
+                { "const": "fsn1.your-objectstorage.com", "title": "Falkenstein" },
+                { "const": "nbg1.your-objectstorage.com", "title": "Nuremberg" }
+              ],
+              "description": "Replace 'your-objectstorage.com' with your actual Hetzner object storage endpoint"
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Intercolo"
+            },
+            "region": {
+              "type": "string",
+              "title": "Intercolo Region",
+              "oneOf": [
+                { "const": "de-fra", "title": "Frankfurt, Germany" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Intercolo Endpoint",
+              "oneOf": [
+                { "const": "de-fra.i3storage.com", "title": "Frankfurt, Germany" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Leviia"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Leviia Endpoint",
+              "oneOf": [
+                { "const": "s3.leviia.com", "title": "Leviia" }
+              ],
+              "default": "s3.leviia.com"
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Liara"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Liara Endpoint",
+              "oneOf": [
+                { "const": "storage.iran.liara.space", "title": "Iran" }
+              ],
+              "default": "storage.iran.liara.space"
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "STANDARD", "title": "Standard" }
+              ],
+              "default": "STANDARD"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Liara requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Magalu"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Magalu Endpoint",
+              "oneOf": [
+                { "const": "br-se1.magaluobjects.com", "title": "São Paulo, SP (BR), br-se1" },
+                { "const": "br-ne1.magaluobjects.com", "title": "Fortaleza, CE (BR), br-ne1" }
+              ]
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "STANDARD", "title": "Standard" },
+                { "const": "GLACIER_IR", "title": "Glacier Instant Retrieval" }
+              ],
+              "default": "STANDARD"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Magalu requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Mega"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Mega S4 Endpoint",
+              "oneOf": [
+                { "const": "s3.eu-central-1.s4.mega.io", "title": "Mega S4 eu-central-1 (Amsterdam)" },
+                { "const": "s3.eu-central-2.s4.mega.io", "title": "Mega S4 eu-central-2 (Bettembourg)" },
+                { "const": "s3.ca-central-1.s4.mega.io", "title": "Mega S4 ca-central-1 (Montreal)" },
+                { "const": "s3.ca-west-1.s4.mega.io", "title": "Mega S4 ca-west-1 (Vancouver)" }
+              ]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Mega requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Netease"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Netease Endpoint",
+              "description": "URL of your Netease Object Storage server"
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Outscale"
+            },
+            "region": {
+              "type": "string",
+              "title": "Outscale Region",
+              "oneOf": [
+                { "const": "eu-west-2", "title": "Paris, France" },
+                { "const": "us-east-2", "title": "New Jersey, USA" },
+                { "const": "us-west-1", "title": "California, USA" },
+                { "const": "cloudgouv-eu-west-1", "title": "SecNumCloud, Paris, France" },
+                { "const": "ap-northeast-1", "title": "Tokyo, Japan" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Outscale Endpoint",
+              "oneOf": [
+                { "const": "oos.eu-west-2.outscale.com", "title": "Outscale EU West 2 (Paris)" },
+                { "const": "oos.us-east-2.outscale.com", "title": "Outscale US east 2 (New Jersey)" },
+                { "const": "oos.us-west-1.outscale.com", "title": "Outscale EU West 1 (California)" },
+                { "const": "oos.cloudgouv-eu-west-1.outscale.com", "title": "Outscale SecNumCloud (Paris)" },
+                { "const": "oos.ap-northeast-1.outscale.com", "title": "Outscale AP Northeast 1 (Japan)" }
+              ]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Outscale requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Qiniu"
+            },
+            "region": {
+              "type": "string",
+              "title": "Qiniu Region",
+              "oneOf": [
+                { "const": "cn-east-1", "title": "East China Region 1" },
+                { "const": "cn-east-2", "title": "East China Region 2" },
+                { "const": "cn-north-1", "title": "North China Region 1" },
+                { "const": "cn-south-1", "title": "South China Region 1" },
+                { "const": "us-north-1", "title": "North America Region" },
+                { "const": "ap-southeast-1", "title": "Southeast Asia Region 1" },
+                { "const": "ap-northeast-1", "title": "Northeast Asia Region 1" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Qiniu Endpoint",
+              "oneOf": [
+                { "const": "s3-cn-east-1.qiniucs.com", "title": "East China Endpoint 1" },
+                { "const": "s3-cn-east-2.qiniucs.com", "title": "East China Endpoint 2" },
+                { "const": "s3-cn-north-1.qiniucs.com", "title": "North China Endpoint 1" },
+                { "const": "s3-cn-south-1.qiniucs.com", "title": "South China Endpoint 1" },
+                { "const": "s3-us-north-1.qiniucs.com", "title": "North America Endpoint 1" },
+                { "const": "s3-ap-southeast-1.qiniucs.com", "title": "Southeast Asia Endpoint 1" },
+                { "const": "s3-ap-northeast-1.qiniucs.com", "title": "Northeast Asia Endpoint 1" }
+              ]
+            },
+            "location_constraint": {
+              "type": "string",
+              "title": "Location Constraint",
+              "oneOf": [
+                { "const": "cn-east-1", "title": "East China Region 1" },
+                { "const": "cn-east-2", "title": "East China Region 2" },
+                { "const": "cn-north-1", "title": "North China Region 1" },
+                { "const": "cn-south-1", "title": "South China Region 1" },
+                { "const": "us-north-1", "title": "North America Region 1" },
+                { "const": "ap-southeast-1", "title": "Southeast Asia Region 1" },
+                { "const": "ap-northeast-1", "title": "Northeast Asia Region 1" }
+              ]
+            },
+            "storage_class": {
+              "type": "string",
+              "title": "Storage Class",
+              "oneOf": [
+                { "const": "STANDARD", "title": "Standard" },
+                { "const": "LINE", "title": "Infrequent Access" },
+                { "const": "GLACIER", "title": "Archive" },
+                { "const": "DEEP_ARCHIVE", "title": "Deep Archive" }
+              ]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Qiniu requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Rabata"
+            },
+            "region": {
+              "type": "string",
+              "title": "Rabata Region",
+              "oneOf": [
+                { "const": "us-east-1", "title": "US East (N. Virginia)" },
+                { "const": "eu-west-1", "title": "EU (Ireland)" },
+                { "const": "eu-west-2", "title": "EU (London)" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Rabata Endpoint",
+              "oneOf": [
+                { "const": "s3.us-east-1.rabata.io", "title": "US East (N. Virginia)" },
+                { "const": "s3.eu-west-1.rabata.io", "title": "EU West (Ireland)" },
+                { "const": "s3.eu-west-2.rabata.io", "title": "EU West (London)" }
+              ]
+            },
+            "location_constraint": {
+              "type": "string",
+              "title": "Location Constraint",
+              "oneOf": [
+                { "const": "us-east-1", "title": "US East (N. Virginia)" },
+                { "const": "eu-west-1", "title": "EU (Ireland)" },
+                { "const": "eu-west-2", "title": "EU (London)" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Rclone"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Rclone S3 Server Endpoint",
+              "description": "URL of your Rclone S3 server",
+              "examples": ["http://localhost:9000", "https://rclone.example.com"]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "Rclone S3 server requires path style access",
+              "default": true
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Selectel"
+            },
+            "region": {
+              "type": "string",
+              "title": "Selectel Region",
+              "oneOf": [
+                { "const": "ru-1", "title": "St. Petersburg" }
+              ],
+              "default": "ru-1"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Selectel Endpoint",
+              "oneOf": [
+                { "const": "s3.ru-1.storage.selcloud.ru", "title": "Saint Petersburg" }
+              ],
+              "default": "s3.ru-1.storage.selcloud.ru"
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Servercore"
+            },
+            "region": {
+              "type": "string",
+              "title": "Servercore Region",
+              "oneOf": [
+                { "const": "ru-1", "title": "St. Petersburg" },
+                { "const": "gis-1", "title": "Moscow" },
+                { "const": "ru-7", "title": "Moscow" },
+                { "const": "uz-2", "title": "Tashkent, Uzbekistan" },
+                { "const": "kz-1", "title": "Almaty, Kazakhstan" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Servercore Endpoint",
+              "oneOf": [
+                { "const": "s3.ru-1.storage.selcloud.ru", "title": "Saint Petersburg" },
+                { "const": "s3.gis-1.storage.selcloud.ru", "title": "Moscow" },
+                { "const": "s3.ru-7.storage.selcloud.ru", "title": "Moscow" },
+                { "const": "s3.uz-2.srvstorage.uz", "title": "Tashkent, Uzbekistan" },
+                { "const": "s3.kz-1.srvstorage.kz", "title": "Almaty, Kazakhstan" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "SpectraLogic"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "SpectraLogic Endpoint",
+              "description": "URL of your Spectra Logic BlackPearl server"
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "SpectraLogic requires path style access",
+              "default": true
+            }
+          },
+          "required": ["endpoint"]
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "StackPath"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "StackPath Endpoint",
+              "oneOf": [
+                { "const": "s3.us-east-2.stackpathstorage.com", "title": "US East Endpoint" },
+                { "const": "s3.us-west-1.stackpathstorage.com", "title": "US West Endpoint" },
+                { "const": "s3.eu-central-1.stackpathstorage.com", "title": "EU Endpoint" }
+              ]
+            },
+            "force_path_style": {
+              "type": "boolean",
+              "title": "Force Path Style",
+              "description": "StackPath requires path style access",
+              "default": true
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Synology"
+            },
+            "region": {
+              "type": "string",
+              "title": "Synology Region",
+              "oneOf": [
+                { "const": "eu-001", "title": "Europe Region 1" },
+                { "const": "eu-002", "title": "Europe Region 2" },
+                { "const": "us-001", "title": "US Region 1" },
+                { "const": "us-002", "title": "US Region 2" },
+                { "const": "tw-001", "title": "Asia (Taiwan)" }
+              ]
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Synology Endpoint",
+              "oneOf": [
+                { "const": "eu-001.s3.synologyc2.net", "title": "EU Endpoint 1" },
+                { "const": "eu-002.s3.synologyc2.net", "title": "EU Endpoint 2" },
+                { "const": "us-001.s3.synologyc2.net", "title": "US Endpoint 1" },
+                { "const": "us-002.s3.synologyc2.net", "title": "US Endpoint 2" },
+                { "const": "tw-001.s3.synologyc2.net", "title": "TW Endpoint 1" }
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "provider": {
+              "const": "Zata"
+            },
+            "region": {
+              "type": "string",
+              "title": "Zata Region",
+              "oneOf": [
+                { "const": "us-east-1", "title": "Indore, Madhya Pradesh, India" }
+              ],
+              "default": "us-east-1"
+            },
+            "endpoint": {
+              "type": "string",
+              "title": "Zata Endpoint",
+              "oneOf": [
+                { "const": "idr01.zata.ai", "title": "South Asia Endpoint" }
+              ],
+              "default": "idr01.zata.ai"
+            }
+          }
+        }
+      ]
     }
-  ],
+  },
   "additionalProperties": false,
   "examples": [
     {
@@ -441,5 +1817,5 @@
       "force_path_style": true
     }
   ],
-  "$comment": "S3 backend supports 46 providers. Provider-specific fields (region, endpoint, storage_class) use oneOf with const/title for clean dropdown generation. The allOf section conditionally shows appropriate fields based on selected provider."
+  "$comment": "S3 backend supports 46 providers. Provider-specific fields (region, endpoint, storage_class) use oneOf with const/title for clean dropdown generation. The dependencies section conditionally shows appropriate fields based on selected provider."
 }

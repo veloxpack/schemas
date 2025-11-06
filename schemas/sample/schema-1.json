@@ -1,0 +1,183 @@
+{
+  "type": "object",
+  "properties": {
+    "storageType": {
+      "title": "Storage Type",
+      "enum": ["S3", "HTTP"]
+    }
+  },
+  "required": ["storageType"],
+  "oneOf": [
+    {
+      "properties": {
+        "storageType": {
+          "const": "S3"
+        },
+        "provider": {
+          "type": "string",
+          "title": "S3 Provider",
+          "enum": ["AWS", "Minio"]
+        },
+        "bucket": {
+          "type": "string",
+          "title": "S3 Bucket Name"
+        }
+      },
+      "required": ["provider", "bucket"],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "AWS"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "region": {
+                "type": "string",
+                "title": "AWS Region",
+                "enum": ["us-east-1", "us-west-2", "eu-central-1", "ap-south-1"]
+              },
+              "accessKeyId": {
+                "type": "string",
+                "title": "AWS Access Key ID"
+              },
+              "secretAccessKey": {
+                "type": "string",
+                "title": "AWS Secret Access Key"
+              }
+            },
+            "required": ["region", "accessKeyId", "secretAccessKey"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "provider": {
+                "const": "Minio"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "endpoint": {
+                "type": "string",
+                "title": "Minio Endpoint URL",
+                "format": "uri",
+                "examples": ["http://localhost:9000", "https://minio.example.com"]
+              },
+              "accessKey": {
+                "type": "string",
+                "title": "Minio Access Key"
+              },
+              "secretKey": {
+                "type": "string",
+                "title": "Minio Secret Key"
+              },
+              "useSSL": {
+                "type": "boolean",
+                "title": "Use SSL/TLS",
+                "default": true
+              }
+            },
+            "required": ["endpoint", "accessKey", "secretKey"]
+          }
+        }
+      ]
+    },
+    {
+      "properties": {
+        "storageType": {
+          "const": "HTTP"
+        },
+        "url": {
+          "type": "string",
+          "title": "HTTP URL",
+          "format": "uri"
+        },
+        "authMethod": {
+          "type": "string",
+          "title": "Authentication Method",
+          "enum": ["none", "basic", "bearer"]
+        }
+      },
+      "required": ["url", "authMethod"],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "authMethod": {
+                "const": "basic"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "username": {
+                "type": "string",
+                "title": "Username"
+              },
+              "password": {
+                "type": "string",
+                "title": "Password"
+              }
+            },
+            "required": ["username", "password"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "authMethod": {
+                "const": "bearer"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "token": {
+                "type": "string",
+                "title": "Bearer Token"
+              }
+            },
+            "required": ["token"]
+          }
+        }
+      ]
+    }
+  ],
+  "examples": [
+    {
+      "storageType": "S3",
+      "provider": "AWS",
+      "bucket": "my-bucket",
+      "region": "us-east-1",
+      "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
+      "secretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+    },
+    {
+      "storageType": "S3",
+      "provider": "Minio",
+      "bucket": "my-minio-bucket",
+      "endpoint": "http://localhost:9000",
+      "accessKey": "minioadmin",
+      "secretKey": "minioadmin",
+      "useSSL": false
+    },
+    {
+      "storageType": "HTTP",
+      "url": "https://api.example.com/storage",
+      "authMethod": "bearer",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    },
+    {
+      "storageType": "HTTP",
+      "url": "https://api.example.com/files",
+      "authMethod": "basic",
+      "username": "john",
+      "password": "secret123"
+    }
+  ]
+}

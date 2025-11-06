@@ -22,10 +22,29 @@ const SCHEMAS = [
     description: 'Configure your rclone settings with an interactive form based on the latest schema',
   },
   {
-    id: 'sample',
+    id: 'sample-1',
     name: 'Sample Nested Object',
-    url: 'https://schemas.veloxpack.io/schemas/sample/schema.json',
+    url: 'https://schemas.veloxpack.io/schemas/sample/schema-1.json',
     description: 'A sample nested object for the schema',
+  },
+  {
+    id: 'sample-2',
+    name: 'Sample Nested Object 2',
+    url: 'https://schemas.veloxpack.io/schemas/sample/schema-2.json',
+    description: 'A sample nested object for the schema',
+  },
+
+  {
+    id: 'sample-3',
+    name: 'Schema Dependencies',
+    url: 'https://schemas.veloxpack.io/schemas/sample/dependencies.json',
+    description: 'A schema with dependencies',
+  },
+  {
+    id: 'sample-4',
+    name: 'Enumerated Objects',
+    url: 'https://schemas.veloxpack.io/schemas/sample/enumerated-objects.json',
+    description: 'A schema with enumerated objects',
   }
 ] as const
 

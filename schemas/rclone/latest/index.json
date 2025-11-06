@@ -1,0 +1,110 @@
+{
+  "title": "Rclone Configuration",
+  "description": "Configure rclone remotes",
+  "type": "object",
+  "properties": {
+    "configurationOptions": {
+      "type": "object",
+      "title": "Configuration Options",
+      "description": "General rclone configuration options",
+      "$ref": "https://schemas.veloxpack.io/schemas/rclone/latest/options/configuration.json"
+    },
+    "mountOptions": {
+      "type": "object",
+      "title": "Mount Options",
+      "description": "Options for mounting this remote as a filesystem",
+      "$ref": "https://schemas.veloxpack.io/schemas/rclone/latest/options/mount.json"
+    },
+    "vfsOptions": {
+      "type": "object",
+      "title": "VFS Options",
+      "description": "Virtual File System options for this remote",
+      "$ref": "https://schemas.veloxpack.io/schemas/rclone/latest/options/vfs.json"
+    },
+    "remotes": {
+      "title": "Remotes",
+      "type": "array",
+      "items": {
+        "title": "Rclone Backend Selection",
+        "description": "Select a backend and configure its properties",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Remote Name",
+            "type": "string",
+            "description": "Unique name for this remote"
+          },
+          "type": {
+            "title": "Backend Type",
+            "type": "string",
+            "oneOf": [
+              {
+                "const": "local",
+                "title": "Local Filesystem"
+              },
+              {
+                "const": "s3",
+                "title": "Amazon S3"
+              }
+            ],
+            "default": "local"
+          },
+          "remotePath": {
+            "title": "Remote Path",
+            "type": "string",
+            "description": "Path on the remote storage (supports template variables like ${pvc.metadata.namespace})"
+          },
+          "backend": {
+            "title": "Backend Configuration",
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "local"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/local.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "s3"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/latest/backends/s3.json"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "default": [
+        {
+          "name": "default-remote",
+          "type": "local"
+        }
+      ],
+      "minItems": 1
+    }
+  }
+}

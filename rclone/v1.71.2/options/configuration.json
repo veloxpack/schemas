@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/options/config.json",
+  "$id": "https://schemas.veloxpack.io/rclone/v1.71.2/options/configuration.json",
   "title": "General",
   "description": "General rclone options and flags",
   "type": "object",

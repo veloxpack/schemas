@@ -21,6 +21,12 @@ const SCHEMAS = [
     url: 'https://schemas.veloxpack.io/schemas/rclone/latest/index.json',
     description: 'Configure rclone remotes with simplified form interface',
   },
+  {
+    id: 'rclone-backend-types',
+    name: 'Rclone: Backend',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/backends/index.json',
+    description: 'Choose your backend',
+  },
   // Rclone Options
   {
     id: 'rclone-configuration-options',

@@ -1,7 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { SchemaPreview } from '@/components/SchemaPreview'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
@@ -480,7 +481,10 @@ function App() {
             Preview and configure schemas with interactive forms
           </p>
         </div>
-        <div className="flex-shrink-0">
+        <div className="flex items-center gap-4">
+          <Link to="/steps">
+            <Button variant="outline">Multi-Step Form</Button>
+          </Link>
           <ThemeToggle />
         </div>
       </div>

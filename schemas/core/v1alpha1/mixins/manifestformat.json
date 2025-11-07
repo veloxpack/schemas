@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/manifestformat.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/manifestformat.json",
   "title": "Manifest Format",
   "description": "Supported adaptive streaming manifest formats.",
   "type": "string",

@@ -15,7 +15,7 @@
       "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the thumbnail generation operation. This controls the compute resources allocated to thumbnail workers.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     },
@@ -36,7 +36,7 @@
             "description": "Format specifies the output image format for this thumbnail.\nOverrides any global format setting for this specific thumbnail.\nChoose based on use case: JPEG for photos, PNG for transparency, WebP for efficiency.",
             "allOf": [
               {
-                "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/imageformat.json"
+                "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/imageformat.json"
               }
             ]
           },

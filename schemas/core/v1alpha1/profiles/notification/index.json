@@ -8,7 +8,7 @@
       "description": "ConfigMapRef references a ConfigMap containing notification triggers, templates, and service configurations.\nThe ConfigMap should contain keys like:\n- trigger.<name>: YAML trigger definitions with conditions and templates\n- template.<name>: Go template definitions for notification messages\n- service.<name>: Service-specific configuration (Slack, Email, Webhook, etc.)\n\nExample ConfigMap structure:\n  data:\n    trigger.job-failed: |\n      - when: job.status.phase == 'Failed'\n        send: [job-failure-alert]\n    template.job-failure-alert: |\n      message: Job {{.job.metadata.name}} failed: {{.job.status.errorMessage}}\n    service.slack: |\n      token: $slack-token",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     },
@@ -56,7 +56,7 @@
       "description": "SecretRef references a Secret containing sensitive notification service credentials.\nKeys should match variables referenced in service configurations (e.g., $slack-token).\nThe Secret must be in the same namespace as the NotificationProfile.\n\nExample Secret:\n  data:\n    slack-token: <base64-encoded-token>\n    email-password: <base64-encoded-password>",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     }

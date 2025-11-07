@@ -6,7 +6,8 @@
   "properties": {
     "duration": {
       "description": "Duration specifies the total video duration to cover with thumbnails.\nFormat: \"HH:MM:SS\" or \"MM:SS\" (e.g., \"00:05:00\" for 5 minutes, \"01:30:00\" for 1.5 hours).\nIf not specified, thumbnails are generated for the entire video duration.\nUseful for limiting sprite generation for very long videos or excluding end credits.\nExamples: \"00:10:00\" (first 10 minutes only), \"01:00:00\" (first hour only).",
-      "type": "string"
+      "type": "string",
+      "pattern": "^(?:\\d{2}:){1,2}\\d{2}$"
     },
     "quality": {
       "default": 80,
@@ -19,7 +20,7 @@
       "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the scrub preview generation operation. This controls the compute resources allocated to scrub preview workers.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     },
@@ -28,7 +29,7 @@
       "description": "SpriteFormat specifies the image format for the sprite sheet files.\nJPEG provides good compression for photographic content (recommended for most cases).\nPNG offers lossless compression but larger file sizes.\nWebP provides superior compression but may have limited browser support.\nThe VTT file will reference sprite sheets in this format.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/imageformat.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/imageformat.json"
         }
       ]
     },

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/videooutputformat.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/videooutputformat.json",
   "title": "Video Output Format",
   "description": "Naming schemes for generated video segments.",
   "type": "string",

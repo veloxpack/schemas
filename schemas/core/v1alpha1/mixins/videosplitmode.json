@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/videosplitmode.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/videosplitmode.json",
   "title": "Video Split Mode",
   "description": "Strategies for dividing source video into segments.",
   "type": "string",

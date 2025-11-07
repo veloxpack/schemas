@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/videocodec.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/videocodec.json",
   "title": "Video Codec",
   "description": "Supported video codec identifiers for transcoding.",
   "type": "string",

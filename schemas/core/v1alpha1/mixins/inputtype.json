@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/inputtype.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/inputtype.json",
   "title": "Input Type",
   "description": "Specifies the source type of a media input.",
   "type": "string",

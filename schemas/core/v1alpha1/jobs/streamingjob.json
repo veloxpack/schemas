@@ -20,7 +20,7 @@
       "description": "MediaInputRef references the input media configuration defining source files or streams.\nThe MediaInput specifies input locations, track selections, time slicing,\nand input-specific processing options (filters, deinterlacing, language tags).\nSupports local files, remote URLs, live capture devices, and multi-period content.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     },
@@ -28,7 +28,7 @@
       "description": "NotificationProfileRef references a notification configuration for job lifecycle events.\nWhen configured, sends notifications (webhooks, emails, SNS) for events like:\njob started, progress updates, stage completions, job succeeded, job failed.\nIf not specified, inherits the NotificationProfile from the referenced StreamingPipeline.\nSet to an empty ResourceRef to explicitly disable notifications for this job.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     },
@@ -36,7 +36,7 @@
       "description": "OutputDestinationRef references a secret for csi-driver-rclone that specifies\nthe storage destination for processed media files.\nSupports various storage backends (S3, GCS, Azure Blob, HTTP, etc.).\nSee: https://github.com/veloxpack/csi-driver-rclone/\nIf not specified, inherits the OutputDestination from the referenced StreamingPipeline.\nSpecifying a destination here overrides the pipeline's default for this specific job.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     },
@@ -44,7 +44,7 @@
       "description": "PipelineRef references the StreamingPipeline configuration that defines the complete\nprocessing workflow for this job, including transcoding profiles, packaging settings,\nencryption configuration, and auxiliary content generation (thumbnails, sprites).\nThe pipeline orchestrates all processing stages and determines output formats.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     },

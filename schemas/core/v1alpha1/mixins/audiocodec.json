@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/audiocodec.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/audiocodec.json",
   "title": "Audio Codec",
-  "description": "Supported audio codec identifiers for transcoding.",
+  "description": "Available audio codecs for transcoding.",
   "type": "string",
   "oneOf": [
     {

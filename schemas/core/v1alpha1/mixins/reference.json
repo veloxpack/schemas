@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json",
   "title": "Veloxpack Resource Reference",
   "description": "Reference to a Veloxpack resource including enable toggle and priority.",
   "type": "object",

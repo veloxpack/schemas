@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/mediatype.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/mediatype.json",
   "title": "Media Type",
   "description": "Specifies media stream type as audio, video, or text.",
   "type": "string",

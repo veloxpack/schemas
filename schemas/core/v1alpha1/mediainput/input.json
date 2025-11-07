@@ -41,7 +41,7 @@
       "description": "InputType specifies the source type of the media input.\nDetermines how the Name field is interpreted and which FFmpeg input format is used.\nDifferent input types support different features (e.g., time slicing only works with 'file').",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/inputtype.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/inputtype.json"
         }
       ]
     },
@@ -57,7 +57,7 @@
       "description": "MediaType specifies whether this input is audio, video, or text (subtitles).\nDetermines which track to extract from multi-track sources and how to process it.\nFor files with multiple tracks, use TrackNum to select the specific track.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/mediatype.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/mediatype.json"
         }
       ]
     },

@@ -31,28 +31,11 @@
       "description": "Keys specifies the encryption keys for raw encryption mode.\nEach key can have a label to encrypt different content streams or quality tiers.\nMultiple keys enable selective decryption (e.g., different keys for SD vs HD content).\nOnly applicable in 'raw' encryption mode.\nAt least one key is required when Mode is 'raw'.",
       "items": {
         "description": "RawKey represents an encryption key configuration for raw key encryption mode.\nMultiple keys can be specified to encrypt different content streams (video/audio)\nor quality levels (SD/HD/4K) with different keys, enabling selective decryption.",
-        "properties": {
-          "key": {
-            "description": "Key is the actual encryption key used to encrypt the content.\nMust be a 32-character hexadecimal string (128-bit AES key).\nKeep this value secure and do not expose in public repositories or logs.\nExample: \"ffeeddccbbaa99887766554433221100\"",
-            "pattern": "^[0-9a-fA-F]{32}$",
-            "type": "string"
-          },
-          "keyId": {
-            "description": "KeyId is the key identifier used to locate the decryption key.\nMust be a 32-character hexadecimal string (128-bit value).\nThis ID is included in the PSSH box and manifest for players to request the correct key.\nExample: \"00112233445566778899aabbccddeeff\"",
-            "pattern": "^[0-9a-fA-F]{32}$",
-            "type": "string"
-          },
-          "label": {
-            "description": "Label is an arbitrary identifier or predefined DRM label for this key.\nPredefined labels include: AUDIO, SD, HD, UHD1, UHD2, AUDIO_<LANG> (e.g., AUDIO_en).\nIf not specified, this represents the default key for content without a specific label.\nLabels are case-sensitive and should match the DrmLabel field in Input configurations.\nExample: \"HD\" for 1080p video, \"AUDIO_en\" for English audio track, \"premium\" for custom tier.",
-            "type": "string"
+        "allOf": [
+          {
+            "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/rawkey.json"
           }
-        },
-        "required": [
-          "key",
-          "keyId"
-        ],
-        "type": "object",
-        "additionalProperties": false
+        ]
       },
       "type": "array"
     },
@@ -61,7 +44,7 @@
       "description": "Mode specifies the encryption workflow: widevine (DRM-managed) or raw (static keys).\nWidevine mode integrates with a license server for dynamic key management.\nRaw mode uses pre-defined static keys without external license servers.\nChoose widevine for commercial DRM deployments, raw for testing or custom key management.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/encryptionmode.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/encryptionmode.json"
         }
       ]
     },
@@ -70,7 +53,7 @@
       "description": "ProtectionScheme selects the encryption algorithm: cenc (AES-CTR) or cbcs (AES-CBC).\nCENC is standard for DASH with Widevine/PlayReady on web and Android.\nCBCS is required for HLS with FairPlay on Apple devices.\nFor multi-DRM scenarios supporting both platforms, you may need separate profiles.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/protectionscheme.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/protectionscheme.json"
         }
       ]
     },
@@ -80,7 +63,7 @@
         "description": "ProtectionSystem represents a specific Digital Rights Management (DRM) system\nused to control access to encrypted media content. Each system defines its own\nkey management, license acquisition, and playback authorization mechanisms.\nThis field is typically aligned with the ContentProtection descriptors in DASH or HLS manifests.",
         "allOf": [
           {
-            "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/protectionsystem.json"
+            "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/protectionsystem.json"
           }
         ]
       },
@@ -96,51 +79,19 @@
     },
     "signingIvSecretSelector": {
       "description": "SigningIvSecretSelector references a Kubernetes Secret containing the authentication IV\nfor the Widevine key server. This is the recommended way to provide the signing IV\nas it avoids storing sensitive credentials directly in the resource spec.\nOnly applicable in 'widevine' encryption mode.\nThe secret should contain the signing IV in hexadecimal format.\nIf both SigningIv and SigningIvSecretSelector are specified, SigningIvSecretSelector takes precedence.\nExample:\n  apiVersion: v1\n  kind: Secret\n  metadata:\n    name: widevine-credentials\n  data:\n    signingIv: <base64-encoded-hex-iv>\nReference: {name: \"widevine-credentials\", key: \"signingIv\"}",
-      "properties": {
-        "key": {
-          "description": "The key of the secret to select from.  Must be a valid secret key.",
-          "type": "string"
-        },
-        "name": {
-          "default": "",
-          "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-          "type": "string"
-        },
-        "optional": {
-          "description": "Specify whether the Secret or its key must be defined",
-          "type": "boolean"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/secretselector.json"
         }
-      },
-      "required": [
-        "key"
-      ],
-      "type": "object",
-      "x-kubernetes-map-type": "atomic",
-      "additionalProperties": false
+      ]
     },
     "signingKeySecretSelector": {
       "description": "SigningKeySecretSelector references a Kubernetes Secret containing the authentication key\nfor the Widevine key server. This is the recommended way to provide the signing key\nas it avoids storing sensitive credentials directly in the resource spec.\nOnly applicable in 'widevine' encryption mode.\nThe secret should contain the signing key in hexadecimal format.\nIf both SigningKey and SigningKeySecretSelector are specified, SigningKeySecretSelector takes precedence.\nExample:\n  apiVersion: v1\n  kind: Secret\n  metadata:\n    name: widevine-credentials\n  data:\n    signingKey: <base64-encoded-hex-key>\nReference: {name: \"widevine-credentials\", key: \"signingKey\"}",
-      "properties": {
-        "key": {
-          "description": "The key of the secret to select from.  Must be a valid secret key.",
-          "type": "string"
-        },
-        "name": {
-          "default": "",
-          "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
-          "type": "string"
-        },
-        "optional": {
-          "description": "Specify whether the Secret or its key must be defined",
-          "type": "boolean"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/secretselector.json"
         }
-      },
-      "required": [
-        "key"
-      ],
-      "type": "object",
-      "x-kubernetes-map-type": "atomic",
-      "additionalProperties": false
+      ]
     }
   },
   "type": "object",

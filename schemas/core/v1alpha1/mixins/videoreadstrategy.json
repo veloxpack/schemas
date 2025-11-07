@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/videoreadstrategy.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/videoreadstrategy.json",
   "title": "Video Read Strategy",
   "description": "Strategies for accessing source media during splitting or transcoding.",
   "type": "string",

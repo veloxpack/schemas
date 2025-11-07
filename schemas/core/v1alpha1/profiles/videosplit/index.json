@@ -23,7 +23,7 @@
       "description": "Mode determines how the video is split into segments.\nChoose based on your workload characteristics and optimization goals.\nExample: For a 2-hour movie with 30s segments:\nMode: \"fixed-duration\"\nSegmentDuration: \"30s\"\nResult: ~240 segments",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/videosplitmode.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/videosplitmode.json"
         }
       ]
     },
@@ -32,7 +32,7 @@
       "description": "OutputFormat specifies how segment files are named and organized.\n- sequential: segment_001.mp4, segment_002.mp4, ... (simple, predictable)\n- timecode: segment_00:00:00.mp4, segment_00:05:00.mp4, ... (human-readable)\n- uuid: segment_a1b2c3d4.mp4, segment_e5f6g7h8.mp4, ... (collision-free)\nDefault: sequential",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/videooutputformat.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/videooutputformat.json"
         }
       ]
     },
@@ -50,7 +50,7 @@
       "description": "ReadStrategy determines how transcode workers access source video segments.\n- direct-seek: Workers read time ranges directly from source (RECOMMENDED)\n  No split step needed. Saves 50%+ storage. Perfect for S3/GCS/NVMe/modern NFS.\n- split-first: Physically split video into files before transcoding (legacy)\n  Use only for HDDs or bandwidth-constrained storage (<1Gbps).\nSee SplitReadStrategy type documentation for detailed guidance.\nDefault: \"direct-seek\"",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/videoreadstrategy.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/videoreadstrategy.json"
         }
       ]
     },
@@ -58,7 +58,7 @@
       "description": "ResourceProfileRef for the splitting operation.\nReferences a ResourceProfile that defines CPU, memory, and GPU requirements\nfor the segment analysis and splitting process.\n\nSplitting operations can be resource-intensive depending on:\n- Split mode: Scene detection requires more CPU than fixed-duration\n- Video resolution: 4K video analysis needs more memory than HD\n- Read strategy: split-first requires fast I/O for file writes\n\nExample use cases:\n- Scene detection: CPU-optimized nodes for video analysis\n- Large videos: High-memory nodes for buffering and analysis\n- split-first mode: Fast NVMe storage for temporary segment files",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
         }
       ]
     },

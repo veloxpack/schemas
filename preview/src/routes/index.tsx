@@ -55,7 +55,7 @@ const SCHEMAS = [
   {
     id: 'core-mixins',
     name: 'Veloxpack Core: Mixins',
-    url: 'https://schemas.veloxpack.io/schemas/core/mixins/index.json',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/index.json',
     description: 'Reusable schema fragments shared across configurations.',
   },
   {

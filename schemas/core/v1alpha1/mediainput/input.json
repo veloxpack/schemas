@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/input.json",
+  "title": "Media Input Definition",
+  "description": "Input represents a single input stream to Veloxpack. An input defines a media source (video, audio, or text) along with its properties, extraction parameters, and processing options. Multiple inputs can be combined to create multi-track outputs with various language tracks, subtitle options, and media configurations.",
+  "type": "object",
+  "properties": {
+    "channelLayout": {
+      "description": "ChannelLayout specifies the audio channel configuration.\nCommon layouts: \"mono\", \"stereo\", \"5.1\", \"7.1\", \"5.1(side)\".\nRequired for raw audio inputs where layout cannot be auto-detected.\nFor standard files, this is usually auto-detected from container metadata.\nOnly applicable when MediaType is \"audio\".\nDetermines which audio layout outputs to generate (no upmixing).",
+      "type": "string"
+    },
+    "drmLabel": {
+      "description": "DrmLabel assigns a custom encryption label for DRM key differentiation.\nIf not provided, labels are auto-generated based on stream characteristics\n(media type, resolution, codec, etc.) to group similar quality tracks.\nCase-sensitive and only applicable when encryption mode is \"raw\".\nAllows fine-grained control over which tracks share encryption keys.\nExample: \"hd-video\", \"premium-audio\", \"director-commentary\".",
+      "type": "string"
+    },
+    "endTime": {
+      "description": "EndTime specifies the end of a time slice to extract from the input.\nFormat: \"HH:MM:SS\" or \"HH:MM:SS.mmm\" (e.g., \"00:05:30\", \"00:10:00.000\").\nOnly valid for VOD (video-on-demand) and InputType \"file\".\nNot supported for MediaType \"text\" (subtitles).\nUsed to extract a portion of a longer file without transcoding the entire content.\nMust be used together with StartTime to define the slice range.",
+      "type": "string"
+    },
+    "extraInputArgs": {
+      "description": "ExtraInputArgs provides additional FFmpeg input arguments for special input handling.\nUsed when FFmpeg cannot auto-detect the input format or needs special configuration.\nArguments are passed directly to FFmpeg before the input specification.\nExamples: \"-f rawvideo -pixel_format yuv420p\", \"-re\" (read at native frame rate),\n\"-rtsp_transport tcp\" (force TCP for RTSP), \"-thread_queue_size 512\" (buffer size).",
+      "type": "string"
+    },
+    "filters": {
+      "description": "Filters specifies a list of FFmpeg video or audio filters to apply during transcoding.\nEach filter is a complete filter string in FFmpeg syntax.\nNot supported for MediaType \"text\" (subtitles).\nFilters are applied in the order specified before codec encoding.\nVideo filter examples:\n- \"scale=1280:720\" (resize to 720p)\n- \"crop=1920:800:0:140\" (crop to 2.40:1 aspect ratio)\n- \"eq=brightness=0.1:contrast=1.2\" (color correction)\n- \"delogo=x=10:y=10:w=100:h=50\" (remove watermark)\n- \"yadif\" (deinterlace)\nAudio filter examples:\n- \"volume=1.5\" (increase volume by 50%)\n- \"acompressor\" (dynamic range compression)\n- \"highpass=f=200\" (remove low frequencies)",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "forcedSubtitle": {
+      "description": "ForcedSubtitle marks a subtitle track as containing forced narratives.\nForced subtitles display translations of foreign language dialogue or on-screen text\neven when the main subtitle track is disabled.\nOnly applicable when MediaType is \"text\".\nPlayers typically show forced subtitles by default regardless of user subtitle preferences.\nCommon in movies with mixed-language dialogue.",
+      "type": "boolean"
+    },
+    "frameRate": {
+      "description": "FrameRate specifies the input video frame rate in frames per second.\nFormat: Decimal number (e.g., \"30\", \"29.97\", \"60\") or fraction (e.g., \"30000/1001\").\nRequired for raw video inputs where frame rate cannot be auto-detected.\nFor standard files, this is usually auto-detected from container metadata.\nOnly applicable when MediaType is \"video\".\nCommon values: \"24\", \"25\", \"29.97\", \"30\", \"50\", \"59.94\", \"60\".",
+      "type": "string"
+    },
+    "inputType": {
+      "default": "file",
+      "description": "InputType specifies the source type of the media input.\nDetermines how the Name field is interpreted and which FFmpeg input format is used.\nDifferent input types support different features (e.g., time slicing only works with 'file').",
+      "enum": [
+        "url",
+        "file",
+        "looped_file",
+        "webcam",
+        "microphone",
+        "external_command"
+      ],
+      "type": "string"
+    },
+    "isInterlaced": {
+      "description": "IsInterlaced indicates whether the input video uses interlaced scanning.\nWhen true, deinterlacing filters are automatically applied during transcoding\nto convert to progressive scan for better quality on modern displays.\nAuto-detected for most file formats from metadata flags.\nOnly applicable when MediaType is \"video\".\nCommon for broadcast content (1080i, 480i) but rare in modern web video.",
+      "type": "boolean"
+    },
+    "language": {
+      "description": "Language specifies the ISO 639 language code for audio or subtitle tracks.\nFormat: 2-letter (e.g., \"en\", \"es\", \"fr\") or 3-letter (e.g., \"eng\", \"spa\", \"fra\").\nAuto-detected from file metadata when InputType is \"file\" or \"looped_file\".\nDefaults to \"und\" (undetermined) if not specified or detected.\nUsed in manifest metadata for player language selection and accessibility.\nExamples: \"en\" (English), \"es\" (Spanish), \"ja\" (Japanese), \"pt-BR\" (Brazilian Portuguese).",
+      "type": "string"
+    },
+    "mediaType": {
+      "description": "MediaType specifies whether this input is audio, video, or text (subtitles).\nDetermines which track to extract from multi-track sources and how to process it.\nFor files with multiple tracks, use TrackNum to select the specific track.",
+      "enum": [
+        "audio",
+        "video",
+        "text"
+      ],
+      "type": "string"
+    },
+    "name": {
+      "description": "Name identifies the input source, with interpretation depending on InputType:\n- file: Path to a local media file (e.g., \"/mnt/media/video.mp4\", \"input.mkv\")\n- url: Remote URL (e.g., \"https://example.com/stream.m3u8\", \"rtmp://server/live/stream\")\n- looped_file: Path to a file that will loop indefinitely (e.g., \"/mnt/loop/pattern.mp4\")\n- webcam: Device path on Linux (/dev/video0) or device name on macOS (\"default\", \"FaceTime HD Camera\")\n- microphone: Audio device identifier (platform-specific)\n- external_command: Shell command that outputs media to stdout (e.g., \"ffmpeg -i ... -f mpegts -\")",
+      "type": "string"
+    },
+    "resolution": {
+      "description": "Resolution specifies the input video resolution name or dimensions.\nCan be a preset name (e.g., \"1080p\", \"720p\", \"4k\") or explicit dimensions (\"1920x1080\").\nRequired for raw video inputs where resolution cannot be auto-detected.\nFor standard files, this is usually auto-detected from container metadata.\nOnly applicable when MediaType is \"video\".\nUsed to determine which output resolutions to generate (no upscaling).",
+      "type": "string"
+    },
+    "skipEncryption": {
+      "default": 0,
+      "description": "SkipEncryption disables encryption for this specific input stream.\nWhen set to non-zero value, this stream will not be encrypted even if\nan EncryptionProfile is configured in the pipeline.\nUseful for unprotected streams like preview quality or public samples.\nDefault: 0 (encryption applied if configured).",
+      "type": "integer"
+    },
+    "startTime": {
+      "description": "StartTime specifies the beginning of a time slice to extract from the input.\nFormat: \"HH:MM:SS\" or \"HH:MM:SS.mmm\" (e.g., \"00:01:30\", \"00:00:05.500\").\nOnly valid for VOD (video-on-demand) and InputType \"file\".\nNot supported for MediaType \"text\" (subtitles).\nUsed to extract a portion of a longer file without transcoding the entire content.\nMust be used together with EndTime to define the slice range.",
+      "type": "string"
+    },
+    "trackNum": {
+      "default": 0,
+      "description": "TrackNum selects which track to use from multi-track sources (0-indexed).\nTrack numbering is per MediaType: if a file has 1 video and 2 audio tracks,\nMediaType \"audio\" with TrackNum 0 selects the first audio track (not the second track overall).\nDefault: 0 (first track of the specified MediaType).\nExamples: TrackNum 0 = first audio track, TrackNum 1 = second audio track.",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "mediaType",
+    "name"
+  ],
+  "additionalProperties": false,
+  "x-kubernetes-validations": [
+    {
+      "message": "endTime must be specified when startTime is set",
+      "rule": "!has(self.startTime) || has(self.endTime)"
+    },
+    {
+      "message": "startTime must be specified when endTime is set",
+      "rule": "!has(self.endTime) || has(self.startTime)"
+    },
+    {
+      "message": "startTime and endTime are only valid for inputType 'file'",
+      "rule": "self.inputType == 'file' || (!has(self.startTime) && !has(self.endTime))"
+    },
+    {
+      "message": "time slicing is not supported for text (subtitle) streams",
+      "rule": "self.mediaType != 'text' || (!has(self.startTime) && !has(self.endTime))"
+    },
+    {
+      "message": "frameRate is only applicable for video streams",
+      "rule": "self.mediaType == 'video' || !has(self.frameRate)"
+    },
+    {
+      "message": "resolution is only applicable for video streams",
+      "rule": "self.mediaType == 'video' || !has(self.resolution)"
+    },
+    {
+      "message": "isInterlaced is only applicable for video streams",
+      "rule": "self.mediaType == 'video' || !has(self.isInterlaced)"
+    },
+    {
+      "message": "channelLayout is only applicable for audio streams",
+      "rule": "self.mediaType == 'audio' || !has(self.channelLayout)"
+    },
+    {
+      "message": "forcedSubtitle is only applicable for text streams",
+      "rule": "self.mediaType == 'text' || !has(self.forcedSubtitle)"
+    },
+    {
+      "message": "filters are not supported for text (subtitle) streams",
+      "rule": "self.mediaType != 'text' || !has(self.filters) || size(self.filters) == 0"
+    }
+  ]
+}
+

@@ -18,6 +18,54 @@ export const Route = createFileRoute('/steps')({
 
 const SCHEMAS = [
   {
+    id: 'core-index',
+    name: 'Veloxpack Core: Library',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/index.json',
+    description: 'Explore the v1alpha1 Veloxpack core schema collection.',
+  },
+  {
+    id: 'core-profiles',
+    name: 'Veloxpack Core: Profiles',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/index.json',
+    description: 'Reusable audio, video, and workload profile definitions.',
+  },
+  {
+    id: 'core-audio',
+    name: 'Veloxpack Core: Audio',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/audio/index.json',
+    description: 'Audio-specific configuration schemas including channel layouts.',
+  },
+  {
+    id: 'core-inputs',
+    name: 'Veloxpack Core: Inputs',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/index.json',
+    description: 'Input configuration schemas for ingesting media.',
+  },
+  {
+    id: 'core-pipelines',
+    name: 'Veloxpack Core: Pipelines',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/pipelines/index.json',
+    description: 'Schemas for orchestrating pipeline definition and workflows.',
+  },
+  {
+    id: 'core-video',
+    name: 'Veloxpack Core: Video',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/video/index.json',
+    description: 'Video-specific configuration schemas including resolution profiles.',
+  },
+  {
+    id: 'core-jobs',
+    name: 'Veloxpack Core: Jobs',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/jobs/index.json',
+    description: 'Execution job specifications for running pipelines.',
+  },
+  {
+    id: 'core-tools',
+    name: 'Veloxpack Core: Tools',
+    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/tools/index.json',
+    description: 'Reusable processing tools shared across workloads.',
+  },
+  {
     id: 'rclone-index',
     name: 'Rclone: Full Schema',
     url: 'https://schemas.veloxpack.io/schemas/rclone/latest/index.json',

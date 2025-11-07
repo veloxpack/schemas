@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/audio/index.json",
+  "title": "Veloxpack Audio Schemas",
+  "description": "Audio-specific configuration schemas for Veloxpack workloads.",
+  "type": "object",
+  "properties": {
+    "audioLayout": {
+      "title": "Audio Layout",
+      "description": "Defines channel layout capabilities and codec targets.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/audio/audiolayout.json"
+    }
+  },
+  "additionalProperties": false
+}
+

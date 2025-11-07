@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/jobs/streamingjob.json",
+  "title": "Streaming Job",
+  "description": "StreamingJobSpec defines the desired state of StreamingJob.\nStreamingJob represents a single media processing job that executes a workflow\nto transcode, package, encrypt, and deliver streaming media content based on\na StreamingPipeline configuration. Each job processes specific input media\nthrough the defined pipeline stages and outputs to a designated destination.",
+  "properties": {
+    "maxConcurrentStages": {
+      "description": "MaxConcurrentStages limits the number of workflow stages that can execute simultaneously.\nThis prevents resource exhaustion and helps control cluster load during job execution.\n\nSetting this value appropriately based on your cluster capacity:\n- Small clusters (< 10 nodes): 2-3 stages\n- Medium clusters (10-50 nodes): 4-6 stages\n- Large clusters (50+ nodes): 7-10 stages\n\nLower values reduce peak resource usage but increase total job duration.\nHigher values enable faster job completion but require more cluster resources.\n\nIf not specified, the system allows unlimited concurrent stages (constrained\nonly by resource availability). Setting this to 1 forces fully sequential execution.\n\nExample: A transcoding job with stages [probe, chunk, transcode-1080p, transcode-720p,\npackage, upload] and MaxConcurrentStages=3 might run probe+chunk+transcode-1080p\nconcurrently, then transcode-720p+package+upload as the first group completes.",
+      "maximum": 10,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "maxRetries": {
+      "default": 3,
+      "description": "MaxRetries specifies the maximum number of retry attempts if the job fails.\nRetries are attempted with exponential backoff for transient failures.\nSet to 0 to disable retries. Defaults to 3 if not specified.",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "mediaInputRef": {
+      "description": "MediaInputRef references the input media configuration defining source files or streams.\nThe MediaInput specifies input locations, track selections, time slicing,\nand input-specific processing options (filters, deinterlacing, language tags).\nSupports local files, remote URLs, live capture devices, and multi-period content.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "notificationProfileRef": {
+      "description": "NotificationProfileRef references a notification configuration for job lifecycle events.\nWhen configured, sends notifications (webhooks, emails, SNS) for events like:\njob started, progress updates, stage completions, job succeeded, job failed.\nIf not specified, inherits the NotificationProfile from the referenced StreamingPipeline.\nSet to an empty ResourceRef to explicitly disable notifications for this job.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "outputDestinationRef": {
+      "description": "OutputDestinationRef references a secret for csi-driver-rclone that specifies\nthe storage destination for processed media files.\nSupports various storage backends (S3, GCS, Azure Blob, HTTP, etc.).\nSee: https://github.com/veloxpack/csi-driver-rclone/\nIf not specified, inherits the OutputDestination from the referenced StreamingPipeline.\nSpecifying a destination here overrides the pipeline's default for this specific job.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "pipelineRef": {
+      "description": "PipelineRef references the StreamingPipeline configuration that defines the complete\nprocessing workflow for this job, including transcoding profiles, packaging settings,\nencryption configuration, and auxiliary content generation (thumbnails, sprites).\nThe pipeline orchestrates all processing stages and determines output formats.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "priority": {
+      "description": "Priority sets the scheduling priority for this job (higher values = higher priority).\nJobs with higher priority may be scheduled before lower-priority jobs when resources are limited.\nRange typically 0-100, where 0 is lowest priority and 100 is highest.\nDefault priority is inherited from the pipeline or system defaults.",
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "suspend": {
+      "default": false,
+      "description": "Suspend indicates whether this job should be suspended (not executed).\nWhen true, the job remains in Pending phase and will not be scheduled.\nSet to false to resume a suspended job. Useful for temporarily holding jobs.",
+      "type": "boolean"
+    },
+    "timeout": {
+      "description": "Timeout specifies the maximum duration for job execution.\nFormat: Duration string (e.g., \"30m\", \"2h\", \"1h30m\").\nIf the job exceeds this duration, it will be terminated and marked as failed.\nHelps prevent runaway jobs from consuming resources indefinitely.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mediaInputRef",
+    "pipelineRef"
+  ],
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "priority must be between 0 and 100",
+      "rule": "!has(self.priority) || (self.priority >= 0 && self.priority <= 100)"
+    },
+    {
+      "message": "maxRetries must be between 0 and 10",
+      "rule": "self.maxRetries >= 0 && self.maxRetries <= 10"
+    },
+    {
+      "message": "timeout must be positive when specified",
+      "rule": "!has(self.timeout) || duration(self.timeout) > duration('0s')"
+    },
+    {
+      "message": "maxConcurrentStages must be between 1 and 10",
+      "rule": "!has(self.maxConcurrentStages) || (self.maxConcurrentStages >= 1 && self.maxConcurrentStages <= 10)"
+    },
+    {
+      "message": "pipelineRef reference is immutable after creation",
+      "rule": "!has(oldSelf.pipelineRef) || self.pipelineRef == oldSelf.pipelineRef"
+    },
+    {
+      "message": "mediaInputRef reference is immutable after creation",
+      "rule": "!has(oldSelf.mediaInputRef) || self.mediaInputRef == oldSelf.mediaInputRef"
+    }
+  ]
+}

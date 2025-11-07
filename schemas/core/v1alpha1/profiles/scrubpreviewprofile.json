@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/scrubpreviewprofile.json",
+  "title": "Scrub Preview Profile",
+  "description": "ScrubPreviewProfile is the Schema for the scrubpreviewprofiles API.\nScrubPreviewProfile defines the configuration for generating timeline scrubbing previews,\nwhich combine multiple thumbnail images into grid-based sprite sheets with accompanying\nWebVTT metadata files. This technique enables efficient video seeking, timeline scrubbing,\nand hover preview functionality in video players by reducing HTTP requests and bandwidth\nusage compared to individual thumbnails. Players use the WebVTT file to map time positions\nto specific coordinates within the sprite sheets, providing visual feedback during seeking.",
+  "properties": {
+    "duration": {
+      "description": "Duration specifies the total video duration to cover with thumbnails.\nFormat: \"HH:MM:SS\" or \"MM:SS\" (e.g., \"00:05:00\" for 5 minutes, \"01:30:00\" for 1.5 hours).\nIf not specified, thumbnails are generated for the entire video duration.\nUseful for limiting sprite generation for very long videos or excluding end credits.\nExamples: \"00:10:00\" (first 10 minutes only), \"01:00:00\" (first hour only).",
+      "type": "string"
+    },
+    "quality": {
+      "default": 80,
+      "description": "Quality specifies the image quality for lossy formats (JPEG, WebP).\nRange: 1-100, where higher values mean better quality but larger file sizes.\nRecommended: 75-85 for good balance between quality and file size.\nOnly applicable for JPEG and WebP formats; ignored for PNG.",
+      "maximum": 100,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "resourceProfileRef": {
+      "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the scrub preview generation operation. This controls the compute resources allocated to scrub preview workers.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "spriteFormat": {
+      "default": "jpeg",
+      "description": "SpriteFormat specifies the image format for the sprite sheet files.\nJPEG provides good compression for photographic content (recommended for most cases).\nPNG offers lossless compression but larger file sizes.\nWebP provides superior compression but may have limited browser support.\nThe VTT file will reference sprite sheets in this format.",
+      "enum": [
+        "jpeg",
+        "jpg",
+        "png",
+        "webp"
+      ],
+      "type": "string"
+    },
+    "thumbnailHeight": {
+      "default": 180,
+      "description": "ThumbnailHeight specifies the height of each individual thumbnail in the sprite sheet.\nAll thumbnails in the sprite will have this uniform height in pixels.\nShould maintain the video's aspect ratio (e.g., 16:9 = 320x180, 4:3 = 320x240).\nCommon values: 90 (low quality), 180 (standard), 270 (high quality).",
+      "minimum": 1,
+      "type": "integer"
+    },
+    "thumbnailWidth": {
+      "default": 320,
+      "description": "ThumbnailWidth specifies the width of each individual thumbnail in the sprite sheet.\nAll thumbnails in the sprite will have this uniform width in pixels.\nSmaller sizes reduce bandwidth but may sacrifice preview clarity.\nCommon values: 160 (low quality), 320 (standard), 480 (high quality).\nMust be balanced with ThumbnailHeight to maintain aspect ratio.",
+      "minimum": 1,
+      "type": "integer"
+    },
+    "thumbnailsPerColumn": {
+      "default": 10,
+      "description": "ThumbnailsPerColumn specifies how many thumbnails are arranged vertically in each sprite sheet.\nMore thumbnails per column create taller sprite sheets but fewer total sprite files.\nTypical values: 5-10 for balance between sprite dimensions and file count.\nTotal thumbnails per sprite = ThumbnailsPerRow \u00d7 ThumbnailsPerColumn.\nExample: 10 columns \u00d7 10 rows = 100 thumbnails per sprite sheet.",
+      "minimum": 1,
+      "type": "integer"
+    },
+    "thumbnailsPerRow": {
+      "default": 10,
+      "description": "ThumbnailsPerRow specifies how many thumbnails are arranged horizontally in each sprite sheet.\nMore thumbnails per row create wider sprite sheets but fewer total sprite files.\nTypical values: 5-10 for balance between sprite dimensions and file count.\nTotal thumbnails per sprite = ThumbnailsPerRow \u00d7 ThumbnailsPerColumn.\nExample: 10 columns \u00d7 10 rows = 100 thumbnails per sprite sheet.",
+      "minimum": 1,
+      "type": "integer"
+    },
+    "timeInterval": {
+      "default": 10,
+      "description": "TimeInterval specifies the time gap between consecutive thumbnails in seconds.\nSmaller intervals provide smoother scrubbing but generate more thumbnails.\nLarger intervals reduce file size and generation time but make scrubbing less precise.\nCommon values: 5 (detailed), 10 (standard), 30 (sparse).\nFor a 1-hour video with 10s interval: 360 thumbnails = 4 sprite sheets (at 100 thumbs/sheet).",
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "thumbnail dimensions must be positive",
+      "rule": "self.thumbnailWidth > 0 && self.thumbnailHeight > 0"
+    },
+    {
+      "message": "thumbnailsPerRow and thumbnailsPerColumn must be at least 1",
+      "rule": "self.thumbnailsPerRow >= 1 && self.thumbnailsPerColumn >= 1"
+    },
+    {
+      "message": "total thumbnails per sprite (row \u00d7 column) must not exceed 1000",
+      "rule": "self.thumbnailsPerRow * self.thumbnailsPerColumn <= 1000"
+    },
+    {
+      "message": "timeInterval must be at least 1 second",
+      "rule": "self.timeInterval >= 1"
+    },
+    {
+      "message": "sprite width (thumbnailWidth \u00d7 thumbnailsPerRow) must not exceed 16384 pixels",
+      "rule": "(self.thumbnailWidth * self.thumbnailsPerRow) <= 16384"
+    },
+    {
+      "message": "sprite height (thumbnailHeight \u00d7 thumbnailsPerColumn) must not exceed 16384 pixels",
+      "rule": "(self.thumbnailHeight * self.thumbnailsPerColumn) <= 16384"
+    }
+  ]
+}

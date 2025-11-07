@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/index.json",
+  "title": "Veloxpack Inputs",
+  "description": "Input configuration schemas for ingesting media into Veloxpack pipelines.",
+  "type": "object",
+  "properties": {
+    "input": {
+      "title": "Input",
+      "description": "Base definition for a single media input stream.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/input.json"
+    },
+    "mediaInput": {
+      "title": "Media Input",
+      "description": "Describes source media topology for processing.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/mediainput.json"
+    }
+  },
+  "additionalProperties": false
+}
+

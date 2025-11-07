@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/pipelines/index.json",
+  "title": "Veloxpack Pipelines",
+  "description": "Building blocks for ingest, orchestration, and runtime execution of Veloxpack streaming workloads.",
+  "type": "object",
+  "properties": {
+    "streamingPipeline": {
+      "title": "Streaming Pipeline",
+      "description": "Defines end-to-end streaming pipeline configuration.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/pipelines/streamingpipeline.json"
+    },
+    "videoResolution": {
+      "title": "Video Resolution",
+      "description": "Standardized resolution definitions for ladder construction.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/video/videoresolution.json"
+    }
+  },
+  "additionalProperties": false
+}
+

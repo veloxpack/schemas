@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/index.json",
+  "title": "Veloxpack Core Schemas",
+  "description": "Entry point for Veloxpack core v1alpha1 schema library.",
+  "type": "object",
+  "properties": {
+    "profiles": {
+      "title": "Reusable Profiles",
+      "description": "Audio, video, and workflow profiles shared across workloads.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/index.json"
+    },
+    "audio": {
+      "title": "Audio",
+      "description": "Audio-specific configuration schemas including channel layouts.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/audio/index.json"
+    },
+    "video": {
+      "title": "Video",
+      "description": "Video-specific configuration schemas including resolution profiles.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/video/index.json"
+    },
+    "inputs": {
+      "title": "Inputs",
+      "description": "Input configuration schemas for ingesting media.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/index.json"
+    },
+    "pipelines": {
+      "title": "Pipelines",
+      "description": "Schemas for orchestrating pipeline definition and workflows.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/pipelines/index.json"
+    },
+    "jobs": {
+      "title": "Jobs",
+      "description": "Execution job specifications for running pipelines.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/jobs/index.json"
+    },
+    "tools": {
+      "title": "Tools",
+      "description": "Reusable processing tools shared across workloads.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/tools/index.json"
+    }
+  },
+  "additionalProperties": false
+}
+

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/jobs/index.json",
+  "title": "Veloxpack Jobs",
+  "description": "Execution job specifications for Veloxpack streaming workloads.",
+  "type": "object",
+  "properties": {
+    "streamingJob": {
+      "title": "Streaming Job",
+      "description": "Runtime job parameters for executing streaming pipelines.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/jobs/streamingjob.json"
+    }
+  },
+  "additionalProperties": false
+}
+

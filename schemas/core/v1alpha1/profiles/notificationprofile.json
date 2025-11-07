@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/notificationprofile.json",
+  "title": "Notification Profile",
+  "description": "NotificationProfileSpec defines the desired state of NotificationProfile.\nNotificationProfile configures how and when to send notifications about StreamingJob\nlifecycle events through various notification services (Slack, Email, Webhook, etc.).",
+  "properties": {
+    "configMapRef": {
+      "description": "ConfigMapRef references a ConfigMap containing notification triggers, templates, and service configurations.\nThe ConfigMap should contain keys like:\n- trigger.<name>: YAML trigger definitions with conditions and templates\n- template.<name>: Go template definitions for notification messages\n- service.<name>: Service-specific configuration (Slack, Email, Webhook, etc.)\n\nExample ConfigMap structure:\n  data:\n    trigger.job-failed: |\n      - when: job.status.phase == 'Failed'\n        send: [job-failure-alert]\n    template.job-failure-alert: |\n      message: Job {{.job.metadata.name}} failed: {{.job.status.errorMessage}}\n    service.slack: |\n      token: $slack-token",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "context": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Context provides additional variables available to notification templates.\nThese key-value pairs are added to the template context as {{.context.<key>}}.\nCommon uses: operatorUrl, clusterName, environment, region\n\nExample:\n  context:\n    operatorUrl: \"https://veloxpack.example.com\"\n    environment: \"production\"\n    clusterName: \"prod-us-west-2\"",
+      "type": "object"
+    },
+    "defaultDestinations": {
+      "description": "DefaultDestinations defines default notification destinations that apply to all triggers.\nThese destinations receive notifications for any triggered event unless overridden\nby annotation-based subscriptions on individual StreamingJobs.\n\nExample:\n  defaultDestinations:\n    - service: slack\n      recipients: [\"#production-alerts\", \"#ops-team\"]\n    - service: email\n      recipients: [\"alerts@example.com\"]",
+      "items": {
+        "description": "NotificationDestination defines a notification service and its recipients",
+        "properties": {
+          "recipients": {
+            "description": "Recipients is a list of destination identifiers for this service.\nFor Slack: channel names like \"#alerts\" or user IDs\nFor Email: email addresses\nFor Webhook: typically not needed (webhook URL is in service config)\nFor PagerDuty: routing keys or service keys",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "service": {
+            "description": "Service is the name of the notification service (e.g., \"slack\", \"email\", \"webhook\")\nMust match a service configured in the ConfigMap",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "service"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "type": "array"
+    },
+    "defaultTriggers": {
+      "description": "DefaultTriggers is a list of triggers that are enabled by default for all notifications.\nIf specified, these triggers will be automatically evaluated unless explicitly disabled.\nCommon values: [\"job-failed\", \"job-succeeded\"]",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "secretRef": {
+      "description": "SecretRef references a Secret containing sensitive notification service credentials.\nKeys should match variables referenced in service configurations (e.g., $slack-token).\nThe Secret must be in the same namespace as the NotificationProfile.\n\nExample Secret:\n  data:\n    slack-token: <base64-encoded-token>\n    email-password: <base64-encoded-password>",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "configMapRef",
+    "secretRef"
+  ],
+  "type": "object"
+}

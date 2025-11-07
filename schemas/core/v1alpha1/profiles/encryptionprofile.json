@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/encryptionprofile.json",
+  "title": "Encryption Profile",
+  "description": "EncryptionProfileSpec defines the desired state of EncryptionProfile.\nIt configures content encryption and DRM protection settings for securing media streams\nagainst unauthorized access. Supports both managed DRM systems (Widevine, PlayReady, FairPlay)\nand raw encryption with custom keys. Used to protect premium content, enforce geographic\nrestrictions, and enable secure commercial streaming workflows.",
+  "properties": {
+    "clearLead": {
+      "default": 10,
+      "description": "ClearLead specifies the duration in seconds of unencrypted media at the stream start.\nAllows players to initialize and buffer before encryption keys are required.\nImproves startup time and reduces playback failures.\nCommon values: 0 (immediate encryption), 5-10 (standard), 15-30 (aggressive optimization).\nNote: Clear lead content is not protected and may be captured.",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "contentId": {
+      "description": "ContentId uniquely identifies the content for Widevine key management.\nMust be a hexadecimal string. If omitted, a random content ID is generated.\nOnly applicable in 'widevine' encryption mode.\nUsed by the Widevine license server to track and manage encryption keys.\nShould be unique per piece of content for proper license tracking.\nExample: \"0123456789abcdef\"",
+      "type": "string"
+    },
+    "hlsKeyUri": {
+      "description": "HlsKeyUri specifies the URI where HLS players can retrieve the decryption key.\nIncluded in HLS playlists as the #EXT-X-KEY URI attribute.\nCan be an absolute URL or relative path.\nRequired for HLS with AES-128 encryption (raw mode).\nExample: \"https://keys.example.com/key.bin\", \"skd://key-id\" (for FairPlay).",
+      "type": "string"
+    },
+    "iv": {
+      "description": "Iv specifies the Initialization Vector for AES encryption in hex format.\nMust be a 32-character hexadecimal string (128-bit value).\nOnly applicable in 'raw' encryption mode.\nIf not specified, a cryptographically random IV will be generated per segment.\nUsing a random IV per segment is more secure than a static IV.\nExample: \"0123456789abcdef0123456789abcdef\"",
+      "pattern": "^[0-9a-fA-F]{32}$",
+      "type": "string"
+    },
+    "keyServerUrl": {
+      "description": "KeyServerUrl is the URL of the Widevine key server for encryption key generation.\nOnly applicable in 'widevine' encryption mode.\nDefaults to Widevine's UAT (User Acceptance Testing) server if not specified.\nProduction deployments should use a licensed Widevine key server.\nExample: \"https://license.uat.widevine.com/cenc/getcontentkey/widevine_test\"",
+      "type": "string"
+    },
+    "keys": {
+      "description": "Keys specifies the encryption keys for raw encryption mode.\nEach key can have a label to encrypt different content streams or quality tiers.\nMultiple keys enable selective decryption (e.g., different keys for SD vs HD content).\nOnly applicable in 'raw' encryption mode.\nAt least one key is required when Mode is 'raw'.",
+      "items": {
+        "description": "RawKey represents an encryption key configuration for raw key encryption mode.\nMultiple keys can be specified to encrypt different content streams (video/audio)\nor quality levels (SD/HD/4K) with different keys, enabling selective decryption.",
+        "properties": {
+          "key": {
+            "description": "Key is the actual encryption key used to encrypt the content.\nMust be a 32-character hexadecimal string (128-bit AES key).\nKeep this value secure and do not expose in public repositories or logs.\nExample: \"ffeeddccbbaa99887766554433221100\"",
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "type": "string"
+          },
+          "keyId": {
+            "description": "KeyId is the key identifier used to locate the decryption key.\nMust be a 32-character hexadecimal string (128-bit value).\nThis ID is included in the PSSH box and manifest for players to request the correct key.\nExample: \"00112233445566778899aabbccddeeff\"",
+            "pattern": "^[0-9a-fA-F]{32}$",
+            "type": "string"
+          },
+          "label": {
+            "description": "Label is an arbitrary identifier or predefined DRM label for this key.\nPredefined labels include: AUDIO, SD, HD, UHD1, UHD2, AUDIO_<LANG> (e.g., AUDIO_en).\nIf not specified, this represents the default key for content without a specific label.\nLabels are case-sensitive and should match the DrmLabel field in Input configurations.\nExample: \"HD\" for 1080p video, \"AUDIO_en\" for English audio track, \"premium\" for custom tier.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "keyId"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "type": "array"
+    },
+    "mode": {
+      "default": "widevine",
+      "description": "Mode specifies the encryption workflow: widevine (DRM-managed) or raw (static keys).\nWidevine mode integrates with a license server for dynamic key management.\nRaw mode uses pre-defined static keys without external license servers.\nChoose widevine for commercial DRM deployments, raw for testing or custom key management.",
+      "enum": [
+        "widevine",
+        "raw"
+      ],
+      "type": "string"
+    },
+    "protectionScheme": {
+      "default": "cenc",
+      "description": "ProtectionScheme selects the encryption algorithm: cenc (AES-CTR) or cbcs (AES-CBC).\nCENC is standard for DASH with Widevine/PlayReady on web and Android.\nCBCS is required for HLS with FairPlay on Apple devices.\nFor multi-DRM scenarios supporting both platforms, you may need separate profiles.",
+      "enum": [
+        "cenc",
+        "cbcs"
+      ],
+      "type": "string"
+    },
+    "protectionSystems": {
+      "description": "ProtectionSystems lists the DRM systems to generate metadata for in manifests.\nMultiple systems enable multi-DRM support, allowing playback across different platforms.\nCommon combinations: [Widevine, PlayReady] for web/mobile, add FairPlay for Apple devices.\nIf not specified with raw mode, a generic Common System PSSH will be generated.\nEach system requires appropriate licensing agreements and player support.",
+      "items": {
+        "description": "ProtectionSystem represents a specific Digital Rights Management (DRM) system\nused to control access to encrypted media content. Each system defines its own\nkey management, license acquisition, and playback authorization mechanisms.\nThis field is typically aligned with the ContentProtection descriptors in DASH or HLS manifests.",
+        "enum": [
+          "Widevine",
+          "FairPlay",
+          "PlayReady",
+          "Marlin",
+          "CommonSystem"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "pssh": {
+      "description": "Pssh contains one or more concatenated Protection System Specific Header (PSSH) boxes in hex.\nPSSH boxes contain DRM system-specific initialization data embedded in manifests and init segments.\nOnly applicable in 'raw' encryption mode. If not specified, a v1 common PSSH box is auto-generated.\nFormat: Hex string with complete PSSH box(es) including headers.\nUse for pre-generated PSSH data from external DRM providers.",
+      "type": "string"
+    },
+    "signer": {
+      "description": "Signer identifies the account/entity when authenticating to the Widevine key server.\nOnly applicable in 'widevine' encryption mode.\nDefaults to the Widevine test account for UAT environments.\nProduction requires a licensed signer name from Widevine.",
+      "type": "string"
+    },
+    "signingIvSecretSelector": {
+      "description": "SigningIvSecretSelector references a Kubernetes Secret containing the authentication IV\nfor the Widevine key server. This is the recommended way to provide the signing IV\nas it avoids storing sensitive credentials directly in the resource spec.\nOnly applicable in 'widevine' encryption mode.\nThe secret should contain the signing IV in hexadecimal format.\nIf both SigningIv and SigningIvSecretSelector are specified, SigningIvSecretSelector takes precedence.\nExample:\n  apiVersion: v1\n  kind: Secret\n  metadata:\n    name: widevine-credentials\n  data:\n    signingIv: <base64-encoded-hex-iv>\nReference: {name: \"widevine-credentials\", key: \"signingIv\"}",
+      "properties": {
+        "key": {
+          "description": "The key of the secret to select from.  Must be a valid secret key.",
+          "type": "string"
+        },
+        "name": {
+          "default": "",
+          "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+          "type": "string"
+        },
+        "optional": {
+          "description": "Specify whether the Secret or its key must be defined",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "type": "object",
+      "x-kubernetes-map-type": "atomic",
+      "additionalProperties": false
+    },
+    "signingKeySecretSelector": {
+      "description": "SigningKeySecretSelector references a Kubernetes Secret containing the authentication key\nfor the Widevine key server. This is the recommended way to provide the signing key\nas it avoids storing sensitive credentials directly in the resource spec.\nOnly applicable in 'widevine' encryption mode.\nThe secret should contain the signing key in hexadecimal format.\nIf both SigningKey and SigningKeySecretSelector are specified, SigningKeySecretSelector takes precedence.\nExample:\n  apiVersion: v1\n  kind: Secret\n  metadata:\n    name: widevine-credentials\n  data:\n    signingKey: <base64-encoded-hex-key>\nReference: {name: \"widevine-credentials\", key: \"signingKey\"}",
+      "properties": {
+        "key": {
+          "description": "The key of the secret to select from.  Must be a valid secret key.",
+          "type": "string"
+        },
+        "name": {
+          "default": "",
+          "description": "Name of the referent.\nThis field is effectively required, but due to backwards compatibility is\nallowed to be empty. Instances of this type with an empty value here are\nalmost certainly wrong.\nMore info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+          "type": "string"
+        },
+        "optional": {
+          "description": "Specify whether the Secret or its key must be defined",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "type": "object",
+      "x-kubernetes-map-type": "atomic",
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "at least one key is required when mode is 'raw'",
+      "rule": "self.mode == 'raw' ? size(self.keys) > 0 : true"
+    },
+    {
+      "message": "signingKeySecretSelector or signingIvSecretSelector should be provided when mode is 'widevine'",
+      "rule": "self.mode == 'widevine' ? (has(self.signingKeySecretSelector) || has(self.signingIvSecretSelector)) : true"
+    },
+    {
+      "message": "keys field is only applicable when mode is 'raw'",
+      "rule": "self.mode == 'raw' || !has(self.keys) || size(self.keys) == 0"
+    },
+    {
+      "message": "pssh field is only applicable when mode is 'raw'",
+      "rule": "self.mode == 'raw' || !has(self.pssh)"
+    },
+    {
+      "message": "clearLead must be between 0 and 300 seconds",
+      "rule": "self.clearLead >= 0 && self.clearLead <= 300"
+    }
+  ]
+}

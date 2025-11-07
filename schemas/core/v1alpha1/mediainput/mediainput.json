@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/mediainput.json",
+  "title": "Media Input",
+  "description": "MediaInputSpec defines the desired state of MediaInput.\nIt configures the input media streams for processing, supporting both simple\nsingle-input scenarios and complex multi-period DASH presentations with multiple\ninputs per period for live streaming and VOD delivery.",
+  "properties": {
+    "inputs": {
+      "description": "Inputs defines a list of input streams for single-period processing.\nEach input can be video, audio, or text (subtitles) from various sources.\nMultiple inputs enable multi-audio, multi-subtitle, and multi-angle scenarios.\nExamples:\n- Multiple audio tracks: English, Spanish, French commentary\n- Multiple subtitle tracks: English SDH, Spanish, Japanese\n- Multiple video angles: Main camera, alternate angles\nMutually exclusive with MultiperiodInputsList - use one or the other.\nAt least one input is required.",
+      "items": {
+        "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/input.json"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "multiperiodInputsList": {
+      "description": "MultiperiodInputsList defines a sequence of periods for multi-period DASH.\nEach period can contain different inputs, enabling:\n- Server-side ad insertion (SSAI) with different content per period\n- Live stream configuration changes (switching encoders, resolutions)\n- Content stitching (main program + commercials + promos)\nMutually exclusive with Inputs field - use one or the other.\nOnly applicable for DASH output format.",
+      "items": {
+        "description": "SinglePeriod represents a single period in a multi-period DASH presentation.\nPeriods allow switching between different content or ad insertions in live streams.\nEach period can have different encoder settings, resolutions, or content entirely.\nCommonly used for server-side ad insertion (SSAI) or changing live stream configurations.",
+        "properties": {
+          "duration": {
+            "description": "Duration specifies the duration of this period.\nFormat: \"HH:MM:SS\" (e.g., \"00:00:30\" for 30-second ad spot).\nFor live streams, this may be omitted if the period ends when the next period begins.",
+            "type": "string"
+          },
+          "inputs": {
+            "description": "Inputs defines the list of input streams for this period.\nEach period can have completely different inputs, allowing content switching.\nAll inputs within a period are processed and packaged together.",
+            "items": {
+              "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mediainput/input.json"
+            },
+            "type": "array"
+          },
+          "periodId": {
+            "description": "PeriodID provides a unique identifier for this period in the DASH manifest.\nIf not specified, an auto-generated ID will be used.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "inputs"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "either inputs or multiperiodInputsList must be specified, but not both",
+      "rule": "(has(self.inputs) && size(self.inputs) > 0 && (!has(self.multiperiodInputsList) || size(self.multiperiodInputsList) == 0)) || ((!has(self.inputs) || size(self.inputs) == 0) && has(self.multiperiodInputsList) && size(self.multiperiodInputsList) > 0)"
+    },
+    {
+      "message": "at least one input or period must be specified",
+      "rule": "(has(self.inputs) && size(self.inputs) > 0) || (has(self.multiperiodInputsList) && size(self.multiperiodInputsList) > 0)"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/video/index.json",
+  "title": "Veloxpack Video Schemas",
+  "description": "Video-specific configuration schemas for Veloxpack workloads.",
+  "type": "object",
+  "properties": {
+    "videoResolution": {
+      "title": "Video Resolution",
+      "description": "Standardized resolution definitions for ladder construction.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/video/videoresolution.json"
+    }
+  },
+  "additionalProperties": false
+}
+

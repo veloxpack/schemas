@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/audio/audiolayout.json",
+  "title": "Audio Layout",
+  "description": "AudioLayoutSpec defines the desired state of AudioLayout.\nAudioLayoutSpec represents the configuration for a specific audio channel layout,\ndefining the maximum number of audio channels and codec-specific bitrate targets.\nCommon layouts include mono (1), stereo (2), 5.1 surround (6), and 7.1 surround (8).\nMultiple AudioLayout resources form an audio quality ladder for adaptive streaming,\nallowing players to select appropriate audio tracks based on device capabilities\nand bandwidth availability.",
+  "properties": {
+    "bitrates": {
+      "additionalProperties": {
+        "description": "Bitrate represents a bitrate value as a string with optional k/M suffix for CRD compatibility.\nValid formats: \"500\", \"500k\", \"7.5M\"\n- No suffix: bits per second\n- k suffix: kilobits per second (1000 bits/s)\n- M suffix: megabits per second (1000000 bits/s)",
+        "pattern": "^[\\d\\.]+(?:[kM])?$",
+        "type": "string"
+      },
+      "description": "Bitrates maps audio codecs to their target encoding bitrates for this channel layout.\nDifferent codecs achieve different compression efficiency and quality characteristics,\nrequiring codec-specific bitrate optimization. Higher channel counts typically need\nproportionally higher bitrates to maintain quality.\n\nBitrate recommendations by layout and codec:\n\nMono (1 channel):\n- AAC: 48-64kbps, Opus: 32-48kbps, FLAC: 300-400kbps\n\nStereo (2 channels):\n- AAC: 128-192kbps (standard), 256kbps (high quality)\n- Opus: 96-128kbps (matches AAC 128-192kbps quality)\n- AC-3: 192kbps, E-AC-3: 128-192kbps\n- FLAC: 700-1000kbps (lossless)\n\n5.1 Surround (6 channels):\n- AAC: 384-512kbps\n- Opus: 256-384kbps\n- AC-3: 384-448kbps (standard), 640kbps (maximum)\n- E-AC-3: 384-512kbps\n- FLAC: 2000-3000kbps (lossless)\n\n7.1 Surround (8 channels):\n- AAC: 512-768kbps\n- E-AC-3: 512-768kbps\n- FLAC: 3000-4000kbps (lossless)\n\nFormat: String with optional suffix - '128k' (kilobits/sec), '1.5M' (megabits/sec).\nExamples: \"128k\", \"384k\", \"1.5M\"\nAt least one codec bitrate must be specified.",
+      "type": "object"
+    },
+    "maxChannels": {
+      "description": "MaxChannels defines the maximum number of discrete audio channels in this layout.\nCommon channel counts and their standard configurations:\n- 1 channel:  Mono (single speaker/headphone)\n- 2 channels: Stereo (left, right)\n- 6 channels: 5.1 Surround (FL, FR, FC, LFE, BL, BR)\n- 8 channels: 7.1 Surround (FL, FR, FC, LFE, BL, BR, SL, SR)\n\nFL=Front Left, FR=Front Right, FC=Front Center, LFE=Low Frequency Effects (subwoofer),\nBL=Back Left, BR=Back Right, SL=Side Left, SR=Side Right\n\nInput audio with more channels than MaxChannels will be downmixed.\nInput audio with fewer channels will not be upmixed (prevents artificial channel creation).\nMust be between 1 and 32 channels (32 is the maximum supported by most formats).",
+      "maximum": 32,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "resourceProfileRef": {
+      "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor audio processing operations using this layout. This controls the compute resources allocated to audio workers.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "sampleRate": {
+      "description": "SampleRate specifies the target audio sample rate in Hz.\nCommon values: 44100 (CD quality), 48000 (DVD/broadcast standard), 96000 (high-res).\nIf not specified, the source sample rate is preserved.\nLower sample rates reduce bitrate but may affect quality for music content.",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "bitrates",
+    "maxChannels"
+  ],
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "maxChannels must be between 1 and 32",
+      "rule": "self.maxChannels >= 1 && self.maxChannels <= 32"
+    },
+    {
+      "message": "at least one codec bitrate must be specified",
+      "rule": "size(self.bitrates) > 0"
+    },
+    {
+      "message": "sampleRate must be positive when specified",
+      "rule": "!has(self.sampleRate) || self.sampleRate > 0"
+    },
+    {
+      "message": "sampleRate must be between 8000 and 192000 Hz",
+      "rule": "!has(self.sampleRate) || self.sampleRate >= 8000 && self.sampleRate <= 192000"
+    }
+  ]
+}

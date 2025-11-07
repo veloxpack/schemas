@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/video/videoresolution.json",
+  "title": "Video Resolution",
+  "description": "VideoResolutionSpec defines the encoding parameters and resource requirements\nfor a specific video resolution profile. Each resolution profile specifies the\nmaximum dimensions, frame rate, and codec-specific bitrates, along with optional\ncompute requirements for scheduling encoding workloads.\n\nResolution profiles enable adaptive bitrate streaming (ABR) by defining quality\ntiers that players can switch between based on available bandwidth. Common profiles\ninclude \"2160p\" (4K), \"1080p\" (Full HD), \"720p\" (HD), \"480p\" (SD), \"360p\", and \"240p\".\n\nExample: A \"1080p\" resolution profile might specify 1920x1080 maximum dimensions,\n60fps max frame rate, with H264 at 5Mbps and VP9 at 3Mbps, requiring GPU nodes\nfor hardware acceleration.",
+  "properties": {
+    "bitrates": {
+      "additionalProperties": {
+        "description": "Bitrate represents a bitrate value as a string with optional k/M suffix for CRD compatibility.\nValid formats: \"500\", \"500k\", \"7.5M\"\n- No suffix: bits per second\n- k suffix: kilobits per second (1000 bits/s)\n- M suffix: megabits per second (1000000 bits/s)",
+        "pattern": "^[\\d\\.]+(?:[kM])?$",
+        "type": "string"
+      },
+      "description": "Bitrates maps video codecs to their target encoding bitrates for this resolution.\nDifferent codecs achieve different compression ratios, so each requires codec-specific\nbitrate tuning to maintain quality. Higher bitrates improve quality but increase\nbandwidth and storage requirements.\n\nBitrate selection guidelines by resolution and codec:\n- 4K (3840x2160):  H.264: 15-25M, H.265: 10-15M, VP9: 12-18M, AV1: 8-12M\n- 1080p (1920x1080): H.264: 4-8M, H.265: 3-5M, VP9: 3-6M, AV1: 2-4M\n- 720p (1280x720):  H.264: 2-4M, H.265: 1.5-3M, VP9: 1.5-3M, AV1: 1-2M\n- 480p (854x480):   H.264: 1-2M, H.265: 0.7-1.5M, VP9: 0.7-1.5M, AV1: 0.5-1M\n\nFormat: String with optional suffix - '500k' (kilobits/sec), '5M' (megabits/sec).\nExamples: \"500k\", \"2.5M\", \"8M\", \"15M\"\nAt least one codec bitrate must be specified.",
+      "type": "object"
+    },
+    "maxFrameRate": {
+      "description": "MaxFrameRate is the maximum frame rate in frames per second (fps).\nVideos with higher frame rates will be reduced to this value.\nIf not specified, the source frame rate is preserved (no limit).\nCommon values: 24 (film), 25 (PAL), 30 (NTSC/web), 60 (sports/gaming), 120 (high-motion).\nFormat: Decimal number (e.g., \"30\", \"29.97\", \"60\") or fraction (\"30000/1001\").\nLower frame rates reduce bitrate requirements but may affect motion smoothness.",
+      "type": "string"
+    },
+    "maxHeight": {
+      "description": "MaxHeight is the maximum height in pixels for this resolution profile.\nDefines the vertical dimension constraint. Input videos exceeding this height\nwill be downscaled to fit within MaxHeight while preserving aspect ratio.\nCommon values: 2160 (4K), 1080 (1080p), 720 (720p), 480 (480p), 360 (360p).\nFor portrait video, height may exceed width. Must be a positive integer.",
+      "maximum": 4320,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "maxWidth": {
+      "description": "MaxWidth is the maximum width in pixels for this resolution profile.\nDefines the horizontal dimension constraint. Input videos exceeding this width\nwill be downscaled to fit within MaxWidth while preserving aspect ratio.\nCommon values: 3840 (4K), 1920 (1080p), 1280 (720p), 854 (480p), 640 (360p).\nMust be a positive integer representing pixel count.",
+      "maximum": 7680,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "resourceProfileRef": {
+      "description": "ResourceProfile references hardware and scheduling constraints for encoding.\nHigher resolutions and frame rates require more powerful hardware:\n- 1080p30: Standard CPU encoding acceptable\n- 1080p60/4K30: GPU acceleration recommended for real-time encoding\n- 4K60+: High-end GPU or dedicated encoding hardware required\n\nResourceProfile can specify:\n- CPU/memory requests and limits\n- GPU requirements (nvidia.com/gpu, amd.com/gpu)\n- Node selectors (instance types with encoding hardware)\n- Tolerations (dedicated encoding node pools)\n\nIf not specified, uses cluster defaults with no special requirements.\nHardware acceleration prefix \"hw:\" in codec name (e.g., \"hw:h264\") requires\nappropriate compute resources to be available.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "bitrates",
+    "maxHeight",
+    "maxWidth"
+  ],
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "maxWidth and maxHeight must be positive",
+      "rule": "self.maxWidth > 0 && self.maxHeight > 0"
+    },
+    {
+      "message": "at least one codec bitrate must be specified",
+      "rule": "size(self.bitrates) > 0"
+    },
+    {
+      "message": "maxFrameRate must be positive when specified",
+      "rule": "!has(self.maxFrameRate) || double(self.maxFrameRate) > 0.0"
+    },
+    {
+      "message": "dimensions exceed maximum supported resolution (8K)",
+      "rule": "self.maxWidth <= 7680 && self.maxHeight <= 4320"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/tools/index.json",
+  "title": "Veloxpack Tools",
+  "description": "Reusable processing tools and utilities referenced by pipelines and jobs.",
+  "type": "object",
+  "properties": {
+    "tool": {
+      "title": "Tool",
+      "description": "Reusable processing utilities available to pipelines.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/tools/tool.json"
+    }
+  },
+  "additionalProperties": false
+}
+

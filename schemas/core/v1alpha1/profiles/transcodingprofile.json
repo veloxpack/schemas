@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/transcodingprofile.json",
+  "title": "Transcoding Profile",
+  "description": "TranscodingProfileSpec defines the desired state of TranscodingProfile.\nIt configures video and audio transcoding parameters including target resolutions,\naudio channel layouts, and codec selection for converting input media into multiple\noutput renditions suitable for adaptive bitrate streaming.",
+  "properties": {
+    "audioCodecs": {
+      "default": [
+        "aac"
+      ],
+      "description": "AudioCodecs specifies the audio codecs to use for transcoding.\nSupported codecs include AAC, MP3, Opus, and others depending on the encoder.\nMultiple codecs can be specified to generate outputs in different formats\nfor broader player compatibility (e.g., AAC for iOS, Opus for web).",
+      "items": {
+        "description": "AudioCodec represents the audio codec type",
+        "enum": [
+          "aac",
+          "opus",
+          "ac3",
+          "eac3",
+          "flac"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "audioLayoutRefs": {
+      "description": "AudioLayoutRefs specifies the list of target audio channel layouts to transcode.\nEach layout reference points to an AudioLayout resource that defines channel\nconfiguration (e.g., stereo, 5.1, 7.1) and bitrate settings.\nLayouts with more channels than the input are automatically skipped to prevent\nupmixing from fewer channels, which would not add real audio information.\nIf not specified, defaults to all AudioLayout resources defined in the bitrate configuration.",
+      "items": {
+        "description": "ResourceRef references a Veloxpack custom resource, optionally in a different namespace.\nThis type is specifically designed for referencing Veloxpack CRDs\n(StreamingPipeline, etc.) and provides features not available in K8s core reference types:\n  - Cross-namespace references for shared configurations\n  - Enable/disable toggle for feature flags\n  - Helper methods for controller logic\n  - Future extensibility for version pinning, selectors, etc.\n\nFor referencing K8s core resources (Secrets, ConfigMaps), use corev1.LocalObjectReference\nor corev1.SecretReference instead.",
+        "properties": {
+          "enabled": {
+            "default": true,
+            "description": "Enable controls whether this reference is active",
+            "type": "boolean"
+          },
+          "name": {
+            "description": "Name of the referenced resource",
+            "maxLength": 253,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+            "type": "string"
+          },
+          "priority": {
+            "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "type": "array"
+    },
+    "resolutionRefs": {
+      "description": "ResolutionRefs specifies the list of target video resolutions to transcode.\nEach resolution reference points to a VideoResolution resource that defines\nwidth, height, and bitrate settings. Resolutions exceeding the input resolution\nare automatically skipped to prevent upscaling and quality degradation.\nThis allows reusing the same profile across inputs of varying quality.\nIf not specified, defaults to all VideoResolution resources defined in the bitrate configuration.",
+      "items": {
+        "description": "ResourceRef references a Veloxpack custom resource, optionally in a different namespace.\nThis type is specifically designed for referencing Veloxpack CRDs\n(StreamingPipeline, etc.) and provides features not available in K8s core reference types:\n  - Cross-namespace references for shared configurations\n  - Enable/disable toggle for feature flags\n  - Helper methods for controller logic\n  - Future extensibility for version pinning, selectors, etc.\n\nFor referencing K8s core resources (Secrets, ConfigMaps), use corev1.LocalObjectReference\nor corev1.SecretReference instead.",
+        "properties": {
+          "enabled": {
+            "default": true,
+            "description": "Enable controls whether this reference is active",
+            "type": "boolean"
+          },
+          "name": {
+            "description": "Name of the referenced resource",
+            "maxLength": 253,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+            "type": "string"
+          },
+          "priority": {
+            "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "type": "array"
+    },
+    "resourceProfileRef": {
+      "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the transcoding operation. This controls the compute resources allocated to each transcoding worker.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "videoCodecs": {
+      "default": [
+        "h264"
+      ],
+      "description": "VideoCodecs specifies the video codecs to use for transcoding.\nSupported codecs include H.264 (AVC), H.265 (HEVC), VP9, and AV1.\nUse the \"hw:\" prefix to enable hardware-accelerated encoding (e.g., \"hw:h264\")\nwhen available, which significantly improves encoding speed and reduces CPU usage.\nMultiple codecs can be specified to support different devices and bandwidth scenarios.",
+      "items": {
+        "description": "VideoCodec represents the video codec type",
+        "enum": [
+          "h264",
+          "vp9",
+          "av1",
+          "hevc",
+          "h265"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "videoSplitProfileRef": {
+      "description": "VideoSplitProfile references a VideoSplitProfile resource that defines how input\nvideos are split into chunks for parallel transcoding across multiple workers.\nWhen specified, large videos are divided according to the strategy's configuration\n(e.g., fixed-duration, scene-based, adaptive) before transcoding begins.\n\nBenefits of chunking:\n  - Parallel processing: Multiple workers transcode different chunks simultaneously,\n    dramatically reducing total processing time for large files (10x+ speedup possible)\n  - Horizontal scaling: Distribute workload across many nodes instead of waiting\n    for a single powerful node\n  - Faster time-to-first-byte: First chunks can be processed and delivered while\n    later chunks are still being transcoded\n  - Resource efficiency: Smaller chunks require less memory per worker\n\nWhen to use chunking:\n  - RECOMMENDED: Videos longer than 5-10 minutes or when cluster has 4+ workers\n  - SKIP: Short videos (<5 min) or single-worker clusters (chunking adds overhead)\n\nIf not specified, videos are transcoded as single units without chunking.\nThis is simpler but limits parallelization to the number of input files,\nwhich may not fully utilize large clusters.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "at least one video codec must be specified",
+      "rule": "size(self.videoCodecs) > 0"
+    },
+    {
+      "message": "at least one audio codec must be specified",
+      "rule": "size(self.audioCodecs) > 0"
+    },
+    {
+      "message": "at least one resolution or audio layout must be specified",
+      "rule": "(has(self.resolutionRefs) && size(self.resolutionRefs) > 0) || (has(self.audioLayoutRefs) && size(self.audioLayoutRefs) > 0)"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/videosplitprofile.json",
+  "title": "Video Split Profile",
+  "description": "VideoSplitProfileSpec defines the desired state of VideoSplitProfile.\nIt configures how large videos are divided into processable segments for\nparallel transcoding across multiple workers.",
+  "properties": {
+    "keyframeInterval": {
+      "default": "2s",
+      "description": "KeyframeInterval for keyframe-based splitting (keyframe mode only).\nDetermines the precision of split points. Splits can only occur at keyframe boundaries.\nShould match your video's GOP (Group of Pictures) size.\nTypical values: 2s for normal content, 1s for high-motion content.\nDefault: 2s",
+      "type": "string"
+    },
+    "maxSegmentDuration": {
+      "default": "600s",
+      "description": "MaxSegmentDuration sets the maximum allowed segment duration.\nPrevents creating unwieldy large segments that exceed worker memory/time limits.\nConsider your worker timeout settings when configuring this.\nDefault: 600s (10 minutes)",
+      "type": "string"
+    },
+    "minSegmentDuration": {
+      "default": "10s",
+      "description": "MinSegmentDuration sets the minimum allowed segment duration.\nPrevents creating too many tiny segments which increases overhead.\nShould be at least 2x the keyframe interval (typical GOP size).\nDefault: 10s",
+      "type": "string"
+    },
+    "mode": {
+      "description": "Mode determines how the video is split into segments.\nChoose based on your workload characteristics and optimization goals.\nExample: For a 2-hour movie with 30s segments:\nMode: \"fixed-duration\"\nSegmentDuration: \"30s\"\nResult: ~240 segments",
+      "enum": [
+        "fixed-count",
+        "fixed-duration",
+        "fixed-size",
+        "scene-based",
+        "keyframe"
+      ],
+      "type": "string"
+    },
+    "outputFormat": {
+      "default": "sequential",
+      "description": "OutputFormat specifies how segment files are named and organized.\n- sequential: segment_001.mp4, segment_002.mp4, ... (simple, predictable)\n- timecode: segment_00:00:00.mp4, segment_00:05:00.mp4, ... (human-readable)\n- uuid: segment_a1b2c3d4.mp4, segment_e5f6g7h8.mp4, ... (collision-free)\nDefault: sequential",
+      "enum": [
+        "sequential",
+        "timecode",
+        "uuid"
+      ],
+      "type": "string"
+    },
+    "overlapDuration": {
+      "description": "OverlapDuration specifies overlap between consecutive segments for seamless stitching.\nHelps prevent audio/video discontinuities at segment boundaries during final assembly.\nThe overlap region is processed by both adjacent segments and blended during stitching.\nTypical values: 0.5s-2s. Higher values = smoother transitions but more processing.\nExamples: \"0.5s\", \"1s\", \"2s\"\nDefault: 0 (no overlap)",
+      "type": "string"
+    },
+    "preserveKeyframes": {
+      "default": true,
+      "description": "PreserveKeyframes ensures splits only occur at keyframe boundaries (no re-encoding).\nWhen true: Slightly less precise split points but much faster (stream copy).\nWhen false: Frame-accurate splits but requires re-encoding (slower, potential quality loss).\nRECOMMENDED: true for most use cases. Only set to false if frame-exact splits are critical.",
+      "type": "boolean"
+    },
+    "readStrategy": {
+      "default": "direct-seek",
+      "description": "ReadStrategy determines how transcode workers access source video segments.\n- direct-seek: Workers read time ranges directly from source (RECOMMENDED)\n  No split step needed. Saves 50%+ storage. Perfect for S3/GCS/NVMe/modern NFS.\n- split-first: Physically split video into files before transcoding (legacy)\n  Use only for HDDs or bandwidth-constrained storage (<1Gbps).\nSee SplitReadStrategy type documentation for detailed guidance.\nDefault: \"direct-seek\"",
+      "enum": [
+        "direct-seek",
+        "split-first"
+      ],
+      "type": "string"
+    },
+    "resourceProfileRef": {
+      "description": "ResourceProfileRef for the splitting operation.\nReferences a ResourceProfile that defines CPU, memory, and GPU requirements\nfor the segment analysis and splitting process.\n\nSplitting operations can be resource-intensive depending on:\n- Split mode: Scene detection requires more CPU than fixed-duration\n- Video resolution: 4K video analysis needs more memory than HD\n- Read strategy: split-first requires fast I/O for file writes\n\nExample use cases:\n- Scene detection: CPU-optimized nodes for video analysis\n- Large videos: High-memory nodes for buffering and analysis\n- split-first mode: Fast NVMe storage for temporary segment files",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "sceneDetectionThreshold": {
+      "default": "0.4",
+      "description": "SceneDetectionThreshold for scene-based splitting (scene-based mode only).\nControls sensitivity to scene changes. Range: 0.0-1.0\nHigher values (0.6-0.8) = only major scene changes trigger splits (fewer segments)\nLower values (0.2-0.4) = more sensitive to scene changes (more segments)\nTypical value: 0.4 for general content, 0.3 for action content, 0.5 for documentaries",
+      "type": "string"
+    },
+    "segmentCount": {
+      "description": "SegmentCount specifies the target number of segments (required for fixed-count mode).\nDirectly controls parallelization: more segments = more workers can process simultaneously.\nTypical values: 8-32 for small clusters, 64-256 for large clusters.",
+      "maximum": 1000,
+      "minimum": 2,
+      "type": "integer"
+    },
+    "segmentDuration": {
+      "description": "SegmentDuration specifies the target duration per segment (required for fixed-duration mode).\nShorter durations = more parallelization but higher overhead.\nLonger durations = less overhead but less parallelization.\nTypical values: 60s-300s (1-5 minutes).\nExamples: \"60s\", \"5m\", \"10m\"",
+      "type": "string"
+    },
+    "segmentSize": {
+      "description": "SegmentSize specifies the target file size per segment (required for fixed-size mode).\nUseful for managing network transfer costs or storage quotas.\nExamples: \"100M\", \"500M\", \"1G\"",
+      "pattern": "^[\\d\\.]+(?:[kM])?$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mode"
+  ],
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "segmentCount is required when mode is 'fixed-count'",
+      "rule": "self.mode == 'fixed-count' ? has(self.segmentCount) : true"
+    },
+    {
+      "message": "segmentDuration is required when mode is 'fixed-duration'",
+      "rule": "self.mode == 'fixed-duration' ? has(self.segmentDuration) : true"
+    },
+    {
+      "message": "segmentSize is required when mode is 'fixed-size'",
+      "rule": "self.mode == 'fixed-size' ? has(self.segmentSize) : true"
+    },
+    {
+      "message": "sceneDetectionThreshold is required when mode is 'scene-based'",
+      "rule": "self.mode == 'scene-based' ? has(self.sceneDetectionThreshold) : true"
+    },
+    {
+      "message": "keyframeInterval is required when mode is 'keyframe'",
+      "rule": "self.mode == 'keyframe' ? has(self.keyframeInterval) : true"
+    },
+    {
+      "message": "minSegmentDuration must be less than or equal to maxSegmentDuration",
+      "rule": "!has(self.minSegmentDuration) || !has(self.maxSegmentDuration) || duration(self.minSegmentDuration) <= duration(self.maxSegmentDuration)"
+    },
+    {
+      "message": "mode is immutable after creation",
+      "rule": "!has(oldSelf.mode) || self.mode == oldSelf.mode"
+    }
+  ]
+}

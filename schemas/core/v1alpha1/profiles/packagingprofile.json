@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/packagingprofile.json",
+  "title": "Packaging Profile",
+  "description": "PackagingProfileSpec defines the desired state of PackagingProfile.\nIt specifies how transcoded media should be packaged into streaming formats,\nincluding manifest generation (DASH/HLS), segment configuration, and protocol-specific\nparameters for live, event, or VOD delivery. The profile controls segmentation strategy,\nDVR windows, latency modes, and output file naming for adaptive bitrate streaming.",
+  "properties": {
+    "availabilityWindow": {
+      "default": 300,
+      "description": "AvailabilityWindow defines how long segments remain available in seconds for live streaming.\nAlso known as DVR window or timeshift buffer, this controls how far back viewers\ncan seek in a live stream. Older segments beyond this window are removed from the manifest.\nOnly applicable for live and event streaming modes.",
+      "type": "integer"
+    },
+    "dashOutput": {
+      "default": "dash.mpd",
+      "description": "DashOutput specifies the filename for the generated DASH manifest file.\nThis MPD (Media Presentation Description) file contains metadata about available\nvideo/audio representations, segment locations, and timing information.",
+      "pattern": "^.+\\.mpd$",
+      "type": "string"
+    },
+    "generateIframePlaylist": {
+      "default": false,
+      "description": "GenerateIframePlaylist enables generation of I-frame-only playlists for HLS.\nI-frame playlists allow fast seeking and thumbnail previews by providing\naccess to keyframes without loading full segments.\nUseful for trick play, scrubbing, and visual seek previews.",
+      "type": "boolean"
+    },
+    "hlsOutput": {
+      "default": "hls.m3u8",
+      "description": "HlsOutput specifies the filename for the generated HLS master playlist.\nThis master playlist references variant playlists for different quality levels\nand allows players to perform adaptive bitrate switching.",
+      "pattern": "^.+\\.m3u8$",
+      "type": "string"
+    },
+    "lowLatencyDashMode": {
+      "default": false,
+      "description": "LowLatencyDashMode enables MPEG-DASH low-latency streaming extensions (CMAF).\nWhen enabled, uses chunked transfer encoding and smaller segment durations\nto achieve sub-second glass-to-glass latency. Requires UTCTimings to be configured.\nPlayers must support LL-DASH (ISO/IEC 23009-1 5th edition or later).",
+      "type": "boolean"
+    },
+    "manifestFormats": {
+      "default": [
+        "dash",
+        "hls"
+      ],
+      "description": "ManifestFormats specifies which streaming manifest formats to generate (DASH, HLS, or both).\nDASH uses .mpd manifests for ISO/IEC 23009-1 compliant streaming.\nHLS uses .m3u8 playlists for RFC 8216 compliant streaming.\nBoth formats enable adaptive bitrate streaming across different players and platforms.",
+      "items": {
+        "description": "ManifestFormat defines the manifest or playlist format used for adaptive streaming.\nIt determines the structure and metadata syntax used to describe available media segments.",
+        "enum": [
+          "dash",
+          "hls"
+        ],
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "presentationDelay": {
+      "default": 30,
+      "description": "PresentationDelay specifies the live edge offset in seconds.\nThis is the recommended distance from the live edge where playback should start,\nproviding a buffer against network jitter and ensuring smooth playback.\nLower values reduce latency but may cause rebuffering. Typical values: 10-30s.\nOnly applicable for live streaming mode.",
+      "type": "integer"
+    },
+    "resourceProfileRef": {
+      "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the packaging operation. This controls the compute resources allocated to the packaging worker\nthat generates manifest files and segments.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enable controls whether this reference is active",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name of the referenced resource",
+          "maxLength": 253,
+          "minLength": 1,
+          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    },
+    "segmentFolder": {
+      "description": "SegmentFolder specifies a subdirectory path where media segments will be stored.\nLeave empty to store segments in the same directory as manifests.\nUsing a subfolder helps organize output when generating multiple qualities or formats.",
+      "type": "string"
+    },
+    "segmentPerFile": {
+      "default": true,
+      "description": "SegmentPerFile determines whether each segment is written to a separate file.\nWhen true, each segment gets its own file (required for live streaming).\nWhen false, segments may be stored in a single fragmented MP4 file (VOD only).\nLive and event streaming modes require this to be true.",
+      "type": "boolean"
+    },
+    "segmentSize": {
+      "default": 4,
+      "description": "SegmentSize defines the target duration of each media segment in seconds.\nSmaller segments (2-4s) reduce latency but increase manifest size and overhead.\nLarger segments (6-10s) improve efficiency but increase startup time and latency.\nFor low-latency streaming, use 2s or less. For VOD, 4-6s is typical.",
+      "maximum": 30,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "updatePeriod": {
+      "default": 8,
+      "description": "UpdatePeriod defines how frequently the player should fetch updated manifests in seconds.\nFor live streaming, this determines how often the player checks for new segments.\nShould be less than or equal to segment duration for optimal live streaming.\nLower values reduce latency but increase server load.\nOnly applicable for live and event streaming modes.",
+      "type": "integer"
+    },
+    "utcTimings": {
+      "description": "UtcTimings provides clock synchronization sources for DASH clients.\nEach entry specifies a UTCTiming element with a scheme and value for time synchronization.\nRequired for low-latency DASH to ensure client/server clock alignment.\nMultiple entries provide redundancy; list in order of preference.\nCommon schemes: urn:mpeg:dash:utc:http-xsdate:2014, urn:mpeg:dash:utc:ntp:2014",
+      "items": {
+        "description": "UtcTimingPair represents a DASH MPD UTCTiming element",
+        "properties": {
+          "schemeIdUri": {
+            "description": "SchemeIdUri attribute to be used for the UTCTiming element",
+            "type": "string"
+          },
+          "value": {
+            "description": "Value attribute to be used for the UTCTiming element",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemeIdUri",
+          "value"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-validations": [
+    {
+      "message": "at least one manifest format must be specified",
+      "rule": "size(self.manifestFormats) > 0"
+    },
+    {
+      "message": "segmentSize must be between 1 and 30 seconds",
+      "rule": "self.segmentSize >= 1 && self.segmentSize <= 30"
+    },
+    {
+      "message": "utcTimings must be configured when lowLatencyDashMode is enabled",
+      "rule": "!self.lowLatencyDashMode || size(self.utcTimings) > 0"
+    },
+    {
+      "message": "availabilityWindow should be at least as large as segmentSize",
+      "rule": "self.availabilityWindow >= self.segmentSize"
+    },
+    {
+      "message": "updatePeriod must be less than or equal to 30 seconds",
+      "rule": "self.updatePeriod <= 30"
+    },
+    {
+      "message": "presentationDelay should be at least segmentSize to ensure buffer availability",
+      "rule": "self.presentationDelay >= self.segmentSize"
+    }
+  ]
+}

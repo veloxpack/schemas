@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/scrubpreviewprofile.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/scrubpreview/index.json",
   "title": "Scrub Preview Profile",
   "description": "ScrubPreviewProfile is the Schema for the scrubpreviewprofiles API.\nScrubPreviewProfile defines the configuration for generating timeline scrubbing previews,\nwhich combine multiple thumbnail images into grid-based sprite sheets with accompanying\nWebVTT metadata files. This technique enables efficient video seeking, timeline scrubbing,\nand hover preview functionality in video players by reducing HTTP requests and bandwidth\nusage compared to individual thumbnails. Players use the WebVTT file to map time positions\nto specific coordinates within the sprite sheets, providing visual feedback during seeking.",
   "properties": {

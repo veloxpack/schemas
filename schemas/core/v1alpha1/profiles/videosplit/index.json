@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/videosplitprofile.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/videosplit/index.json",
   "title": "Video Split Profile",
   "description": "VideoSplitProfileSpec defines the desired state of VideoSplitProfile.\nIt configures how large videos are divided into processable segments for\nparallel transcoding across multiple workers.",
   "properties": {

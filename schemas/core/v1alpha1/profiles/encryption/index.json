@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/encryptionprofile.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/encryption/index.json",
   "title": "Encryption Profile",
   "description": "EncryptionProfileSpec defines the desired state of EncryptionProfile.\nIt configures content encryption and DRM protection settings for securing media streams\nagainst unauthorized access. Supports both managed DRM systems (Widevine, PlayReady, FairPlay)\nand raw encryption with custom keys. Used to protect premium content, enforce geographic\nrestrictions, and enable secure commercial streaming workflows.",
   "properties": {

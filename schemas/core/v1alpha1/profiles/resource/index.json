@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/resourceprofile.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/resource/index.json",
   "title": "Resource Profile",
   "description": "ResourceProfileSpec defines hardware, scheduling, and resource\nconstraints for computational workloads. Used to ensure media processing\njobs are scheduled on appropriate nodes with sufficient CPU, memory, GPU,\nand storage resources. Supports advanced scheduling scenarios like GPU-accelerated\nencoding, dedicated node pools, and high-performance storage access.",
   "properties": {

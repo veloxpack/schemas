@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/notificationprofile.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/notification/index.json",
   "title": "Notification Profile",
   "description": "NotificationProfileSpec defines the desired state of NotificationProfile.\nNotificationProfile configures how and when to send notifications about StreamingJob\nlifecycle events through various notification services (Slack, Email, Webhook, etc.).",
   "properties": {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/packagingprofile.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/packaging/index.json",
   "title": "Packaging Profile",
   "description": "PackagingProfileSpec defines the desired state of PackagingProfile.\nIt specifies how transcoded media should be packaged into streaming formats,\nincluding manifest generation (DASH/HLS), segment configuration, and protocol-specific\nparameters for live, event, or VOD delivery. The profile controls segmentation strategy,\nDVR windows, latency modes, and output file naming for adaptive bitrate streaming.",
   "properties": {

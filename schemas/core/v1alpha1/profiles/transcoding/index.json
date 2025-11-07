@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/transcodingprofile.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/transcoding/index.json",
   "title": "Transcoding Profile",
   "description": "TranscodingProfileSpec defines the desired state of TranscodingProfile.\nIt configures video and audio transcoding parameters including target resolutions,\naudio channel layouts, and codec selection for converting input media into multiple\noutput renditions suitable for adaptive bitrate streaming.",
   "properties": {

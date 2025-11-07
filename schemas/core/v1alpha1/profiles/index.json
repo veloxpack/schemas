@@ -13,42 +13,42 @@
     "encryptionProfile": {
       "title": "Encryption Profile",
       "description": "Configures content protection policies and key management.",
-      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/encryptionprofile.json"
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/encryption/index.json"
     },
     "notificationProfile": {
       "title": "Notification Profile",
       "description": "Describes event routing for workflow notifications and alerts.",
-      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/notificationprofile.json"
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/notification/index.json"
     },
     "packagingProfile": {
       "title": "Packaging Profile",
       "description": "Controls manifest generation and packaging formats.",
-      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/packagingprofile.json"
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/packaging/index.json"
     },
     "resourceProfile": {
       "title": "Resource Profile",
       "description": "Specifies compute resources for transcoding workloads.",
-      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/resourceprofile.json"
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/resource/index.json"
     },
     "scrubPreviewProfile": {
       "title": "Scrub Preview Profile",
       "description": "Generates lightweight preview assets for scrubbing interfaces.",
-      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/scrubpreviewprofile.json"
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/scrubpreview/index.json"
     },
     "thumbnailProfile": {
       "title": "Thumbnail Profile",
       "description": "Defines thumbnail extraction cadence and formatting.",
-      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/thumbnailprofile.json"
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/thumbnail/index.json"
     },
     "transcodingProfile": {
       "title": "Transcoding Profile",
       "description": "Outlines video/audio ladder and codec settings for renditions.",
-      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/transcodingprofile.json"
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/transcoding/index.json"
     },
     "videoSplitProfile": {
       "title": "Video Split Profile",
       "description": "Configures automated chaptering and segment extraction.",
-      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/videosplitprofile.json"
+      "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/videosplit/index.json"
     }
   },
   "additionalProperties": false

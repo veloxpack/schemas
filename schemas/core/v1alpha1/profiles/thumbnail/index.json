@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/thumbnailprofile.json",
+  "$id": "https://schemas.veloxpack.io/schemas/core/v1alpha1/profiles/thumbnail/index.json",
   "title": "Thumbnail Profile",
   "description": "ThumbnailProfileSpec defines the desired state of ThumbnailProfile.\nIt configures single or multiple thumbnail extraction from video content,\nsupporting various dimensions, formats, and timing strategies for different\nuse cases like poster frames, preview galleries, and social media sharing.",
   "properties": {

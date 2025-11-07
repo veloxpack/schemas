@@ -18,115 +18,35 @@
     },
     "mediaInputRef": {
       "description": "MediaInputRef references the input media configuration defining source files or streams.\nThe MediaInput specifies input locations, track selections, time slicing,\nand input-specific processing options (filters, deinterlacing, language tags).\nSupports local files, remote URLs, live capture devices, and multi-period content.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "notificationProfileRef": {
       "description": "NotificationProfileRef references a notification configuration for job lifecycle events.\nWhen configured, sends notifications (webhooks, emails, SNS) for events like:\njob started, progress updates, stage completions, job succeeded, job failed.\nIf not specified, inherits the NotificationProfile from the referenced StreamingPipeline.\nSet to an empty ResourceRef to explicitly disable notifications for this job.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "outputDestinationRef": {
       "description": "OutputDestinationRef references a secret for csi-driver-rclone that specifies\nthe storage destination for processed media files.\nSupports various storage backends (S3, GCS, Azure Blob, HTTP, etc.).\nSee: https://github.com/veloxpack/csi-driver-rclone/\nIf not specified, inherits the OutputDestination from the referenced StreamingPipeline.\nSpecifying a destination here overrides the pipeline's default for this specific job.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "pipelineRef": {
       "description": "PipelineRef references the StreamingPipeline configuration that defines the complete\nprocessing workflow for this job, including transcoding profiles, packaging settings,\nencryption configuration, and auxiliary content generation (thumbnails, sprites).\nThe pipeline orchestrates all processing stages and determines output formats.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "priority": {
       "description": "Priority sets the scheduling priority for this job (higher values = higher priority).\nJobs with higher priority may be scheduled before lower-priority jobs when resources are limited.\nRange typically 0-100, where 0 is lowest priority and 100 is highest.\nDefault priority is inherited from the pipeline or system defaults.",

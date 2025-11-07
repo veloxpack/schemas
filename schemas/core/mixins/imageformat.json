@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/imageformat.json",
+  "title": "Image Format",
+  "description": "Supported image output formats (lossy and lossless).",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "jpeg",
+      "title": "JPEG"
+    },
+    {
+      "const": "jpg",
+      "title": "JPG"
+    },
+    {
+      "const": "png",
+      "title": "PNG"
+    },
+    {
+      "const": "webp",
+      "title": "WebP"
+    }
+  ]
+}

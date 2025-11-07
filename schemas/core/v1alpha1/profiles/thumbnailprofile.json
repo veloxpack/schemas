@@ -13,31 +13,11 @@
     },
     "resourceProfileRef": {
       "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the thumbnail generation operation. This controls the compute resources allocated to thumbnail workers.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "thumbnails": {
       "description": "Thumbnails defines a list of specific thumbnail configurations to generate.\nEach thumbnail can have unique dimensions, format, capture time, and filters.\nUse this for generating distinct thumbnails for different purposes:\n- Poster frame: High resolution at an interesting moment\n- Social media: Square or specific aspect ratios (e.g., 1200x630 for OpenGraph)\n- Gallery: Multiple sizes for responsive image loading\nIf both Thumbnails and TimeOffsets are specified, all combinations are generated.",
@@ -54,13 +34,11 @@
           "format": {
             "default": "jpeg",
             "description": "Format specifies the output image format for this thumbnail.\nOverrides any global format setting for this specific thumbnail.\nChoose based on use case: JPEG for photos, PNG for transparency, WebP for efficiency.",
-            "enum": [
-              "jpeg",
-              "jpg",
-              "png",
-              "webp"
-            ],
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/imageformat.json"
+              }
+            ]
           },
           "height": {
             "default": 1080,

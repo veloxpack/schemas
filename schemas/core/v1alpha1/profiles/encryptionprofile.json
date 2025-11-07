@@ -59,33 +59,30 @@
     "mode": {
       "default": "widevine",
       "description": "Mode specifies the encryption workflow: widevine (DRM-managed) or raw (static keys).\nWidevine mode integrates with a license server for dynamic key management.\nRaw mode uses pre-defined static keys without external license servers.\nChoose widevine for commercial DRM deployments, raw for testing or custom key management.",
-      "enum": [
-        "widevine",
-        "raw"
-      ],
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/encryptionmode.json"
+        }
+      ]
     },
     "protectionScheme": {
       "default": "cenc",
       "description": "ProtectionScheme selects the encryption algorithm: cenc (AES-CTR) or cbcs (AES-CBC).\nCENC is standard for DASH with Widevine/PlayReady on web and Android.\nCBCS is required for HLS with FairPlay on Apple devices.\nFor multi-DRM scenarios supporting both platforms, you may need separate profiles.",
-      "enum": [
-        "cenc",
-        "cbcs"
-      ],
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/protectionscheme.json"
+        }
+      ]
     },
     "protectionSystems": {
       "description": "ProtectionSystems lists the DRM systems to generate metadata for in manifests.\nMultiple systems enable multi-DRM support, allowing playback across different platforms.\nCommon combinations: [Widevine, PlayReady] for web/mobile, add FairPlay for Apple devices.\nIf not specified with raw mode, a generic Common System PSSH will be generated.\nEach system requires appropriate licensing agreements and player support.",
       "items": {
         "description": "ProtectionSystem represents a specific Digital Rights Management (DRM) system\nused to control access to encrypted media content. Each system defines its own\nkey management, license acquisition, and playback authorization mechanisms.\nThis field is typically aligned with the ContentProtection descriptors in DASH or HLS manifests.",
-        "enum": [
-          "Widevine",
-          "FairPlay",
-          "PlayReady",
-          "Marlin",
-          "CommonSystem"
-        ],
-        "type": "string"
+        "allOf": [
+          {
+            "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/protectionsystem.json"
+          }
+        ]
       },
       "type": "array"
     },

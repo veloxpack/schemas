@@ -39,15 +39,11 @@
     "inputType": {
       "default": "file",
       "description": "InputType specifies the source type of the media input.\nDetermines how the Name field is interpreted and which FFmpeg input format is used.\nDifferent input types support different features (e.g., time slicing only works with 'file').",
-      "enum": [
-        "url",
-        "file",
-        "looped_file",
-        "webcam",
-        "microphone",
-        "external_command"
-      ],
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/inputtype.json"
+        }
+      ]
     },
     "isInterlaced": {
       "description": "IsInterlaced indicates whether the input video uses interlaced scanning.\nWhen true, deinterlacing filters are automatically applied during transcoding\nto convert to progressive scan for better quality on modern displays.\nAuto-detected for most file formats from metadata flags.\nOnly applicable when MediaType is \"video\".\nCommon for broadcast content (1080i, 480i) but rare in modern web video.",
@@ -59,12 +55,11 @@
     },
     "mediaType": {
       "description": "MediaType specifies whether this input is audio, video, or text (subtitles).\nDetermines which track to extract from multi-track sources and how to process it.\nFor files with multiple tracks, use TrackNum to select the specific track.",
-      "enum": [
-        "audio",
-        "video",
-        "text"
-      ],
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/mediatype.json"
+        }
+      ]
     },
     "name": {
       "description": "Name identifies the input source, with interpretation depending on InputType:\n- file: Path to a local media file (e.g., \"/mnt/media/video.mp4\", \"input.mkv\")\n- url: Remote URL (e.g., \"https://example.com/stream.m3u8\", \"rtmp://server/live/stream\")\n- looped_file: Path to a file that will loop indefinitely (e.g., \"/mnt/loop/pattern.mp4\")\n- webcam: Device path on Linux (/dev/video0) or device name on macOS (\"default\", \"FaceTime HD Camera\")\n- microphone: Audio device identifier (platform-specific)\n- external_command: Shell command that outputs media to stdout (e.g., \"ffmpeg -i ... -f mpegts -\")",

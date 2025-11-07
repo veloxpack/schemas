@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/audiocodec.json",
+  "title": "Audio Codec",
+  "description": "Supported audio codec identifiers for transcoding.",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "aac",
+      "title": "AAC"
+    },
+    {
+      "const": "opus",
+      "title": "Opus"
+    },
+    {
+      "const": "ac3",
+      "title": "AC-3"
+    },
+    {
+      "const": "eac3",
+      "title": "E-AC-3"
+    },
+    {
+      "const": "flac",
+      "title": "FLAC"
+    }
+  ]
+}

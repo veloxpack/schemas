@@ -6,9 +6,7 @@
   "properties": {
     "bitrates": {
       "additionalProperties": {
-        "description": "Bitrate represents a bitrate value as a string with optional k/M suffix for CRD compatibility.\nValid formats: \"500\", \"500k\", \"7.5M\"\n- No suffix: bits per second\n- k suffix: kilobits per second (1000 bits/s)\n- M suffix: megabits per second (1000000 bits/s)",
-        "pattern": "^[\\d\\.]+(?:[kM])?$",
-        "type": "string"
+        "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/bitrate.json"
       },
       "description": "Bitrates maps video codecs to their target encoding bitrates for this resolution.\nDifferent codecs achieve different compression ratios, so each requires codec-specific\nbitrate tuning to maintain quality. Higher bitrates improve quality but increase\nbandwidth and storage requirements.\n\nBitrate selection guidelines by resolution and codec:\n- 4K (3840x2160):  H.264: 15-25M, H.265: 10-15M, VP9: 12-18M, AV1: 8-12M\n- 1080p (1920x1080): H.264: 4-8M, H.265: 3-5M, VP9: 3-6M, AV1: 2-4M\n- 720p (1280x720):  H.264: 2-4M, H.265: 1.5-3M, VP9: 1.5-3M, AV1: 1-2M\n- 480p (854x480):   H.264: 1-2M, H.265: 0.7-1.5M, VP9: 0.7-1.5M, AV1: 0.5-1M\n\nFormat: String with optional suffix - '500k' (kilobits/sec), '5M' (megabits/sec).\nExamples: \"500k\", \"2.5M\", \"8M\", \"15M\"\nAt least one codec bitrate must be specified.",
       "type": "object"
@@ -31,31 +29,11 @@
     },
     "resourceProfileRef": {
       "description": "ResourceProfile references hardware and scheduling constraints for encoding.\nHigher resolutions and frame rates require more powerful hardware:\n- 1080p30: Standard CPU encoding acceptable\n- 1080p60/4K30: GPU acceleration recommended for real-time encoding\n- 4K60+: High-end GPU or dedicated encoding hardware required\n\nResourceProfile can specify:\n- CPU/memory requests and limits\n- GPU requirements (nvidia.com/gpu, amd.com/gpu)\n- Node selectors (instance types with encoding hardware)\n- Tolerations (dedicated encoding node pools)\n\nIf not specified, uses cluster defaults with no special requirements.\nHardware acceleration prefix \"hw:\" in codec name (e.g., \"hw:h264\") requires\nappropriate compute resources to be available.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     }
   },
   "required": [

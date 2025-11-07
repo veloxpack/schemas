@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json",
+  "title": "Veloxpack Resource Reference",
+  "description": "Reference to a Veloxpack resource including enable toggle and priority.",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "description": "Enable controls whether this reference is active.",
+      "type": "boolean",
+      "default": true
+    },
+    "name": {
+      "description": "Name of the referenced Resource.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 253,
+      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
+    },
+    "priority": {
+      "description": "Priority defines the relative importance of this reference. Lower values indicate higher priority.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false
+}
+

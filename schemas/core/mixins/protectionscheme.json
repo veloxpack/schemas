@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/protectionscheme.json",
+  "title": "Protection Scheme",
+  "description": "Content encryption scheme identifiers (ISO/IEC 23001-7).",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "cenc",
+      "title": "CENC"
+    },
+    {
+      "const": "cbcs",
+      "title": "CBCS"
+    }
+  ]
+}

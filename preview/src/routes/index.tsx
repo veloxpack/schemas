@@ -53,6 +53,12 @@ const SCHEMAS = [
     description: 'Video-specific configuration schemas including resolution profiles.',
   },
   {
+    id: 'core-mixins',
+    name: 'Veloxpack Core: Mixins',
+    url: 'https://schemas.veloxpack.io/schemas/core/mixins/index.json',
+    description: 'Reusable schema fragments shared across configurations.',
+  },
+  {
     id: 'core-jobs',
     name: 'Veloxpack Core: Jobs',
     url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/jobs/index.json',

@@ -20,6 +20,11 @@
       "description": "Video-specific configuration schemas including resolution profiles.",
       "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/video/index.json"
     },
+    "mixins": {
+      "title": "Mixins",
+      "description": "Reusable schema fragments shared across configurations.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/index.json"
+    },
     "inputs": {
       "title": "Inputs",
       "description": "Input configuration schemas for ingesting media.",

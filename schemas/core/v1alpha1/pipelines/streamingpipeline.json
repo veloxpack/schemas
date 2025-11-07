@@ -6,209 +6,68 @@
   "properties": {
     "encryptionProfileRef": {
       "description": "EncryptionProfileRef references an EncryptionProfile resource for DRM and content protection.\nWhen specified, transcoded outputs will be encrypted using the configured encryption\nscheme (e.g., AES-128, CENC, CBCS) to protect content from unauthorized access.\nEncryption is applied during or after transcoding before packaging.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "mode": {
       "default": "vod",
       "description": "Mode specifies the streaming delivery mode (live, event, or vod).\nThis determines the playlist/manifest behavior and segment availability:\n- live: Real-time streaming with rolling segment window\n- event: Growing manifest during the event, finalized after completion\n- vod: Static manifest with all segments available immediately\nThe mode affects how the PackagingProfile generates and updates manifests.",
-      "enum": [
-        "live",
-        "vod",
-        "event"
-      ],
-      "type": "string"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/streamingmode.json"
+        }
+      ]
     },
     "notificationProfileRef": {
       "description": "NotificationProfileRef references a NotificationProfile resource for job event notifications.\nWhen specified, the system sends notifications (webhooks, emails, SNS, etc.) about\njob lifecycle events such as started, completed, failed, or progress updates.\nActs as the default notification configuration for StreamingJobs using this pipeline.\nIndividual jobs can override this profile.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "outputDestinationRef": {
       "description": "OutputDestinationRef references a secret for csi-driver-rclone that specifies\nthe storage destination for processed media files.\nSupports various storage backends (S3, GCS, Azure Blob, HTTP, etc.).\nSee: https://github.com/veloxpack/csi-driver-rclone/\nThis defines where transcoded videos, manifests, segments, and auxiliary files are uploaded.\nActs as the default output location for StreamingJobs using this pipeline.\nIndividual jobs can override this destination.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "packagingProfileRef": {
       "description": "PackagingProfileRef references a PackagingProfile resource that defines streaming manifest and segmentation settings.\nThe PackagingProfile specifies the streaming mode (live/vod/event), manifest formats (DASH/HLS),\nsegment duration, and protocol-specific parameters for delivering the transcoded media to players.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "scrubPreviewProfileRef": {
       "description": "ScrubPreviewProfileRef references a ScrubPreviewProfile resource for WebVTT sprite sheet generation.\nWhen specified, creates sprite sheets combining multiple thumbnails into single images\nwith accompanying WebVTT files, enabling efficient trick play, timeline previews, and seek scrubbing.\nSprites are generated after thumbnail extraction.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "thumbnailProfileRef": {
       "description": "ThumbnailProfileRef references a ThumbnailProfile resource for thumbnail image generation.\nWhen specified, thumbnail images are extracted from the video at configured intervals,\nsuitable for preview galleries, video catalogs, and poster frames.\nThumbnails are generated during transcoding.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     },
     "transcodingProfileRef": {
       "description": "TranscodingProfileRef references a TranscodingProfile resource that defines video and audio transcoding settings.\nThe TranscodingProfile specifies codecs, resolutions, bitrates, and audio layouts for converting\nthe input media into multiple output renditions suitable for adaptive bitrate streaming.",
-      "properties": {
-        "enabled": {
-          "default": true,
-          "description": "Enable controls whether this reference is active",
-          "type": "boolean"
-        },
-        "name": {
-          "description": "Name of the referenced resource",
-          "maxLength": 253,
-          "minLength": 1,
-          "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority defines the relative importance of this resource reference.\nLower values indicate higher priority. This can be used by controllers\nto resolve conflicts or determine the order in which references are applied.\nOptional, defaults to nil (no specific priority).",
-          "maximum": 100,
-          "minimum": 0,
-          "type": "integer"
+      "allOf": [
+        {
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
+      ]
     }
   },
   "type": "object"

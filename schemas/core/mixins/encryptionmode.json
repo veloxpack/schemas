@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/encryptionmode.json",
+  "title": "Encryption Mode",
+  "description": "Encryption workflows supported by Veloxpack.",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "widevine",
+      "title": "Widevine"
+    },
+    {
+      "const": "raw",
+      "title": "Raw"
+    }
+  ]
+}

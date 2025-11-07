@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/timehmsms.json",
+  "title": "Time (HH:MM:SS[.mmm])",
+  "description": "Represents a timecode formatted as HH:MM:SS with optional millisecond precision (HH:MM:SS.mmm).",
+  "type": "string",
+  "pattern": "^\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?$"
+}
+

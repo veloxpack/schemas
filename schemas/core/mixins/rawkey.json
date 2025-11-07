@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/rawkey.json",
+  "title": "Raw Encryption Key",
+  "description": "Encryption key configuration used in raw encryption mode.",
+  "type": "object",
+  "properties": {
+    "key": {
+      "description": "AES-128 encryption key represented as a 32-character hexadecimal string.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{32}$"
+    },
+    "keyId": {
+      "description": "Identifier for the encryption key (KID) as a 32-character hexadecimal string.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{32}$"
+    },
+    "label": {
+      "description": "Optional DRM label or custom identifier associated with this key.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "key",
+    "keyId"
+  ],
+  "additionalProperties": false
+}

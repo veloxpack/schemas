@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/hdfs.json",
+  "title": "HDFS",
+  "description": "Hadoop Distributed File System",
+  "type": "object",
+  "required": ["namenode"],
+  "properties": {
+    "namenode": {
+      "type": "array",
+      "title": "Name Nodes",
+      "description": "Hadoop name nodes and ports. E.g. 'namenode-1:8020,namenode-2:8020,...' to connect to host namenodes at port 8020",
+      "items": {
+        "type": "string",
+        "pattern": "^[^:]+:[0-9]+$"
+      },
+      "minItems": 1,
+      "examples": [
+        ["namenode-1:8020", "namenode-2:8020"],
+        ["hadoop-master:8020"]
+      ]
+    },
+    "username": {
+      "type": "string",
+      "title": "Username",
+      "description": "Hadoop user name",
+      "examples": ["root", "hdfs", "hadoop"]
+    },
+    "service_principal_name": {
+      "type": "string",
+      "title": "Kerberos Service Principal Name",
+      "description": "Kerberos service principal name for the namenode. Enables KERBEROS authentication. Format: SERVICE/FQDN (e.g. 'hdfs/namenode.hadoop.docker')",
+      "examples": ["hdfs/namenode.hadoop.docker"]
+    },
+    "data_transfer_protection": {
+      "type": "string",
+      "title": "Data Transfer Protection",
+      "description": "Kerberos data transfer protection: authentication|integrity|privacy. Used only with KERBEROS enabled",
+      "oneOf": [
+        { "const": "authentication", "title": "Authentication Only" },
+        { "const": "integrity", "title": "Authentication + Integrity Checks" },
+        { "const": "privacy", "title": "Authentication + Integrity + Encryption" }
+      ]
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,Colon,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "namenode": ["namenode:8020"],
+      "username": "root"
+    },
+    {
+      "namenode": ["namenode-1:8020", "namenode-2:8020"],
+      "service_principal_name": "hdfs/namenode.hadoop.docker",
+      "data_transfer_protection": "privacy"
+    }
+  ]
+}

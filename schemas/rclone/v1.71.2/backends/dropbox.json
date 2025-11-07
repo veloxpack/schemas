@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/dropbox.json",
+  "title": "Dropbox",
+  "description": "Configuration schema for rclone Dropbox backend",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "title": "OAuth Client ID",
+      "description": "Dropbox App Client ID"
+    },
+    "client_secret": {
+      "type": "string",
+      "title": "OAuth Client Secret",
+      "description": "Dropbox App Client Secret",
+      "format": "password"
+    },
+    "shared_files": {
+      "type": "boolean",
+      "title": "Show Shared Files",
+      "description": "Instructs rclone to work on individual shared files",
+      "default": false
+    },
+    "shared_folders": {
+      "type": "boolean",
+      "title": "Show Shared Folders",
+      "description": "Instructs rclone to work on shared folders",
+      "default": false
+    },
+    "batch_mode": {
+      "type": "string",
+      "title": "Upload Batch Mode",
+      "description": "Upload file batching sync|async|off",
+      "enum": ["sync", "async", "off"],
+      "default": "sync"
+    },
+    "batch_size": {
+      "type": "integer",
+      "title": "Batch Size",
+      "description": "Max number of files in upload batch",
+      "default": 0,
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

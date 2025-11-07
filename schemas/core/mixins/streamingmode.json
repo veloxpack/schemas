@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/streamingmode.json",
+  "title": "Streaming Mode",
+  "description": "Enumerates supported streaming delivery modes.",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "live",
+      "title": "Live"
+    },
+    {
+      "const": "event",
+      "title": "Event"
+    },
+    {
+      "const": "vod",
+      "title": "VOD"
+    }
+  ]
+}

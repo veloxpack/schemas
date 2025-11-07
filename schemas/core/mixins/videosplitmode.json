@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/videosplitmode.json",
+  "title": "Video Split Mode",
+  "description": "Strategies for dividing source video into segments.",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "fixed-count",
+      "title": "Fixed Count"
+    },
+    {
+      "const": "fixed-duration",
+      "title": "Fixed Duration"
+    },
+    {
+      "const": "fixed-size",
+      "title": "Fixed Size"
+    },
+    {
+      "const": "scene-based",
+      "title": "Scene Based"
+    },
+    {
+      "const": "keyframe",
+      "title": "Keyframe"
+    }
+  ]
+}

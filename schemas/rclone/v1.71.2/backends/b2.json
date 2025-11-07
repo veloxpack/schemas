@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/b2.json",
+  "title": "Backblaze B2",
+  "type": "object",
+  "properties": {
+    "account": {"type": "string", "title": "Application Key ID"},
+    "key": {"type": "string", "title": "Application Key", "format": "password"},
+    "hard_delete": {"type": "boolean", "default": false, "title": "Permanently delete files"},
+    "versions": {"type": "boolean", "default": false, "title": "Include old versions"}
+  }
+}

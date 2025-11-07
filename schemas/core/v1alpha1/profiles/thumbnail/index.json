@@ -15,7 +15,7 @@
       "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the thumbnail generation operation. This controls the compute resources allocated to thumbnail workers.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
       ]
     },
@@ -36,7 +36,7 @@
             "description": "Format specifies the output image format for this thumbnail.\nOverrides any global format setting for this specific thumbnail.\nChoose based on use case: JPEG for photos, PNG for transparency, WebP for efficiency.",
             "allOf": [
               {
-                "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/imageformat.json"
+                "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/imageformat.json"
               }
             ]
           },
@@ -52,7 +52,11 @@
           },
           "timeOffset": {
             "description": "TimeOffset specifies when to capture the thumbnail from the video.\nFormat: \"HH:MM:SS\" or \"MM:SS\" or seconds as string (e.g., \"5\", \"30\", \"01:30\", \"00:01:30\").\nIf not specified, defaults to the first frame or a percentage through the video.\nExamples: \"00:00:05\" (5 seconds in), \"00:01:30\" (1 minute 30 seconds), \"30\" (30 seconds).",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/timeoffset.json"
+              }
+            ]
           },
           "width": {
             "default": 1920,
@@ -75,7 +79,11 @@
     "timeOffsets": {
       "description": "TimeOffsets specifies a list of time positions for automatic thumbnail generation.\nFormat: \"HH:MM:SS\" or \"MM:SS\" or seconds as string (e.g., \"5\", \"30\", \"01:30\").\nUseful for generating thumbnails at regular intervals or specific key moments.\nAll thumbnails at these offsets will use the same dimensions and format settings\nfrom the first thumbnail spec or defaults.\nExamples: [\"00:00:05\", \"00:00:30\", \"00:01:00\"] generates thumbnails at 5s, 30s, and 1m.",
       "items": {
-        "type": "string"
+        "allOf": [
+          {
+            "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/timeoffset.json"
+          }
+        ]
       },
       "type": "array"
     }

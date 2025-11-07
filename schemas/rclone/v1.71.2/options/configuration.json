@@ -1,0 +1,784 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/options/configuration.json",
+  "title": "General",
+  "description": "General rclone options and flags",
+  "type": "object",
+  "properties": {
+    "verbose": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2,
+      "default": 0,
+      "description": "Print lots more stuff (repeat for more). -v for INFO, -vv for DEBUG. Short: -v"
+    },
+    "quiet": {
+      "type": "boolean",
+      "default": false,
+      "description": "Print as little stuff as possible. Short: -q"
+    },
+    "config": {
+      "type": "string",
+      "description": "Config file path",
+      "examples": ["~/.config/rclone/rclone.conf", "/etc/rclone.conf"]
+    },
+    "cache_dir": {
+      "type": "string",
+      "description": "Directory rclone will use for caching",
+      "examples": ["~/.cache/rclone", "/var/cache/rclone"]
+    },
+    "temp_dir": {
+      "type": "string",
+      "description": "Directory rclone will use for temporary files",
+      "examples": ["/tmp", "C:\\Temp"]
+    },
+    "modify_window": {
+      "type": "string",
+      "default": "1ns",
+      "description": "Max time diff to be considered the same",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$",
+      "examples": ["1ns", "1s", "1m"]
+    },
+    "checkers": {
+      "type": "integer",
+      "default": 8,
+      "minimum": 1,
+      "description": "Number of checkers to run in parallel"
+    },
+    "transfers": {
+      "type": "integer",
+      "default": 4,
+      "minimum": 1,
+      "description": "Number of file transfers to run in parallel"
+    },
+    "checksum": {
+      "type": "boolean",
+      "default": false,
+      "description": "Check for changes with size & checksum (if available, or fallback to size only). Short: -c"
+    },
+    "size_only": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip based on size only, not modtime or checksum"
+    },
+    "ignore_times": {
+      "type": "boolean",
+      "default": false,
+      "description": "Don't skip items that match size and time - transfer all unconditionally. Short: -I"
+    },
+    "ignore_existing": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip all files that exist on destination"
+    },
+    "ignore_errors": {
+      "type": "boolean",
+      "default": false,
+      "description": "Delete even if there are I/O errors"
+    },
+    "dry_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do a trial run with no permanent changes. Short: -n"
+    },
+    "interactive": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable interactive mode. Short: -i"
+    },
+    "links": {
+      "type": "boolean",
+      "default": false,
+      "description": "Translate symlinks to/from regular files with a '.rclonelink' extension. Short: -l"
+    },
+    "contimeout": {
+      "type": "string",
+      "default": "1m0s",
+      "description": "Connect timeout",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$",
+      "examples": ["60s", "1m", "30s"]
+    },
+    "timeout": {
+      "type": "string",
+      "default": "5m0s",
+      "description": "IO idle timeout",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$",
+      "examples": ["5m", "300s", "10m"]
+    },
+    "expect_continue_timeout": {
+      "type": "string",
+      "default": "1s",
+      "description": "Timeout when using expect / 100-continue in HTTP",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$"
+    },
+    "no_check_certificate": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not verify the server SSL certificate (insecure)"
+    },
+    "ask_password": {
+      "type": "boolean",
+      "default": true,
+      "description": "Allow prompt for password for encrypted configuration"
+    },
+    "password_command": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Command for supplying password for encrypted configuration",
+      "examples": [["pass", "rclone/config"], ["gpg", "--decrypt", "password.gpg"]]
+    },
+    "max_delete": {
+      "type": "integer",
+      "default": -1,
+      "description": "When synchronizing, limit the number of deletes (-1 for unlimited)"
+    },
+    "max_delete_size": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^-?[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "default": "off",
+      "description": "When synchronizing, limit the total size of deletes"
+    },
+    "track_renames": {
+      "type": "boolean",
+      "default": false,
+      "description": "When synchronizing, track file renames and do a server-side move if possible"
+    },
+    "track_renames_strategy": {
+      "type": "string",
+      "default": "hash",
+      "enum": ["hash", "modtime", "leaf"],
+      "description": "Strategies to use when synchronizing using track-renames"
+    },
+    "retries": {
+      "type": "integer",
+      "default": 3,
+      "minimum": 0,
+      "description": "Retry operations this many times if they fail"
+    },
+    "retries_sleep": {
+      "type": "string",
+      "default": "0s",
+      "description": "Interval between retrying operations if they fail (0 to disable)",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$",
+      "examples": ["0s", "500ms", "1s", "5s"]
+    },
+    "low_level_retries": {
+      "type": "integer",
+      "default": 10,
+      "minimum": 1,
+      "description": "Number of low level retries to do"
+    },
+    "update": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip files that are newer on the destination. Short: -u"
+    },
+    "use_server_modtime": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use server modified time instead of object metadata"
+    },
+    "no_gzip_encoding": {
+      "type": "boolean",
+      "default": false,
+      "description": "Don't set Accept-Encoding: gzip"
+    },
+    "max_depth": {
+      "type": "integer",
+      "default": -1,
+      "description": "If set limits the recursion depth to this (-1 for unlimited)"
+    },
+    "ignore_size": {
+      "type": "boolean",
+      "default": false,
+      "description": "Ignore size when skipping use modtime or checksum"
+    },
+    "ignore_checksum": {
+      "type": "boolean",
+      "default": false,
+      "description": "Skip post copy check of checksums"
+    },
+    "ignore_case_sync": {
+      "type": "boolean",
+      "default": false,
+      "description": "Ignore case when synchronizing"
+    },
+    "fix_case": {
+      "type": "boolean",
+      "default": false,
+      "description": "Force rename of case insensitive dest to match source"
+    },
+    "no_traverse": {
+      "type": "boolean",
+      "default": false,
+      "description": "Don't traverse destination file system on copy"
+    },
+    "check_first": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do all the checks before starting transfers"
+    },
+    "no_check_dest": {
+      "type": "boolean",
+      "default": false,
+      "description": "Don't check the destination, copy regardless"
+    },
+    "no_unicode_normalization": {
+      "type": "boolean",
+      "default": false,
+      "description": "Don't normalize unicode characters in filenames"
+    },
+    "no_update_modtime": {
+      "type": "boolean",
+      "default": false,
+      "description": "Don't update destination modtime if files identical"
+    },
+    "no_update_dir_modtime": {
+      "type": "boolean",
+      "default": false,
+      "description": "Don't update directory modification times"
+    },
+    "compare_dest": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Include additional server-side paths during comparison"
+    },
+    "copy_dest": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Implies --compare-dest but also copies files from paths into destination"
+    },
+    "backup_dir": {
+      "type": "string",
+      "default": "",
+      "description": "Make backups into hierarchy based in DIR"
+    },
+    "suffix": {
+      "type": "string",
+      "default": "",
+      "description": "Suffix to add to changed files",
+      "examples": ["-2023-01-01", ".bak", "_old"]
+    },
+    "suffix_keep_extension": {
+      "type": "boolean",
+      "default": false,
+      "description": "Preserve the extension when using --suffix"
+    },
+    "fast_list": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use recursive list if available; uses more memory but fewer transactions"
+    },
+    "list_cutoff": {
+      "type": "integer",
+      "default": 1000000,
+      "minimum": 0,
+      "description": "To save memory, sort directory listings on disk above this threshold"
+    },
+    "tpslimit": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "description": "Limit HTTP transactions per second to this (0 for unlimited)"
+    },
+    "tpslimit_burst": {
+      "type": "integer",
+      "default": 1,
+      "minimum": 1,
+      "description": "Max burst of transactions for --tpslimit"
+    },
+    "user_agent": {
+      "type": "string",
+      "description": "Set the user-agent to a specified string",
+      "examples": ["rclone/v1.64.0", "MyApp/1.0"]
+    },
+    "immutable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not modify files, fail if existing files have been modified"
+    },
+    "auto_confirm": {
+      "type": "boolean",
+      "default": false,
+      "description": "If enabled, do not request console confirmation"
+    },
+    "stats_unit": {
+      "type": "string",
+      "default": "bytes",
+      "enum": ["bytes", "bits"],
+      "description": "Show data rate in stats as either 'bits' or 'bytes' per second"
+    },
+    "stats_file_name_length": {
+      "type": "integer",
+      "default": 45,
+      "minimum": 0,
+      "description": "Max file name length in stats (0 for no limit)"
+    },
+    "log_level": {
+      "type": "string",
+      "default": "NOTICE",
+      "enum": ["DEBUG", "INFO", "NOTICE", "ERROR"],
+      "description": "Log level"
+    },
+    "stats_log_level": {
+      "type": "string",
+      "default": "INFO",
+      "enum": ["DEBUG", "INFO", "NOTICE", "ERROR"],
+      "description": "Log level to show --stats output"
+    },
+    "bwlimit": {
+      "type": "string",
+      "default": "off",
+      "description": "Bandwidth limit in KiB/s, or use suffix B|K|M|G|T|P or a full timetable",
+      "examples": ["1M", "10M:512k", "08:00,512k 12:00,10M 13:00,512k 18:00,30M 23:00,off"]
+    },
+    "bwlimit_file": {
+      "type": "string",
+      "default": "off",
+      "description": "Bandwidth limit per file in KiB/s, or use suffix B|K|M|G|T|P or a full timetable",
+      "examples": ["1M", "500k", "off"]
+    },
+    "buffer_size": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "default": "16Mi",
+      "description": "In memory buffer size when reading files for each --transfer"
+    },
+    "streaming_upload_cutoff": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "default": "100Ki",
+      "description": "Cutoff for switching to chunked upload if file size is unknown"
+    },
+    "dump": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["headers", "bodies", "requests", "responses", "auth", "filters", "goroutines", "openfiles"]
+      },
+      "default": [],
+      "description": "List of items to dump for debugging"
+    },
+    "dump_headers": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dump HTTP headers - may contain sensitive info (deprecated, use --dump headers)"
+    },
+    "dump_bodies": {
+      "type": "boolean",
+      "default": false,
+      "description": "Dump HTTP headers and bodies - may contain sensitive info (deprecated, use --dump bodies)"
+    },
+    "max_transfer": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^-?[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "default": "off",
+      "description": "Maximum size of data to transfer (-1 for unlimited)"
+    },
+    "max_duration": {
+      "type": "string",
+      "default": "0s",
+      "description": "Maximum duration rclone will transfer data for",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$",
+      "examples": ["0s", "1h", "30m", "24h"]
+    },
+    "cutoff_mode": {
+      "type": "string",
+      "default": "HARD",
+      "enum": ["HARD", "SOFT", "CAUTIOUS"],
+      "description": "Mode to stop transfers when reaching the max transfer limit"
+    },
+    "max_backlog": {
+      "type": "integer",
+      "default": 10000,
+      "minimum": 0,
+      "description": "Maximum number of objects in sync or check backlog"
+    },
+    "max_stats_groups": {
+      "type": "integer",
+      "default": 1000,
+      "minimum": 0,
+      "description": "Maximum number of stats groups to keep in memory"
+    },
+    "stats_one_line": {
+      "type": "boolean",
+      "default": false,
+      "description": "Make the stats fit on one line"
+    },
+    "stats_one_line_date": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable --stats-one-line and add current date/time prefix"
+    },
+    "stats_one_line_date_format": {
+      "type": "string",
+      "default": "",
+      "description": "Enable --stats-one-line-date and use custom formatted date",
+      "examples": ["2006/01/02 15:04:05 - ", "2006-01-02 15:04:05 "]
+    },
+    "error_on_no_transfer": {
+      "type": "boolean",
+      "default": false,
+      "description": "Sets exit code 9 if no files are transferred, useful in scripts"
+    },
+    "progress": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show progress during transfer. Short: -P"
+    },
+    "progress_terminal_title": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show progress on the terminal title (requires -P/--progress)"
+    },
+    "use_cookies": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable session cookiejar"
+    },
+    "use_mmap": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use mmap allocator (see docs)"
+    },
+    "max_buffer_memory": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^-?[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "default": "off",
+      "description": "If set, don't allocate more than this amount of memory as buffers"
+    },
+    "ca_cert": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "CA certificate used to verify servers",
+      "examples": [["/path/to/ca.crt"], ["/etc/ssl/certs/ca-bundle.crt"]]
+    },
+    "client_cert": {
+      "type": "string",
+      "default": "",
+      "description": "Client SSL certificate (PEM) for mutual TLS auth"
+    },
+    "client_key": {
+      "type": "string",
+      "default": "",
+      "description": "Client SSL private key (PEM) for mutual TLS auth"
+    },
+    "client_pass": {
+      "type": "string",
+      "default": "",
+      "description": "Password for client SSL private key (PEM) for mutual TLS auth (obscured)"
+    },
+    "multi_thread_cutoff": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "default": "256Mi",
+      "description": "Use multi-thread downloads for files above this size"
+    },
+    "multi_thread_streams": {
+      "type": "integer",
+      "default": 4,
+      "minimum": 0,
+      "description": "Number of streams to use for multi-thread downloads"
+    },
+    "multi_thread_write_buffer_size": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "default": "128Ki",
+      "description": "In memory buffer size for writing when in multi-thread mode"
+    },
+    "multi_thread_chunk_size": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]+)?[BKMGTP]?i?$"
+        },
+        {
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "default": "64Mi",
+      "description": "Chunk size for multi-thread downloads / uploads, if not set by filesystem"
+    },
+    "use_json_log": {
+      "type": "boolean",
+      "default": false,
+      "description": "Use json log format"
+    },
+    "order_by": {
+      "type": "string",
+      "default": "",
+      "description": "Instructions on how to order the transfers",
+      "examples": ["size,ascending", "size,descending", "name,ascending", "modtime,descending"]
+    },
+    "refresh_times": {
+      "type": "boolean",
+      "default": false,
+      "description": "Refresh the modtime of remote files"
+    },
+    "no_console": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hide console window (supported on Windows only)"
+    },
+    "fs_cache_expire_duration": {
+      "type": "string",
+      "default": "5m0s",
+      "description": "Cache remotes for this long (0 to disable caching)",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$"
+    },
+    "fs_cache_expire_interval": {
+      "type": "string",
+      "default": "1m0s",
+      "description": "Interval to check for expired remotes",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$"
+    },
+    "disable_http2": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disable HTTP/2 in the global transport"
+    },
+    "human_readable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Print numbers in a human-readable format, sizes with suffix Ki|Mi|Gi|Ti|Pi"
+    },
+    "kv_lock_time": {
+      "type": "string",
+      "default": "1s",
+      "description": "Maximum time to keep key-value database locked by process",
+      "pattern": "^[0-9]+(ns|us|µs|ms|s|m|h)$"
+    },
+    "disable_http_keep_alives": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disable HTTP keep-alives and use each connection once"
+    },
+    "metadata": {
+      "type": "boolean",
+      "default": false,
+      "description": "If set, preserve metadata when copying objects. Short: -M"
+    },
+    "server_side_across_configs": {
+      "type": "boolean",
+      "default": false,
+      "description": "Allow server-side operations (e.g. copy) to work across different configs"
+    },
+    "color": {
+      "type": "string",
+      "default": "AUTO",
+      "enum": ["AUTO", "NEVER", "ALWAYS"],
+      "description": "When to show colors (and other ANSI codes)"
+    },
+    "default_time": {
+      "type": "string",
+      "default": "2000-01-01T00:00:00Z",
+      "format": "date-time",
+      "description": "Time to show if modtime is unknown for files and directories"
+    },
+    "inplace": {
+      "type": "boolean",
+      "default": false,
+      "description": "Download directly to destination file instead of atomic download to temp/rename"
+    },
+    "metadata_mapper": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Program to run to transforming metadata before upload"
+    },
+    "partial_suffix": {
+      "type": "string",
+      "default": ".partial",
+      "description": "Add partial-suffix to temporary file name when --inplace is not used"
+    },
+    "max_connections": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "description": "Maximum number of simultaneous backend API connections, 0 for unlimited"
+    },
+    "name_transform": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Transform paths during the copy process"
+    },
+    "http_proxy": {
+      "type": "string",
+      "default": "",
+      "description": "HTTP proxy URL",
+      "format": "uri",
+      "examples": ["http://proxy.example.com:8080", "socks5://127.0.0.1:1080"]
+    },
+    "delete_before": {
+      "type": "boolean",
+      "default": false,
+      "description": "When synchronizing, delete files on destination before transferring"
+    },
+    "delete_during": {
+      "type": "boolean",
+      "default": false,
+      "description": "When synchronizing, delete files during transfer"
+    },
+    "delete_after": {
+      "type": "boolean",
+      "default": false,
+      "description": "When synchronizing, delete files on destination after transferring (default)"
+    },
+    "bind": {
+      "type": "string",
+      "default": "",
+      "description": "Local address to bind to for outgoing connections, IPv4, IPv6 or name",
+      "examples": ["192.168.1.10", "::1", "eth0"]
+    },
+    "disable": {
+      "type": "string",
+      "default": "",
+      "description": "Disable a comma separated list of features",
+      "examples": ["ListR", "Copy", "Move", "DirMove"]
+    },
+    "header_upload": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Set HTTP header for upload transactions",
+      "examples": [["X-Custom-Header: value"], ["Authorization: Bearer token"]]
+    },
+    "header_download": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Set HTTP header for download transactions",
+      "examples": [["Range: bytes=0-1023"]]
+    },
+    "header": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Set HTTP header for all transactions",
+      "examples": [["User-Agent: MyApp/1.0", "X-Custom: value"]]
+    },
+    "metadata_set": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[^=]+=[^=]+$"
+      },
+      "default": [],
+      "description": "Add metadata key=value when uploading",
+      "examples": [["author=John Doe", "department=IT"]]
+    },
+    "dscp": {
+      "type": "string",
+      "default": "",
+      "description": "Set DSCP value to connections, value or name",
+      "examples": ["CS1", "LE", "DF", "AF21", "0", "10"]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "transfers": 8,
+      "checkers": 16,
+      "progress": true,
+      "stats_one_line": true,
+      "bwlimit": "10M"
+    },
+    {
+      "dry_run": true,
+      "verbose": 1,
+      "log_level": "INFO",
+      "stats_log_level": "NOTICE"
+    },
+    {
+      "fast_list": true,
+      "transfers": 32,
+      "checkers": 32,
+      "buffer_size": "32Mi",
+      "multi_thread_streams": 8
+    },
+    {
+      "retries": 10,
+      "low_level_retries": 20,
+      "retries_sleep": "1s",
+      "timeout": "10m"
+    }
+  ]
+}
+

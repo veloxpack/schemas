@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/index.json",
+  "title": "Veloxpack Mixins",
+  "description": "Reusable schema fragments shared across Veloxpack configurations.",
+  "type": "object",
+  "properties": {
+    "bitrate": {
+      "title": "Bitrate",
+      "description": "Standard bitrate scalar with optional k/M suffix.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/bitrate.json"
+    },
+    "reference": {
+      "title": "Veloxpack Resource Reference",
+      "description": "Reference structure for Veloxpack resource objects.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
+    },
+    "mediatype": {
+      "title": "Media Type",
+      "description": "Media stream type enum (audio, video, text).",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/mediatype.json"
+    },
+    "streamingmode": {
+      "title": "Streaming Mode",
+      "description": "Streaming delivery mode enum (live, event, vod).",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/streamingmode.json"
+    },
+    "inputtype": {
+      "title": "Input Type",
+      "description": "Source type for media inputs.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/inputtype.json"
+    },
+    "manifestformat": {
+      "title": "Manifest Format",
+      "description": "Adaptive streaming manifest formats.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/manifestformat.json"
+    },
+    "imageformat": {
+      "title": "Image Format",
+      "description": "Supported thumbnail and sprite image formats.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/imageformat.json"
+    },
+    "audiocodec": {
+      "title": "Audio Codec",
+      "description": "Available audio codecs for transcoding.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/audiocodec.json"
+    },
+    "videocodec": {
+      "title": "Video Codec",
+      "description": "Available video codecs for transcoding.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/videocodec.json"
+    },
+    "videosplitmode": {
+      "title": "Video Split Mode",
+      "description": "Segmenting strategies for video splitting.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/videosplitmode.json"
+    },
+    "videooutputformat": {
+      "title": "Video Output Format",
+      "description": "Naming schemes for generated segments.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/videooutputformat.json"
+    },
+    "videoreadstrategy": {
+      "title": "Video Read Strategy",
+      "description": "Source access strategies during splitting or transcoding.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/videoreadstrategy.json"
+    },
+    "encryptionmode": {
+      "title": "Encryption Mode",
+      "description": "Supported encryption workflows.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/encryptionmode.json"
+    },
+    "protectionscheme": {
+      "title": "Protection Scheme",
+      "description": "Content encryption scheme identifiers.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/protectionscheme.json"
+    },
+    "protectionsystem": {
+      "title": "Protection System",
+      "description": "DRM systems supported in manifests.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/protectionsystem.json"
+    },
+    "secretselector": {
+      "title": "Secret Selector",
+      "description": "Reference to a key within a Kubernetes Secret.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/secretselector.json"
+    },
+    "rawkey": {
+      "title": "Raw Encryption Key",
+      "description": "Encryption key definition used when mode is 'raw'.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/rawkey.json"
+    },
+    "duration_hms": {
+      "title": "Duration (HH:MM:SS)",
+      "description": "Clock-style duration values such as 00:05:00.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/durationhms.json"
+    },
+    "duration_go": {
+      "title": "Duration (Go format)",
+      "description": "Durations using Go's time format (e.g., 30s, 5m, 1h30m).",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/durationgo.json"
+    },
+    "time_offset": {
+      "title": "Time Offset",
+      "description": "Timestamp offset as HH:MM:SS/MM:SS or seconds value.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/timeoffset.json"
+    },
+    "time_hms_ms": {
+      "title": "Time (HH:MM:SS[.mmm])",
+      "description": "Timecode values with optional millisecond precision.",
+      "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/timehmsms.json"
+    }
+  },
+  "additionalProperties": false
+}
+

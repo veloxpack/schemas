@@ -13,7 +13,7 @@
         "description": "AudioCodec represents the audio codec type",
         "allOf": [
           {
-            "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/audiocodec.json"
+            "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/audiocodec.json"
           }
         ]
       },
@@ -25,7 +25,7 @@
         "description": "ResourceRef references a Veloxpack custom resource, optionally in a different namespace.\nThis type is specifically designed for referencing Veloxpack CRDs\n(StreamingPipeline, etc.) and provides features not available in K8s core reference types:\n  - Cross-namespace references for shared configurations\n  - Enable/disable toggle for feature flags\n  - Helper methods for controller logic\n  - Future extensibility for version pinning, selectors, etc.\n\nFor referencing K8s core resources (Secrets, ConfigMaps), use corev1.LocalObjectReference\nor corev1.SecretReference instead.",
         "allOf": [
           {
-            "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
+            "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
           }
         ]
       },
@@ -37,7 +37,7 @@
         "description": "ResourceRef references a Veloxpack custom resource, optionally in a different namespace.\nThis type is specifically designed for referencing Veloxpack CRDs\n(StreamingPipeline, etc.) and provides features not available in K8s core reference types:\n  - Cross-namespace references for shared configurations\n  - Enable/disable toggle for feature flags\n  - Helper methods for controller logic\n  - Future extensibility for version pinning, selectors, etc.\n\nFor referencing K8s core resources (Secrets, ConfigMaps), use corev1.LocalObjectReference\nor corev1.SecretReference instead.",
         "allOf": [
           {
-            "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
+            "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
           }
         ]
       },
@@ -47,7 +47,7 @@
       "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the transcoding operation. This controls the compute resources allocated to each transcoding worker.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
       ]
     },
@@ -60,7 +60,7 @@
         "description": "VideoCodec represents the video codec type",
         "allOf": [
           {
-            "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/videocodec.json"
+            "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/videocodec.json"
           }
         ]
       },
@@ -70,7 +70,7 @@
       "description": "VideoSplitProfile references a VideoSplitProfile resource that defines how input\nvideos are split into chunks for parallel transcoding across multiple workers.\nWhen specified, large videos are divided according to the strategy's configuration\n(e.g., fixed-duration, scene-based, adaptive) before transcoding begins.\n\nBenefits of chunking:\n  - Parallel processing: Multiple workers transcode different chunks simultaneously,\n    dramatically reducing total processing time for large files (10x+ speedup possible)\n  - Horizontal scaling: Distribute workload across many nodes instead of waiting\n    for a single powerful node\n  - Faster time-to-first-byte: First chunks can be processed and delivered while\n    later chunks are still being transcoded\n  - Resource efficiency: Smaller chunks require less memory per worker\n\nWhen to use chunking:\n  - RECOMMENDED: Videos longer than 5-10 minutes or when cluster has 4+ workers\n  - SKIP: Short videos (<5 min) or single-worker clusters (chunking adds overhead)\n\nIf not specified, videos are transcoded as single units without chunking.\nThis is simpler but limits parallelization to the number of input files,\nwhich may not fully utilize large clusters.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
       ]
     }

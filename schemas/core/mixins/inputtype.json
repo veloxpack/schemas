@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/inputtype.json",
+  "title": "Input Type",
+  "description": "Specifies the source type of a media input.",
+  "type": "string",
+  "oneOf": [
+    {
+      "const": "url",
+      "title": "Remote URL"
+    },
+    {
+      "const": "file",
+      "title": "File"
+    },
+    {
+      "const": "looped_file",
+      "title": "Looped File"
+    },
+    {
+      "const": "webcam",
+      "title": "Webcam"
+    },
+    {
+      "const": "microphone",
+      "title": "Microphone"
+    },
+    {
+      "const": "external_command",
+      "title": "External Command"
+    }
+  ]
+}

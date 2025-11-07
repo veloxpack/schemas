@@ -41,7 +41,7 @@
         "description": "ManifestFormat defines the manifest or playlist format used for adaptive streaming.\nIt determines the structure and metadata syntax used to describe available media segments.",
         "allOf": [
           {
-            "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/manifestformat.json"
+            "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/manifestformat.json"
           }
         ]
       },
@@ -56,7 +56,7 @@
       "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor the packaging operation. This controls the compute resources allocated to the packaging worker\nthat generates manifest files and segments.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
       ]
     },

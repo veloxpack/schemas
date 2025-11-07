@@ -6,7 +6,7 @@
   "properties": {
     "bitrates": {
       "additionalProperties": {
-        "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/bitrate.json"
+        "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/bitrate.json"
       },
       "description": "Bitrates maps audio codecs to their target encoding bitrates for this channel layout.\nDifferent codecs achieve different compression efficiency and quality characteristics,\nrequiring codec-specific bitrate optimization. Higher channel counts typically need\nproportionally higher bitrates to maintain quality.\n\nBitrate recommendations by layout and codec:\n\nMono (1 channel):\n- AAC: 48-64kbps, Opus: 32-48kbps, FLAC: 300-400kbps\n\nStereo (2 channels):\n- AAC: 128-192kbps (standard), 256kbps (high quality)\n- Opus: 96-128kbps (matches AAC 128-192kbps quality)\n- AC-3: 192kbps, E-AC-3: 128-192kbps\n- FLAC: 700-1000kbps (lossless)\n\n5.1 Surround (6 channels):\n- AAC: 384-512kbps\n- Opus: 256-384kbps\n- AC-3: 384-448kbps (standard), 640kbps (maximum)\n- E-AC-3: 384-512kbps\n- FLAC: 2000-3000kbps (lossless)\n\n7.1 Surround (8 channels):\n- AAC: 512-768kbps\n- E-AC-3: 512-768kbps\n- FLAC: 3000-4000kbps (lossless)\n\nFormat: String with optional suffix - '128k' (kilobits/sec), '1.5M' (megabits/sec).\nExamples: \"128k\", \"384k\", \"1.5M\"\nAt least one codec bitrate must be specified.",
       "type": "object"
@@ -21,7 +21,7 @@
       "description": "ResourceProfileRef references a ResourceProfile resource that defines CPU, memory, and GPU requirements\nfor audio processing operations using this layout. This controls the compute resources allocated to audio workers.",
       "allOf": [
         {
-          "$ref": "https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/reference.json"
+          "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/reference.json"
         }
       ]
     },

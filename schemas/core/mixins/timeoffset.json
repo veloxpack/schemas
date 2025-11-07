@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/timeoffset.json",
+  "title": "Time Offset",
+  "description": "Represents a timestamp offset expressed as either HH:MM:SS/MM:SS or a numeric second value.",
+  "type": "string",
+  "oneOf": [
+    {
+      "$comment": "Clock-style offset",
+      "pattern": "^(?:\\d{2}:){1,2}\\d{2}$"
+    },
+    {
+      "$comment": "Seconds offset (integer or decimal)",
+      "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+    }
+  ]
+}
+

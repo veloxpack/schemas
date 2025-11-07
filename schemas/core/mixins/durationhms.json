@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/durationhms.json",
+  "title": "Duration (HH:MM:SS)",
+  "description": "Represents a clock-style duration formatted as HH:MM:SS or MM:SS.",
+  "type": "string",
+  "pattern": "^(?:\\d{2}:){1,2}\\d{2}$"
+}
+

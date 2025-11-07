@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/googlecloudstorage.json",
+  "title": "Google Cloud Storage",
+  "description": "Google Cloud Storage (GCS) - not Google Drive",
+  "type": "object",
+  "properties": {
+    "project_number": {
+      "type": "string",
+      "title": "Project Number",
+      "description": "Project number (optional, needed only for list/create/delete buckets - see your developer console)",
+      "examples": ["123456789012"]
+    },
+    "user_project": {
+      "type": "string",
+      "title": "User Project",
+      "description": "User project (optional, needed only for requester pays)",
+      "examples": ["my-project"]
+    },
+    "service_account_file": {
+      "type": "string",
+      "title": "Service Account File",
+      "description": "Service Account Credentials JSON file path. Leave blank normally. Needed only if you want use SA instead of interactive login",
+      "examples": ["/path/to/credentials.json", "~/service-account.json"]
+    },
+    "service_account_credentials": {
+      "type": "string",
+      "title": "Service Account Credentials",
+      "description": "Service Account Credentials JSON blob. Leave blank normally",
+      "format": "password"
+    },
+    "access_token": {
+      "type": "string",
+      "title": "Access Token",
+      "description": "Short-lived access token. Leave blank normally. Needed only if you want use short-lived access token instead of interactive login",
+      "format": "password"
+    },
+    "anonymous": {
+      "type": "boolean",
+      "title": "Anonymous Access",
+      "description": "Access public buckets and objects without credentials. Set to 'true' if you just want to download files and don't configure credentials",
+      "default": false
+    },
+    "object_acl": {
+      "type": "string",
+      "title": "Object ACL",
+      "description": "Access Control List for new objects",
+      "default": "private",
+      "oneOf": [
+        { "const": "authenticatedRead", "title": "Authenticated Read" },
+        { "const": "bucketOwnerFullControl", "title": "Bucket Owner Full Control" },
+        { "const": "bucketOwnerRead", "title": "Bucket Owner Read" },
+        { "const": "private", "title": "Private" },
+        { "const": "projectPrivate", "title": "Project Private" },
+        { "const": "publicRead", "title": "Public Read" }
+      ]
+    },
+    "bucket_acl": {
+      "type": "string",
+      "title": "Bucket ACL",
+      "description": "Access Control List for new buckets",
+      "default": "private",
+      "oneOf": [
+        { "const": "authenticatedRead", "title": "Authenticated Read" },
+        { "const": "private", "title": "Private" },
+        { "const": "projectPrivate", "title": "Project Private" },
+        { "const": "publicRead", "title": "Public Read" },
+        { "const": "publicReadWrite", "title": "Public Read Write" }
+      ]
+    },
+    "bucket_policy_only": {
+      "type": "boolean",
+      "title": "Bucket Policy Only",
+      "description": "Access checks should use bucket-level IAM policies. Requires Cloud Storage version 1.17.0+",
+      "default": false
+    },
+    "location": {
+      "type": "string",
+      "title": "Location",
+      "description": "Location for newly created buckets",
+      "examples": ["us", "eu", "asia", "us-central1", "us-east1", "europe-west1"]
+    },
+    "storage_class": {
+      "type": "string",
+      "title": "Storage Class",
+      "description": "Storage class for newly created objects in GCS",
+      "oneOf": [
+        { "const": "", "title": "Default" },
+        { "const": "MULTI_REGIONAL", "title": "Multi-Regional" },
+        { "const": "REGIONAL", "title": "Regional" },
+        { "const": "NEARLINE", "title": "Nearline" },
+        { "const": "COLDLINE", "title": "Coldline" },
+        { "const": "ARCHIVE", "title": "Archive" },
+        { "const": "DURABLE_REDUCED_AVAILABILITY", "title": "Durable Reduced Availability" }
+      ]
+    },
+    "no_check_bucket": {
+      "type": "boolean",
+      "title": "No Check Bucket",
+      "description": "If set, don't attempt to check the bucket exists or create it",
+      "default": false
+    },
+    "decompress": {
+      "type": "boolean",
+      "title": "Decompress",
+      "description": "If set, decompress gzip encoded objects. Can't check size and hash but file contents will be decompressed",
+      "default": false
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "description": "Endpoint for the service. Leave blank normally",
+      "format": "uri",
+      "examples": ["https://storage.googleapis.com"]
+    },
+    "env_auth": {
+      "type": "boolean",
+      "title": "Environment Auth",
+      "description": "Get GCP IAM credentials from runtime (environment variables or instance meta data if no env vars). Only applies if service_account_file and service_account_credentials is blank",
+      "default": false
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,CrLf,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "anonymous": true
+    },
+    {
+      "service_account_file": "/path/to/service-account.json",
+      "project_number": "123456789012"
+    },
+    {
+      "env_auth": true
+    }
+  ]
+}

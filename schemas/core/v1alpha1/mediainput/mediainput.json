@@ -19,7 +19,11 @@
         "properties": {
           "duration": {
             "description": "Duration specifies the duration of this period.\nFormat: \"HH:MM:SS\" (e.g., \"00:00:30\" for 30-second ad spot).\nFor live streams, this may be omitted if the period ends when the next period begins.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "https://schemas.veloxpack.io/schemas/core/mixins/durationhms.json"
+              }
+            ]
           },
           "inputs": {
             "description": "Inputs defines the list of input streams for this period.\nEach period can have completely different inputs, allowing content switching.\nAll inputs within a period are processed and packaged together.",

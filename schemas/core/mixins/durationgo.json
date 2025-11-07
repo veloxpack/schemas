@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/core/mixins/durationgo.json",
+  "title": "Duration (Go format)",
+  "description": "Represents a time duration formatted using Go's time.ParseDuration syntax (e.g., '90s', '5m', '1h30m').",
+  "type": "string",
+  "pattern": "^(?:\\d+(?:\\.\\d+)?(?:ns|us|\\u00B5s|ms|s|m|h))+$"
+}
+

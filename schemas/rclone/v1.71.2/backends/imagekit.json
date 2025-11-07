@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/imagekit.json",
+  "title": "ImageKit.io",
+  "description": "ImageKit.io media storage and optimization",
+  "type": "object",
+  "required": [
+    "endpoint",
+    "public_key",
+    "private_key"
+  ],
+  "properties": {
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "description": "Your ImageKit.io URL endpoint. Find it in your dashboard at https://imagekit.io/dashboard/developer/api-keys",
+      "format": "uri",
+      "examples": [
+        "https://ik.imagekit.io/your_id"
+      ]
+    },
+    "public_key": {
+      "type": "string",
+      "title": "Public Key",
+      "description": "Your ImageKit.io public key. Find it in your dashboard"
+    },
+    "private_key": {
+      "type": "string",
+      "title": "Private Key",
+      "description": "Your ImageKit.io private key. Find it in your dashboard",
+      "format": "password"
+    },
+    "only_signed": {
+      "type": "boolean",
+      "title": "Only Signed URLs",
+      "description": "If you have configured 'Restrict unsigned image URLs' in your dashboard settings, set this to true",
+      "default": false
+    },
+    "versions": {
+      "type": "boolean",
+      "title": "Include Versions",
+      "description": "Include old versions in directory listings",
+      "default": false
+    },
+    "upload_tags": {
+      "type": "string",
+      "title": "Upload Tags",
+      "description": "Tags to add to uploaded files (e.g. 'tag1,tag2')",
+      "examples": [
+        "tag1,tag2,tag3"
+      ]
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,Question,HashPercent,DoubleQuote,BackSlash,Dollar,LtGt,SquareBracket,Percent,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false
+}

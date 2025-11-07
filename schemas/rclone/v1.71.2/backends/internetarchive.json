@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/internetarchive.json",
+  "title": "Internet Archive",
+  "description": "Internet Archive - preserve digital history",
+  "type": "object",
+  "properties": {
+    "access_key_id": {
+      "type": "string",
+      "title": "Access Key ID",
+      "description": "IAS3 Access Key. Leave blank for anonymous access. Find it at https://archive.org/account/s3.php",
+      "examples": ["abc123"]
+    },
+    "secret_access_key": {
+      "type": "string",
+      "title": "Secret Access Key",
+      "description": "IAS3 Secret Key (password). Leave blank for anonymous access",
+      "format": "password"
+    },
+    "endpoint": {
+      "type": "string",
+      "title": "Endpoint",
+      "description": "IAS3 Endpoint. Leave blank for default value",
+      "default": "https://s3.us.archive.org",
+      "format": "uri"
+    },
+    "front_endpoint": {
+      "type": "string",
+      "title": "Frontend Endpoint",
+      "description": "Host of InternetArchive Frontend. Leave blank for default value",
+      "default": "https://archive.org",
+      "format": "uri"
+    },
+    "item_metadata": {
+      "type": "array",
+      "title": "Item Metadata",
+      "description": "Metadata to be set on the IA item (format: key=value). The 'x-archive-meta-' prefix is added automatically",
+      "items": {
+        "type": "string",
+        "pattern": "^[^=]+="
+      },
+      "examples": [
+        ["collection=opensource", "subject=technology"]
+      ]
+    },
+    "item_derive": {
+      "type": "boolean",
+      "title": "Trigger Derive",
+      "description": "Whether to trigger derive on the IA item. If false, the item will not be derived by IA upon upload (useful for files already in displayable format)",
+      "default": true
+    },
+    "disable_checksum": {
+      "type": "boolean",
+      "title": "Disable Checksum",
+      "description": "Don't ask the server to test against MD5 checksum. Great for integrity but can cause long delays for large files",
+      "default": true
+    },
+    "wait_archive": {
+      "type": "string",
+      "title": "Wait Archive",
+      "description": "Timeout for waiting for server's processing tasks (archive, book_op) to finish. 0 to disable waiting",
+      "default": "0s",
+      "examples": ["0s", "30s", "1m", "5m"]
+    },
+    "encoding": {
+      "type": "string",
+      "title": "Encoding",
+      "description": "The encoding for the backend (advanced)",
+      "default": "Slash,LtGt,CrLf,Del,Ctl,InvalidUtf8,Dot"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "access_key_id": "abc123",
+      "secret_access_key": "secret"
+    },
+    {
+      "access_key_id": "abc123",
+      "secret_access_key": "secret",
+      "item_metadata": ["collection=opensource", "mediatype=texts"]
+    }
+  ],
+  "$comment": "Internet Archive supports rich metadata. Items are publicly accessible once uploaded"
+}

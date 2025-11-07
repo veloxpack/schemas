@@ -56,7 +56,7 @@ const SCHEMAS = [
   {
     id: 'core-mixins',
     name: 'Veloxpack Core: Mixins',
-    url: 'https://schemas.veloxpack.io/schemas/core/v1alpha1/mixins/index.json',
+    url: 'https://schemas.veloxpack.io/schemas/core/mixins/index.json',
     description: 'Reusable schema fragments shared across configurations.',
   },
   {
@@ -74,63 +74,63 @@ const SCHEMAS = [
   {
     id: 'rclone-index',
     name: 'Rclone: Full Schema',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/index.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/index.json',
     description: 'Configure rclone remotes with simplified form interface',
   },
   {
     id: 'rclone-backend-types',
     name: 'Rclone: Backend',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/backends/index.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/index.json',
     description: 'Choose your backend',
   },
   // Rclone Options
   {
     id: 'rclone-configuration-options',
     name: 'Rclone: Configuration Options',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/options/configuration.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/options/configuration.json',
     description: 'General rclone configuration options',
   },
   {
     id: 'rclone-mount-options',
     name: 'Rclone: Mount Options',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/options/mount.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/options/mount.json',
     description: 'Options for mounting remotes as filesystems',
   },
   {
     id: 'rclone-vfs-options',
     name: 'Rclone: VFS Options',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/options/vfs.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/options/vfs.json',
     description: 'Virtual File System options for remotes',
   },
   // Rclone Backends - Cloud Storage
   {
     id: 'rclone-backend-local',
     name: 'Rclone: Local Filesystem',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/backends/local.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/local.json',
     description: 'Local filesystem backend configuration',
   },
   {
     id: 'rclone-backend-s3',
     name: 'Rclone: Amazon S3',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/backends/s3.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/s3.json',
     description: 'Amazon S3 backend configuration',
   },
   {
     id: 'rclone-backend-drive',
     name: 'Rclone: Google Drive',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/backends/drive.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/drive.json',
     description: 'Google Drive backend configuration',
   },
   {
     id: 'rclone-backend-dropbox',
     name: 'Rclone: Dropbox',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/backends/dropbox.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/dropbox.json',
     description: 'Dropbox backend configuration',
   },
   {
     id: 'rclone-backend-onedrive',
     name: 'Rclone: Microsoft OneDrive',
-    url: 'https://schemas.veloxpack.io/schemas/rclone/latest/backends/onedrive.json',
+    url: 'https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/onedrive.json',
     description: 'Microsoft OneDrive backend configuration',
   },
 ] as const

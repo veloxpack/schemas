@@ -1,0 +1,1092 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/index.json",
+  "title": "Rclone Configuration",
+  "description": "Configure rclone remotes",
+  "type": "object",
+  "properties": {
+    "configurationOptions": {
+      "type": "object",
+      "title": "Configuration Options",
+      "description": "General rclone configuration options",
+      "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/options/configuration.json"
+    },
+    "mountOptions": {
+      "type": "object",
+      "title": "Mount Options",
+      "description": "Options for mounting this remote as a filesystem",
+      "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/options/mount.json"
+    },
+    "vfsOptions": {
+      "type": "object",
+      "title": "VFS Options",
+      "description": "Virtual File System options for this remote",
+      "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/options/vfs.json"
+    },
+    "remotes": {
+      "title": "Remotes",
+      "type": "array",
+      "items": {
+        "title": "Rclone Backend Selection",
+        "description": "Select a backend and configure its properties",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Remote Name",
+            "type": "string",
+            "description": "Unique name for this remote"
+          },
+          "remotePath": {
+            "title": "Remote Path",
+            "type": "string",
+            "description": "Path on the remote storage (supports template variables like ${pvc.metadata.namespace})"
+          },
+          "type": {
+            "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/index.json"
+          },
+          "backend": {
+            "title": "Remote Backend Configuration",
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "local"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/local.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "s3"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/s3.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "drive"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/drive.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "dropbox"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/dropbox.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "onedrive"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/onedrive.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "box"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/box.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "sftp"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/sftp.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "ftp"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/ftp.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "webdav"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/webdav.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "smb"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/smb.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "crypt"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/crypt.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "azureblob"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/azureblob.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "azurefiles"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/azurefiles.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "b2"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/b2.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "swift"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/swift.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "googlecloudstorage"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/googlecloudstorage.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "googlephotos"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/googlephotos.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "mega"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/mega.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "pcloud"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/pcloud.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "storj"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/storj.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "yandex"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/yandex.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "koofr"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/koofr.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "jottacloud"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/jottacloud.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "mailru"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/mailru.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "hidrive"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/hidrive.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "union"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/union.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "alias"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/alias.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "chunker"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/chunker.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "compress"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/compress.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "cache"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/cache.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "combine"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/combine.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "hasher"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/hasher.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "archive"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/archive.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "memory"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/memory.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "http"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/http.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "fichier"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/fichier.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "internetarchive"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/internetarchive.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "pikpak"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/pikpak.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "putio"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/putio.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "premiumizeme"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/premiumizeme.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "protondrive"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/protondrive.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "seafile"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/seafile.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "sugarsync"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/sugarsync.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "hdfs"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/hdfs.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "sia"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/sia.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "qingstor"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/qingstor.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "oracleobjectstorage"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/oracleobjectstorage.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "netstorage"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/netstorage.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "sharefile"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/sharefile.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "ulozto"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/ulozto.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "uptobox"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/uptobox.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "pixeldrain"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/pixeldrain.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "gofile"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/gofile.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "linkbox"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/linkbox.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "iclouddrive"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/iclouddrive.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "imagekit"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/imagekit.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "filefabric"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/filefabric.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "filelu"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/filelu.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "filescom"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/filescom.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "cloudinary"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/cloudinary.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "doi"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/doi.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "opendrive"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/opendrive.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "quatrix"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/quatrix.json"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "zoho"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "backend": {
+                  "$ref": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/zoho.json"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "default": [
+        {
+          "name": "default-remote",
+          "type": "local"
+        }
+      ],
+      "minItems": 1
+    }
+  }
+}

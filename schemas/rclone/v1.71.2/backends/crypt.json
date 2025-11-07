@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.veloxpack.io/schemas/rclone/v1.71.2/backends/crypt.json",
+  "title": "Crypt",
+  "description": "Configuration schema for rclone crypt (encryption) backend",
+  "type": "object",
+  "required": ["remote", "password"],
+  "properties": {
+    "remote": {
+      "type": "string",
+      "title": "Remote to Encrypt",
+      "description": "Remote to encrypt/decrypt. Should contain a ':' and a path, e.g. 'myremote:path/to/dir', 'myremote:bucket'",
+      "examples": ["myremote:path/to/dir", "s3:bucket/folder", "drive:encrypted"]
+    },
+    "filename_encryption": {
+      "type": "string",
+      "title": "Filename Encryption Mode",
+      "description": "How to encrypt the filenames",
+      "default": "standard",
+      "oneOf": [
+        { "const": "standard", "title": "Standard - Encrypt filenames (recommended)" },
+        { "const": "obfuscate", "title": "Obfuscate - Simple filename obfuscation" },
+        { "const": "off", "title": "Off - Don't encrypt filenames (adds .bin suffix only)" }
+      ]
+    },
+    "directory_name_encryption": {
+      "type": "boolean",
+      "title": "Directory Name Encryption",
+      "description": "Encrypt directory names or leave them intact. Has no effect if filename_encryption is 'off'",
+      "default": true
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "description": "Password or pass phrase for encryption",
+      "format": "password"
+    },
+    "password2": {
+      "type": "string",
+      "title": "Salt Password",
+      "description": "Password or pass phrase for salt. Optional but recommended. Should be different from the main password",
+      "format": "password"
+    },
+    "server_side_across_configs": {
+      "type": "boolean",
+      "title": "Server Side Across Configs",
+      "description": "Allow server-side operations (e.g. copy) to work across different crypt configs",
+      "default": false
+    },
+    "show_mapping": {
+      "type": "boolean",
+      "title": "Show Mapping",
+      "description": "Show mapping of encrypted names to unencrypted names for debugging",
+      "default": false
+    },
+    "no_data_encryption": {
+      "type": "boolean",
+      "title": "No Data Encryption",
+      "description": "Don't encrypt file data, only encrypt file names",
+      "default": false
+    },
+    "pass_bad_blocks": {
+      "type": "boolean",
+      "title": "Pass Bad Blocks",
+      "description": "If set, pass through corrupt or invalid data blocks instead of erroring",
+      "default": false
+    },
+    "strict_names": {
+      "type": "boolean",
+      "title": "Strict Names",
+      "description": "Raise an error when crypt encounters a filename that can't be decrypted",
+      "default": false
+    },
+    "filename_encoding": {
+      "type": "string",
+      "title": "Filename Encoding",
+      "description": "How to encode the encrypted filename to text string",
+      "default": "base32",
+      "oneOf": [
+        { "const": "base32", "title": "Base32 - Suitable for all remotes" },
+        { "const": "base64", "title": "Base64 - For case-sensitive remotes" },
+        { "const": "base32768", "title": "Base32768 - For UTF-16 remotes (OneDrive, Dropbox)" }
+      ]
+    },
+    "suffix": {
+      "type": "string",
+      "title": "File Suffix",
+      "description": "Suffix for encrypted files. Set to 'none' for empty suffix",
+      "default": ".bin",
+      "examples": [".bin", ".encrypted", "none", ""]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "remote": "drive:encrypted",
+      "filename_encryption": "standard",
+      "directory_name_encryption": true,
+      "password": "my-secret-password",
+      "password2": "my-salt-password"
+    },
+    {
+      "remote": "s3:bucket/secure",
+      "filename_encryption": "off",
+      "no_data_encryption": false,
+      "password": "encryption-key",
+      "suffix": ".encrypted"
+    }
+  ]
+}
+
